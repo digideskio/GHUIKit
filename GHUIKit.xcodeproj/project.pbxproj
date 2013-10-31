@@ -1,0 +1,474 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		00993257181879BD00556ECC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00993256181879BD00556ECC /* Foundation.framework */; };
+		0099325C181879BD00556ECC /* GHUIKit.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0099325B181879BD00556ECC /* GHUIKit.h */; };
+		0099328218187BFE00556ECC /* GHUICollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0099328118187BFE00556ECC /* GHUICollectionView.m */; };
+		0099328418187DBE00556ECC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0099328318187DBE00556ECC /* UIKit.framework */; };
+		0099328F181ADDEB00556ECC /* GHUICollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0099328E181ADDEB00556ECC /* GHUICollectionViewCell.m */; };
+		0099329618204BCC00556ECC /* GHUIViewStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 0099329518204BCC00556ECC /* GHUIViewStack.m */; };
+		0099329918204C6600556ECC /* GHSUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0099329818204C6600556ECC /* GHSUIView.m */; };
+		009932A118204D9100556ECC /* GHUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 009932A018204D9100556ECC /* GHUIView.m */; };
+		009932A418204EE900556ECC /* GHCGUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 009932A318204EE900556ECC /* GHCGUtils.m */; };
+		009932A818204F4B00556ECC /* GHUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 009932A718204F4B00556ECC /* GHUIButton.m */; };
+		009932AB1820501800556ECC /* GHUIControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 009932AA1820501800556ECC /* GHUIControl.m */; };
+		009932AE1820537000556ECC /* GHLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 009932AD1820537000556ECC /* GHLayout.m */; };
+		009932B1182055C900556ECC /* GHSUIInternalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 009932B0182055C900556ECC /* GHSUIInternalView.m */; };
+		009932B51820571F00556ECC /* GHUINavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 009932B41820571F00556ECC /* GHUINavigationBar.m */; };
+		009932BA18206DFF00556ECC /* GHUISwitchButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 009932B918206DFF00556ECC /* GHUISwitchButton.m */; };
+		00C0950E1821C64200E37D61 /* GHUIActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C0950D1821C64200E37D61 /* GHUIActivityView.m */; };
+		00C095121821D1CE00E37D61 /* GHUIActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C095111821D1CE00E37D61 /* GHUIActionSheet.m */; };
+		00E1A6BC18230DD300BBDFBD /* GHUIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E1A6BB18230DD300BBDFBD /* GHUIAlertView.m */; };
+		00E1A6BF18230F7300BBDFBD /* GHUIActivityLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E1A6BE18230F7300BBDFBD /* GHUIActivityLabel.m */; };
+		CEB2341B467542B980EEF5F6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E609F41752043869A0ED942 /* libPods.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		00993251181879BD00556ECC /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				0099325C181879BD00556ECC /* GHUIKit.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		00993253181879BD00556ECC /* libGHUIKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGHUIKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		00993256181879BD00556ECC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		0099325A181879BD00556ECC /* GHUIKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GHUIKit-Prefix.pch"; sourceTree = "<group>"; };
+		0099325B181879BD00556ECC /* GHUIKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GHUIKit.h; sourceTree = "<group>"; };
+		0099328018187BFE00556ECC /* GHUICollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUICollectionView.h; sourceTree = "<group>"; };
+		0099328118187BFE00556ECC /* GHUICollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUICollectionView.m; sourceTree = "<group>"; };
+		0099328318187DBE00556ECC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		0099328A1819A68A00556ECC /* GHUIDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIDefines.h; sourceTree = "<group>"; };
+		0099328D181ADDEB00556ECC /* GHUICollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUICollectionViewCell.h; sourceTree = "<group>"; };
+		0099328E181ADDEB00556ECC /* GHUICollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUICollectionViewCell.m; sourceTree = "<group>"; };
+		0099329418204BCC00556ECC /* GHUIViewStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIViewStack.h; sourceTree = "<group>"; };
+		0099329518204BCC00556ECC /* GHUIViewStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIViewStack.m; sourceTree = "<group>"; };
+		0099329718204C6600556ECC /* GHSUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHSUIView.h; sourceTree = "<group>"; };
+		0099329818204C6600556ECC /* GHSUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHSUIView.m; sourceTree = "<group>"; };
+		0099329F18204D9100556ECC /* GHUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIView.h; sourceTree = "<group>"; };
+		009932A018204D9100556ECC /* GHUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIView.m; sourceTree = "<group>"; };
+		009932A218204E7800556ECC /* GHCGUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHCGUtils.h; sourceTree = "<group>"; };
+		009932A318204EE900556ECC /* GHCGUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHCGUtils.m; sourceTree = "<group>"; };
+		009932A618204F4B00556ECC /* GHUIButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIButton.h; sourceTree = "<group>"; };
+		009932A718204F4B00556ECC /* GHUIButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIButton.m; sourceTree = "<group>"; };
+		009932A91820501800556ECC /* GHUIControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIControl.h; sourceTree = "<group>"; };
+		009932AA1820501800556ECC /* GHUIControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIControl.m; sourceTree = "<group>"; };
+		009932AC1820537000556ECC /* GHLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHLayout.h; sourceTree = "<group>"; };
+		009932AD1820537000556ECC /* GHLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHLayout.m; sourceTree = "<group>"; };
+		009932AF182055C900556ECC /* GHSUIInternalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHSUIInternalView.h; sourceTree = "<group>"; };
+		009932B0182055C900556ECC /* GHSUIInternalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHSUIInternalView.m; sourceTree = "<group>"; };
+		009932B31820571F00556ECC /* GHUINavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUINavigationBar.h; sourceTree = "<group>"; };
+		009932B41820571F00556ECC /* GHUINavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUINavigationBar.m; sourceTree = "<group>"; };
+		009932B61820691100556ECC /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		009932B71820696E00556ECC /* GHUIKit.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = GHUIKit.podspec; sourceTree = "<group>"; };
+		009932B818206DFF00556ECC /* GHUISwitchButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUISwitchButton.h; sourceTree = "<group>"; };
+		009932B918206DFF00556ECC /* GHUISwitchButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUISwitchButton.m; sourceTree = "<group>"; };
+		00C0950C1821C64200E37D61 /* GHUIActivityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIActivityView.h; sourceTree = "<group>"; };
+		00C0950D1821C64200E37D61 /* GHUIActivityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIActivityView.m; sourceTree = "<group>"; };
+		00C095101821D1CE00E37D61 /* GHUIActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIActionSheet.h; sourceTree = "<group>"; };
+		00C095111821D1CE00E37D61 /* GHUIActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIActionSheet.m; sourceTree = "<group>"; };
+		00E1A6BA18230DD300BBDFBD /* GHUIAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIAlertView.h; sourceTree = "<group>"; };
+		00E1A6BB18230DD300BBDFBD /* GHUIAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIAlertView.m; sourceTree = "<group>"; };
+		00E1A6BD18230F7300BBDFBD /* GHUIActivityLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIActivityLabel.h; sourceTree = "<group>"; };
+		00E1A6BE18230F7300BBDFBD /* GHUIActivityLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIActivityLabel.m; sourceTree = "<group>"; };
+		41180B493CA648BEBF3F8549 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		5E609F41752043869A0ED942 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		00993250181879BD00556ECC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0099328418187DBE00556ECC /* UIKit.framework in Frameworks */,
+				00993257181879BD00556ECC /* Foundation.framework in Frameworks */,
+				CEB2341B467542B980EEF5F6 /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0099324A181879BD00556ECC = {
+			isa = PBXGroup;
+			children = (
+				00993258181879BD00556ECC /* GHUIKit */,
+				00993255181879BD00556ECC /* Frameworks */,
+				00993254181879BD00556ECC /* Products */,
+				41180B493CA648BEBF3F8549 /* Pods.xcconfig */,
+				009932B61820691100556ECC /* Podfile */,
+				009932B71820696E00556ECC /* GHUIKit.podspec */,
+			);
+			sourceTree = "<group>";
+		};
+		00993254181879BD00556ECC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				00993253181879BD00556ECC /* libGHUIKit.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		00993255181879BD00556ECC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0099328318187DBE00556ECC /* UIKit.framework */,
+				00993256181879BD00556ECC /* Foundation.framework */,
+				5E609F41752043869A0ED942 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		00993258181879BD00556ECC /* GHUIKit */ = {
+			isa = PBXGroup;
+			children = (
+				0099325B181879BD00556ECC /* GHUIKit.h */,
+				0099328A1819A68A00556ECC /* GHUIDefines.h */,
+				0099327F18187BFE00556ECC /* UICollectionView */,
+				0099329E18204D8600556ECC /* UIView */,
+				009932B21820570F00556ECC /* UINavigationBar */,
+				0099329318204BC000556ECC /* UIViewStack */,
+				009932A518204F3200556ECC /* UIButton */,
+				00C0950B1821C63200E37D61 /* UIActivityView */,
+				00C0950F1821D1B500E37D61 /* UIActionSheet */,
+				00E1A6B918230DB100BBDFBD /* UIAlertView */,
+				00993259181879BD00556ECC /* Supporting Files */,
+			);
+			path = GHUIKit;
+			sourceTree = "<group>";
+		};
+		00993259181879BD00556ECC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0099325A181879BD00556ECC /* GHUIKit-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0099327F18187BFE00556ECC /* UICollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				0099328018187BFE00556ECC /* GHUICollectionView.h */,
+				0099328118187BFE00556ECC /* GHUICollectionView.m */,
+				0099328D181ADDEB00556ECC /* GHUICollectionViewCell.h */,
+				0099328E181ADDEB00556ECC /* GHUICollectionViewCell.m */,
+			);
+			path = UICollectionView;
+			sourceTree = "<group>";
+		};
+		0099329318204BC000556ECC /* UIViewStack */ = {
+			isa = PBXGroup;
+			children = (
+				0099329418204BCC00556ECC /* GHUIViewStack.h */,
+				0099329518204BCC00556ECC /* GHUIViewStack.m */,
+				0099329718204C6600556ECC /* GHSUIView.h */,
+				0099329818204C6600556ECC /* GHSUIView.m */,
+				009932AF182055C900556ECC /* GHSUIInternalView.h */,
+				009932B0182055C900556ECC /* GHSUIInternalView.m */,
+			);
+			path = UIViewStack;
+			sourceTree = "<group>";
+		};
+		0099329E18204D8600556ECC /* UIView */ = {
+			isa = PBXGroup;
+			children = (
+				0099329F18204D9100556ECC /* GHUIView.h */,
+				009932A018204D9100556ECC /* GHUIView.m */,
+				009932A218204E7800556ECC /* GHCGUtils.h */,
+				009932A318204EE900556ECC /* GHCGUtils.m */,
+				009932AC1820537000556ECC /* GHLayout.h */,
+				009932AD1820537000556ECC /* GHLayout.m */,
+			);
+			path = UIView;
+			sourceTree = "<group>";
+		};
+		009932A518204F3200556ECC /* UIButton */ = {
+			isa = PBXGroup;
+			children = (
+				009932A91820501800556ECC /* GHUIControl.h */,
+				009932AA1820501800556ECC /* GHUIControl.m */,
+				009932A618204F4B00556ECC /* GHUIButton.h */,
+				009932A718204F4B00556ECC /* GHUIButton.m */,
+				009932B818206DFF00556ECC /* GHUISwitchButton.h */,
+				009932B918206DFF00556ECC /* GHUISwitchButton.m */,
+			);
+			path = UIButton;
+			sourceTree = "<group>";
+		};
+		009932B21820570F00556ECC /* UINavigationBar */ = {
+			isa = PBXGroup;
+			children = (
+				009932B31820571F00556ECC /* GHUINavigationBar.h */,
+				009932B41820571F00556ECC /* GHUINavigationBar.m */,
+			);
+			path = UINavigationBar;
+			sourceTree = "<group>";
+		};
+		00C0950B1821C63200E37D61 /* UIActivityView */ = {
+			isa = PBXGroup;
+			children = (
+				00C0950C1821C64200E37D61 /* GHUIActivityView.h */,
+				00C0950D1821C64200E37D61 /* GHUIActivityView.m */,
+				00E1A6BD18230F7300BBDFBD /* GHUIActivityLabel.h */,
+				00E1A6BE18230F7300BBDFBD /* GHUIActivityLabel.m */,
+			);
+			path = UIActivityView;
+			sourceTree = "<group>";
+		};
+		00C0950F1821D1B500E37D61 /* UIActionSheet */ = {
+			isa = PBXGroup;
+			children = (
+				00C095101821D1CE00E37D61 /* GHUIActionSheet.h */,
+				00C095111821D1CE00E37D61 /* GHUIActionSheet.m */,
+			);
+			path = UIActionSheet;
+			sourceTree = "<group>";
+		};
+		00E1A6B918230DB100BBDFBD /* UIAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				00E1A6BA18230DD300BBDFBD /* GHUIAlertView.h */,
+				00E1A6BB18230DD300BBDFBD /* GHUIAlertView.m */,
+			);
+			path = UIAlertView;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		00993252181879BD00556ECC /* GHUIKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 00993276181879BE00556ECC /* Build configuration list for PBXNativeTarget "GHUIKit" */;
+			buildPhases = (
+				FB88F8DBD0204C1E9FC95343 /* Check Pods Manifest.lock */,
+				0099324F181879BD00556ECC /* Sources */,
+				00993250181879BD00556ECC /* Frameworks */,
+				00993251181879BD00556ECC /* CopyFiles */,
+				F846BB60569348B8BB13386B /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GHUIKit;
+			productName = GHUIKit;
+			productReference = 00993253181879BD00556ECC /* libGHUIKit.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0099324B181879BD00556ECC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Gabriel Handford";
+			};
+			buildConfigurationList = 0099324E181879BD00556ECC /* Build configuration list for PBXProject "GHUIKit" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 0099324A181879BD00556ECC;
+			productRefGroup = 00993254181879BD00556ECC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				00993252181879BD00556ECC /* GHUIKit */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		F846BB60569348B8BB13386B /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FB88F8DBD0204C1E9FC95343 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0099324F181879BD00556ECC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				009932AE1820537000556ECC /* GHLayout.m in Sources */,
+				009932A418204EE900556ECC /* GHCGUtils.m in Sources */,
+				009932B1182055C900556ECC /* GHSUIInternalView.m in Sources */,
+				0099328218187BFE00556ECC /* GHUICollectionView.m in Sources */,
+				009932A818204F4B00556ECC /* GHUIButton.m in Sources */,
+				0099329918204C6600556ECC /* GHSUIView.m in Sources */,
+				00C095121821D1CE00E37D61 /* GHUIActionSheet.m in Sources */,
+				009932B51820571F00556ECC /* GHUINavigationBar.m in Sources */,
+				00E1A6BF18230F7300BBDFBD /* GHUIActivityLabel.m in Sources */,
+				009932A118204D9100556ECC /* GHUIView.m in Sources */,
+				009932BA18206DFF00556ECC /* GHUISwitchButton.m in Sources */,
+				0099328F181ADDEB00556ECC /* GHUICollectionViewCell.m in Sources */,
+				009932AB1820501800556ECC /* GHUIControl.m in Sources */,
+				0099329618204BCC00556ECC /* GHUIViewStack.m in Sources */,
+				00C0950E1821C64200E37D61 /* GHUIActivityView.m in Sources */,
+				00E1A6BC18230DD300BBDFBD /* GHUIAlertView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		00993274181879BE00556ECC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		00993275181879BE00556ECC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		00993277181879BE00556ECC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 41180B493CA648BEBF3F8549 /* Pods.xcconfig */;
+			buildSettings = {
+				DSTROOT = /tmp/GHUIKit.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GHUIKit/GHUIKit-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		00993278181879BE00556ECC /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 41180B493CA648BEBF3F8549 /* Pods.xcconfig */;
+			buildSettings = {
+				DSTROOT = /tmp/GHUIKit.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GHUIKit/GHUIKit-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0099324E181879BD00556ECC /* Build configuration list for PBXProject "GHUIKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				00993274181879BE00556ECC /* Debug */,
+				00993275181879BE00556ECC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		00993276181879BE00556ECC /* Build configuration list for PBXNativeTarget "GHUIKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				00993277181879BE00556ECC /* Debug */,
+				00993278181879BE00556ECC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0099324B181879BD00556ECC /* Project object */;
+}
