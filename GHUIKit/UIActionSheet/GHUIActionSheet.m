@@ -36,8 +36,8 @@ destructiveButtonTitle:(NSString *)destructiveButtonTitle destructiveTarget:(GHU
     _actionSheet = [[UIActionSheet alloc] initWithTitle:_title delegate:self cancelButtonTitle:_cancelButtonTitle destructiveButtonTitle:_destructiveButtonTitle otherButtonTitles:[_titles gh_objectAtIndex:0], [_titles gh_objectAtIndex:1], [_titles gh_objectAtIndex:2], [_titles gh_objectAtIndex:3], [_titles gh_objectAtIndex:4], [_titles gh_objectAtIndex:5], [_titles gh_objectAtIndex:6], [_titles gh_objectAtIndex:7], [_titles gh_objectAtIndex:8], nil];
     _actionSheet.actionSheetStyle = _actionSheetStyle;
     // Add cancel and destructive buttons to actions at their correct indices
-    if (_destructiveButtonTitle) [_targets insertObject:_destructiveTarget atIndex:[_actionSheet destructiveButtonIndex]];
-    if (_cancelButtonTitle) [_targets insertObject:_cancelTarget atIndex:[_actionSheet cancelButtonIndex]];
+    if (_destructiveButtonTitle && _destructiveTarget) [_targets insertObject:_destructiveTarget atIndex:[_actionSheet destructiveButtonIndex]];
+    if (_cancelButtonTitle && _cancelTarget) [_targets insertObject:_cancelTarget atIndex:[_actionSheet cancelButtonIndex]];
   }
   return _actionSheet;
 }

@@ -12,6 +12,7 @@
 
 #import "GHUICollectionView.h"
 #import "GHUICollectionViewCell.h"
+#import "GHUICollectionViewDataSource.h"
 
 #import "GHUIView.h"
 #import "GHCGUtils.h"
@@ -30,3 +31,5 @@
 #import "GHUIActionSheet.h"
 
 #import "GHUIAlertView.h"
+
+#import "GHUIImageView.h"

@@ -17,7 +17,7 @@ typedef void (^GHUIAlertViewBlock)(NSInteger index);
 
 /*!
  Show alert with block callback.
- @param block YKUIAlertViewBlock that is called when the user presses a button
+ @param block GHUIAlertViewBlock that is called when the user presses a button
  @param title
  @param message
  @param cancelButtonTitle
