@@ -6,18 +6,18 @@
 //  Copyright (c) 2013 Gabriel Handford. All rights reserved.
 //
 
-typedef Class (^GHUICollectionViewCellClassBlock)(UICollectionView *collectionView, NSIndexPath *indexPath, id object);
-
 typedef void (^GHUICollectionViewCellSetBlock)(id cell, id object, NSIndexPath *indexPath);
+typedef void (^GHUICollectionViewSelectBlock)(UICollectionView *collectionView, NSIndexPath *indexPath);
 
 @interface GHUICollectionViewDataSource : NSObject <UICollectionViewDataSource, UICollectionViewDelegate> {
   NSMutableDictionary *_sections;
   
-  id _cellForSizing;
+  NSMutableDictionary *_cellClasses;
+  NSMutableDictionary *_cellsForSizing;
 }
 
-@property (nonatomic, copy) GHUICollectionViewCellClassBlock cellClassBlock;
 @property (nonatomic, copy) GHUICollectionViewCellSetBlock cellSetBlock;
+@property (nonatomic, copy) GHUICollectionViewSelectBlock selectBlock;
 
 - (NSMutableArray *)objectsForSection:(NSInteger)section;
 - (NSMutableArray *)objectsForSection:(NSInteger)section create:(BOOL)create;
@@ -26,10 +26,20 @@ typedef void (^GHUICollectionViewCellSetBlock)(id cell, id object, NSIndexPath *
 
 - (NSInteger)sectionCount;
 
+- (void)addObjects:(NSArray *)objects;
+- (void)addObjects:(NSArray *)objects section:(NSInteger)section;
 - (void)addObjects:(NSArray *)objects section:(NSInteger)section indexPaths:(NSMutableArray **)indexPaths;
+
+- (void)replaceObjectAtIndexPath:(NSIndexPath *)indexPath withObject:(id)object;
 
 - (id)objectAtIndexPath:(NSIndexPath *)indexPath;
 
+- (NSUInteger)indexOfObject:(id)object inSection:(NSInteger)section;
+
 - (void)removeAllObjects;
+
+- (void)setCellClass:(Class)cellClass collectionView:(UICollectionView *)collectionView;
+- (void)setCellClass:(Class)cellClass collectionView:(UICollectionView *)collectionView section:(NSInteger)section;
+- (Class)cellClassForIndexPath:(NSIndexPath *)indexPath;
 
 @end

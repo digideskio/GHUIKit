@@ -7,12 +7,9 @@
 //
 
 #import "GHUICollectionViewDataSource.h"
+#import <GHKit/GHNSArray+Utils.h>
 
 @implementation GHUICollectionViewDataSource
-
-- (void)removeAllObjects {
-  [_sections removeAllObjects];
-}
 
 - (NSMutableArray *)objectsForSection:(NSInteger)section create:(BOOL)create {
   if (!_sections && create) _sections = [[NSMutableDictionary alloc] init];
@@ -37,6 +34,14 @@
   return (_sections ? [_sections count] : 0);
 }
 
+- (void)addObjects:(NSArray *)objects {
+  [self addObjects:objects section:0 indexPaths:nil];
+}
+
+- (void)addObjects:(NSArray *)objects section:(NSInteger)section {
+  [self addObjects:objects section:section indexPaths:nil];
+}
+
 - (void)addObjects:(NSArray *)objects section:(NSInteger)section indexPaths:(NSMutableArray **)indexPaths {
   NSMutableArray *objectsForSection = [self objectsForSection:section create:YES];
   NSInteger previousCount = [objectsForSection count];
@@ -49,9 +54,40 @@
   }
 }
 
+- (void)replaceObjectAtIndexPath:(NSIndexPath *)indexPath withObject:(id)object {
+  NSMutableArray *objectsForSection = [self objectsForSection:indexPath.section create:YES];
+  [objectsForSection replaceObjectAtIndex:indexPath.row withObject:object];
+}
+
+- (void)removeAllObjects {
+  [_sections removeAllObjects];
+}
+
 - (id)objectAtIndexPath:(NSIndexPath *)indexPath {
   NSArray *objects = [self objectsForSection:indexPath.section];
   return [objects objectAtIndex:indexPath.row];
+}
+
+- (NSUInteger)indexOfObject:(id)object inSection:(NSInteger)section {
+  NSArray *objectsForSection = [self objectsForSection:section create:NO];
+  if (!objectsForSection) return NSNotFound;
+  return [objectsForSection indexOfObject:object];
+}
+
+- (void)setCellClass:(Class)cellClass collectionView:(UICollectionView *)collectionView {
+  [self setCellClass:cellClass collectionView:collectionView section:-1];
+}
+
+- (void)setCellClass:(Class)cellClass collectionView:(UICollectionView *)collectionView section:(NSInteger)section {
+  if (!_cellClasses) _cellClasses = [[NSMutableDictionary alloc] init];
+  [_cellClasses setObject:cellClass forKey:@(section)];
+  [collectionView registerClass:cellClass forCellWithReuseIdentifier:NSStringFromClass(cellClass)];
+}
+
+- (Class)cellClassForIndexPath:(NSIndexPath *)indexPath {
+  Class cellClass = [_cellClasses objectForKey:@(indexPath.section)];
+  if (!cellClass) cellClass = [_cellClasses objectForKey:@(-1)];
+  return cellClass;
 }
 
 #pragma mark UICollectionViewDataSource
@@ -61,8 +97,7 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  id object = [self objectAtIndexPath:indexPath];
-  Class cellClass = self.cellClassBlock(collectionView, indexPath, object);
+  Class cellClass = [self cellClassForIndexPath:indexPath];
   id cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(cellClass) forIndexPath:indexPath];
   self.cellSetBlock(cell, [self objectAtIndexPath:indexPath], indexPath);
   return cell;
@@ -76,10 +111,22 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)layout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   id object = [self objectAtIndexPath:indexPath];
-  Class cellClass = self.cellClassBlock(collectionView, indexPath, object);
-  if (!_cellForSizing) _cellForSizing = [[cellClass alloc] init];
-  self.cellSetBlock(_cellForSizing, [self objectAtIndexPath:indexPath], indexPath);
-  return [_cellForSizing sizeThatFits:collectionView.bounds.size];
+  Class cellClass = [self cellClassForIndexPath:indexPath];
+  
+  if (!_cellsForSizing) _cellsForSizing = [[NSMutableDictionary alloc] init];
+  id cellForSizing = [_cellsForSizing objectForKey:@(indexPath.section)];
+  if (!cellForSizing) {
+    cellForSizing = [[cellClass alloc] init];
+    [_cellsForSizing setObject:cellForSizing forKey:@(indexPath.section)];
+  }
+  
+  self.cellSetBlock(cellForSizing, object, indexPath);
+  return [cellForSizing sizeThatFits:collectionView.bounds.size];
 }
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  if (self.selectBlock) self.selectBlock(collectionView, indexPath);  
+}
+
 
 @end
