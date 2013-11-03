@@ -11,6 +11,10 @@
 
 @implementation GHUIActionSheet
 
+- (id)initWithTitle:(NSString *)title cancelButtonTitle:(NSString *)cancelButtonTitle {
+  return [self initWithTitle:title cancelButtonTitle:cancelButtonTitle];
+}
+
 - (id)initWithTitle:(NSString *)title cancelButtonTitle:(NSString *)cancelButtonTitle cancelTarget:(GHUIActionSheetTargetBlock)cancelTarget
 destructiveButtonTitle:(NSString *)destructiveButtonTitle destructiveTarget:(GHUIActionSheetTargetBlock)destructiveTarget {
   

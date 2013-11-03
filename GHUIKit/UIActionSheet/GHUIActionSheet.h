@@ -12,8 +12,7 @@ typedef void (^GHUIActionSheetTargetBlock)();
  Action sheet with target and actions associated with titles.
  Useful for conditional titles and not having to deal with a single delegate, and button index.
  
-     YKUIActionSheet *actionSheet = [[YKUIActionSheet alloc] initWithTitle:nil cancelButtonTitle:NSLocalizedString(@"Cancel") cancelTarget:^(){}
-      destructiveButtonTitle:nil destructiveTarget:^(){}];
+     GHUIActionSheet *actionSheet = [[GHUIActionSheet alloc] initWithTitle:nil cancelButtonTitle:NSLocalizedString(@"Cancel") cancelTarget:^(){} destructiveButtonTitle:nil destructiveTarget:^(){}];
      
      if (...) [actionSheet addButtonWithTitle:NSLocalizedString(@"Use My Facebook Photo") target:^() { }];
      if (...) [actionSheet addButtonWithTitle:YKLocalizedString(@"TakePhoto") target:^() { }];
@@ -37,6 +36,8 @@ typedef void (^GHUIActionSheetTargetBlock)();
 }
 
 @property (assign, nonatomic) UIActionSheetStyle actionSheetStyle;
+
+- (id)initWithTitle:(NSString *)title cancelButtonTitle:(NSString *)cancelButtonTitle;
 
 /*!
  Create action sheet.
