@@ -15,20 +15,13 @@ typedef enum {
   GHUIButtonIconPositionTop, // Aligned with top of button
 } GHUIButtonIconPosition;
 
-typedef enum {
-  GHUIButtonSecondaryTitlePositionDefault = 0, // Default, next to title
-  GHUIButtonSecondaryTitlePositionBottom, // Underneath the title
-  GHUIButtonSecondaryTitlePositionRightAlign, // Next to title, right aligned
-  GHUIButtonSecondaryTitlePositionBottomLeftSingle, // Bottom left, single line
-} GHUIButtonSecondaryTitlePosition;
-
 /*!
  Button.
  */
 @interface GHUIButton : GHUIControl {
   
+  CGSize _sizeThatFitsText;
   CGSize _titleSize;
-  CGSize _abbreviatedTitleSize;
   
   UIActivityIndicatorView *_activityIndicatorView;
   
@@ -110,21 +103,6 @@ typedef enum {
 @property (assign, nonatomic) CGFloat cornerRadiusRatio;
 
 /*!
- Border shadow color (for inner glow).
- */
-@property (strong, nonatomic) UIColor *borderShadowColor;
-
-/*!
- Border shadow blur amount (for inner glow).
- */
-@property (assign, nonatomic) CGFloat borderShadowBlur;
-
-/*!
- Text shadow color.
- */
-@property (strong, nonatomic) UIColor *titleShadowColor;
-
-/*!
  Background image.
  */
 @property (strong, nonatomic) UIImage *image;
@@ -143,11 +121,6 @@ typedef enum {
  Background image (disabled).
  */
 @property (strong, nonatomic) UIImage *disabledImage;
-
-/*!
- Text shadow offset.
- */
-@property (assign, nonatomic) CGSize titleShadowOffset;
 
 /*!
  Image (view) to display to the left of the text.
@@ -169,11 +142,6 @@ typedef enum {
  Insets (padding).
  */
 @property (assign, nonatomic) UIEdgeInsets insets;
-
-/*!
- Hide the text.
- */
-@property (assign, nonatomic, getter=isTitleHidden) BOOL titleHidden;
 
 /*!
  Image to display to the left of the text.
@@ -201,11 +169,6 @@ typedef enum {
 @property (assign, nonatomic) GHUIButtonIconPosition iconPosition;
 
 /*!
- Icon shadow color.
- */
-@property (strong, nonatomic) UIColor *iconShadowColor;
-
-/*!
  Text color for title (highlighted).
  */
 @property (strong, nonatomic) UIColor *highlightedTitleColor;
@@ -231,26 +194,6 @@ typedef enum {
  Border color (highlighted).
  */
 @property (strong, nonatomic) UIColor *highlightedBorderColor;
-
-/*!
- Border shadow color (highlighted).
- */
-@property (strong, nonatomic) UIColor *highlightedBorderShadowColor;
-
-/*!
- Border shadow blur (highlighted).
- */
-@property (assign, nonatomic) CGFloat highlightedBorderShadowBlur;
-
-/*!
- Text shadow color (highlighted).
- */
-@property (strong, nonatomic) UIColor *highlightedTitleShadowColor;
-
-/*!
- Text shadow offset (highlighted).
- */
-@property (assign, nonatomic) CGSize highlightedTitleShadowOffset;
 
 /*!
  Icon image (highlighted).
@@ -285,29 +228,9 @@ typedef enum {
 @property (assign, nonatomic) GHUIShadingType selectedShadingType;
 
 /*!
- Border shadow color (selected).
- */
-@property (strong, nonatomic) UIColor *selectedBorderShadowColor;
-
-/*!
- Border shadow blur (selected).
- */
-@property (assign, nonatomic) CGFloat selectedBorderShadowBlur;
-
-/*!
  Icon image (selected).
  */
 @property (strong, nonatomic) UIImage *selectedIconImage;
-
-/*!
- Text shadow color (selected).
- */
-@property (strong, nonatomic) UIColor *selectedTitleShadowColor;
-
-/*!
- Text shadow offset (selected).
- */
-@property (assign, nonatomic) CGSize selectedTitleShadowOffset;
 
 /*!
  Text color for title (selected).
@@ -347,44 +270,44 @@ typedef enum {
 @property (assign, nonatomic) CGFloat disabledAlpha;
 
 /*!
- Title shadow color (disabled).
+ Accessory title, that appears next to title.
  */
-@property (strong, nonatomic) UIColor *disabledTitleShadowColor;
+@property (strong, nonatomic) NSString *accessoryTitle;
 
 /*!
- Secondary title, that appears next to title.
+ Accessory title color. Defaults to titleColor.
  */
-@property (strong, nonatomic) NSString *secondaryTitle;
+@property (strong, nonatomic) UIColor *accessoryTitleColor;
 
 /*!
- Secondary title color.
+ Accessory title font. Defaults to titleFont.
  */
-@property (strong, nonatomic) UIColor *secondaryTitleColor;
+@property (strong, nonatomic) UIFont *accessoryTitleFont;
 
 /*!
- Secondary title font. Defaults to titleFont.
+ Accessory title alignment.
  */
-@property (strong, nonatomic) UIFont *secondaryTitleFont;
+@property (assign, nonatomic) NSTextAlignment accessoryTitleAlignment;
 
 /*!
- Secondary title position.
+ Text (appears under title).
  */
-@property (assign, nonatomic) GHUIButtonSecondaryTitlePosition secondaryTitlePosition;
+@property (strong, nonatomic) NSString *text;
 
 /*!
- For a custom button content view.
+ Text (appears under title) color.  Defaults to titleColor.
  */
-@property (strong, nonatomic) UIView *contentView;
+@property (strong, nonatomic) UIColor *textColor;
 
 /*!
- Maximum line count. Default is no max (0).
+ Text (appears under title) font. Defaults to titleFont.
  */
-@property (assign, nonatomic) NSInteger maxLineCount;
+@property (strong, nonatomic) UIFont *textFont;
 
 /*!
- Abbreviated title to use if title doesn't fit.
+ Text alignment.
  */
-@property (strong, nonatomic) NSString *abbreviatedTitle;
+@property (assign, nonatomic) NSTextAlignment textAlignment;
 
 /*!
  Color for left arrow (iOS7 back button)
@@ -397,12 +320,6 @@ typedef enum {
  @param title Title
  */
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title;
-
-/*!
- Create button with content view.
- @param contentView
- */
-- (id)initWithContentView:(UIView *)contentView;
 
 /*!
  @result Button
@@ -425,34 +342,6 @@ typedef enum {
 + (GHUIButton *)buttonWithTitle:(NSString *)title;
 
 /*!
- Size to fit button with a minimum size.
- @param minSize Min size
- */
-- (void)sizeToFitWithMinimumSize:(CGSize)minSize;
-
-/*!
- Size that fits title.
- @param size Size
- @result Size to only fit the title text (with insets).
- */
-- (CGSize)sizeThatFitsTitle:(CGSize)size;
-
-/*!
- Size that fits title.
- @param size Size
- @param minWidth Min width
- @result Size to only fit the title text (with insets).
- */
-- (CGSize)sizeThatFitsTitle:(CGSize)size minWidth:(CGFloat)minWidth;
-
-/*!
- Size that fits title and icon.
- @param size Size
- @result Size to fit the title text and icon (with insets).
- */
-- (CGSize)sizeThatFitsTitleAndIcon:(CGSize)size;
-
-/*!
  Set border.
  @param borderStyle Border style
  @param color Color
@@ -460,6 +349,8 @@ typedef enum {
  @param cornerRadius Corner radius
  */
 - (void)setBorderStyle:(GHUIBorderStyle)borderStyle color:(UIColor *)color width:(CGFloat)width cornerRadius:(CGFloat)cornerRadius;
+
+- (CGSize)sizeThatFitsInSize:(CGSize)size;
 
 /*!
  Activity indicator view.

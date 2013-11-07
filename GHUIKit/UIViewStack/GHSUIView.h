@@ -13,17 +13,7 @@
 @class GHUIViewStack;
 
 enum {
-  GHSUIViewAnimationOptionCurveEaseInOut = 1 << 0,
-  GHSUIViewAnimationOptionCurveEaseIn = 1 << 1,
-  GHSUIViewAnimationOptionCurveEaseOut = 1 << 2,
-  GHSUIViewAnimationOptionCurveLinear = 1 << 3,
-  GHSUIViewAnimationOptionTransitionFlipFromLeft = 1 << 5,
-  GHSUIViewAnimationOptionTransitionFlipFromRight = 1 << 6,
-  GHSUIViewAnimationOptionTransitionCurlUp = 1 << 7,
-  GHSUIViewAnimationOptionTransitionCurlDown = 1 << 8,
   GHSUIViewAnimationOptionTransitionCrossDissolve = 1 << 9,
-  GHSUIViewAnimationOptionTransitionFlipFromTop = 1 << 10,
-  GHSUIViewAnimationOptionTransitionFlipFromBottom = 1 << 11,
   GHSUIViewAnimationOptionTransitionSlide = 1 << 12,
   GHSUIViewAnimationOptionTransitionSlideOver = 1 << 13,
 };

@@ -8,6 +8,7 @@
 
 #import "GHUIActivityLabel.h"
 #import "GHCGUtils.h"
+#import "GHUIUtils.h"
 #import <GHKit/GHNSString+Utils.h>
 
 @implementation GHUIActivityLabel
@@ -41,14 +42,14 @@
   CGSize lineSize = CGSizeZero;
   CGSize textLabelSize = CGSizeZero;
   if (![NSString gh_isBlank:_textLabel.text]) {
-    textLabelSize = [_textLabel.text sizeWithFont:_textLabel.font constrainedToSize:size lineBreakMode:NSLineBreakByTruncatingTail];
+    textLabelSize = [GHUIUtils sizeWithText:_textLabel.text font:_textLabel.font width:size.width multiline:YES truncate:YES];
     lineSize.width += textLabelSize.width;
     lineSize.height += textLabelSize.height;
   }
   
   CGSize detailLabelSize = CGSizeZero;
   if (![NSString gh_isBlank:_detailLabel.text]) {
-    detailLabelSize = [_detailLabel.text sizeWithFont:_detailLabel.font constrainedToSize:size lineBreakMode:NSLineBreakByTruncatingTail];
+    detailLabelSize = [GHUIUtils sizeWithText:_detailLabel.text font:_detailLabel.font width:size.width multiline:YES truncate:YES];
     lineSize.height += detailLabelSize.height + 2;
   }
   

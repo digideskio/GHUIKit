@@ -16,12 +16,6 @@ typedef void (^GHUIControlTargetBlock)();
  Also implements GHLayout.
  */
 @interface GHUIControl : UIControl <GHLayoutView> {
-  BOOL _highlightedEnabled;
-  BOOL _selectedEnabled;
-  
-  BOOL _delayActionEnabled;
-  
-  id _context;
   
   GHUIControlTargetBlock _targetBlock;
   BOOL _targetDisabled;
@@ -32,11 +26,10 @@ typedef void (^GHUIControlTargetBlock)();
   UILongPressGestureRecognizer *_longPressGestureRecognizer;
 }
 
-@property (assign, nonatomic, getter=isHighlightedEnabled) BOOL highlightedEnabled; // If YES, will set highlighted state while in between touch begin/end (or cancel); Default is NO
-@property (assign, nonatomic, getter=isSelectedEnabled) BOOL selectedEnabled; // If YES, will set selected state when touch (ended); Default is NO
+@property (assign, nonatomic, getter=isHighlightable) BOOL highlightable; // If YES, will set highlighted state while in between touch begin/end (or cancel); Default is NO
+@property (assign, nonatomic, getter=isSelectable) BOOL selectable; // If YES, will set selected state when touch (ended); Default is NO
 @property (assign, nonatomic, getter=isDelayActionEnabled) BOOL delayActionEnabled; // If YES, the action on the control is delayed in order to display the highlighted state
 @property (retain, nonatomic) id<GHLayout> layout;
-@property (retain, nonatomic) id context;
 @property (copy, nonatomic) GHUIControlTargetBlock targetBlock;
 @property (retain, nonatomic) NSString *valueForCopy;
 

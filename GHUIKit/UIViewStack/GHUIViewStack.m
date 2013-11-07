@@ -11,6 +11,7 @@
 #import "GHSUIInternalView.h"
 #import <QuartzCore/QuartzCore.h>
 #import <GHKit/GHKit.h>
+#import <UIView+MTAnimation.h>
 
 @implementation GHUIViewStack
 
@@ -19,8 +20,8 @@
 - (id)init {
   if ((self = [super init])) {
     _stack = [[NSMutableArray alloc] init];
-    _defaultOptions = GHSUIViewAnimationOptionTransitionSlide|GHSUIViewAnimationOptionCurveLinear;
-    _defaultDuration = 0.25;
+    _defaultOptions = GHSUIViewAnimationOptionTransitionSlideOver;
+    _defaultDuration = 0.55;
   }
   return self;
 }
@@ -89,6 +90,10 @@
   [self _removeInternalView:fromInternalView toInternalView:toInternalView duration:duration options:options completion:NULL];
 }
 
+- (void)setView:(GHSUIView *)view {
+  [self setView:view duration:0 options:0];
+}
+
 - (void)setView:(GHSUIView *)view duration:(NSTimeInterval)duration options:(GHSUIViewAnimationOptions)options {
   if ([_stack count] == 0) {
     [self _addView:view fromInternalView:nil duration:duration options:options];
@@ -110,14 +115,16 @@
   [fromInternalView viewWillDisappear:YES];
   [toInternalView viewWillAppear:YES];
   if (![toInternalView superview]) [_parentView addSubview:toInternalView];
-  [UIView animateWithDuration:duration delay:0 options:[self _animationOptions:options motion:NO] animations:animations completion:^(BOOL finished) {
+  
+  [UIView mt_animateViews:@[fromInternalView, toInternalView] duration:duration timingFunction:MTTimingFunctionEaseOutExpo options:UIViewAnimationOptionAllowAnimatedContent animations:animations completion:^() {
     [fromInternalView removeFromSuperview];
     [fromInternalView viewDidDisappear:YES];
     [toInternalView viewDidAppear:YES];
     fromInternalView.view.stack = nil;
-    if (completion) completion(finished);
+    if (completion) completion(YES);
     if (fromInternalView) [_stack removeObject:fromInternalView];
   }];
+
 }
 
 - (void)_setupToShowInternalView:(GHSUIInternalView *)internalView {
@@ -125,7 +132,8 @@
 }
 
 - (void)_showInternalView:(GHSUIInternalView *)internalView {
-  internalView.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0);
+  // Fun with scaling
+  //internalView.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0);
   internalView.frame = CGRectMake(0, 0, _parentView.frame.size.width, _parentView.frame.size.height);
 }
 
@@ -153,7 +161,7 @@
     if (duration > 0) {
       __block GHUIViewStack *blockSelf = self;
       blockSelf.animating = YES;
-      [UIView transitionFromView:fromInternalView toView:toInternalView duration:duration options:[self _animationOptions:options motion:YES] completion:^(BOOL finished) {
+      [UIView transitionFromView:fromInternalView toView:toInternalView duration:duration options:UIViewAnimationOptionTransitionCrossDissolve completion:^(BOOL finished) {
         blockSelf.animating = NO;
         [fromInternalView removeFromSuperview];
         [fromInternalView viewDidDisappear:YES];
@@ -182,16 +190,23 @@
 }
 
 
-- (void)_addAnimationsForView:(GHSUIView *)view fromInternalView:(GHSUIInternalView *)fromInternalView toInternalView:(GHSUIInternalView *)toInternalView duration:(NSTimeInterval)duration options:(GHSUIViewAnimationOptions)options animations:(void (^)())animations {
+- (void)_addAnimationsForView:(GHSUIView *)view fromInternalView:(GHSUIInternalView *)fromInternalView toInternalView:(GHSUIInternalView *)toInternalView duration:(NSTimeInterval)duration animations:(void (^)())animations {
   
   [self _setupToShowInternalView:toInternalView];
   [toInternalView viewWillAppear:YES];
   [_parentView addSubview:toInternalView];
   [fromInternalView viewWillDisappear:YES];
-  [UIView animateWithDuration:duration delay:0 options:[self _animationOptions:options motion:NO] animations:animations completion:^(BOOL finished) {
+  
+//  [UIView animateWithDuration:duration delay:0 options:[self _animationOptions:options motion:NO] animations:animations completion:^(BOOL finished) {
+//    [fromInternalView viewDidDisappear:YES];
+//    [toInternalView viewDidAppear:YES];
+//  }];
+  
+  [UIView mt_animateViews:@[fromInternalView, toInternalView] duration:duration timingFunction:MTTimingFunctionEaseOutExpo options:UIViewAnimationOptionAllowAnimatedContent animations:animations completion:^() {
     [fromInternalView viewDidDisappear:YES];
     [toInternalView viewDidAppear:YES];
   }];
+
 }
 
 - (void)_addView:(GHSUIView *)view fromInternalView:(GHSUIInternalView *)fromInternalView duration:(NSTimeInterval)duration options:(GHSUIViewAnimationOptions)options {
@@ -208,17 +223,18 @@
   if ((options & GHSUIViewAnimationOptionTransitionSlide) == GHSUIViewAnimationOptionTransitionSlide) {
     [self _setupToShowInternalView:toInternalView];
     __block GHUIViewStack *blockSelf = self;
-    [self _addAnimationsForView:view fromInternalView:fromInternalView toInternalView:toInternalView duration:duration options:options animations:^{
+    [self _addAnimationsForView:view fromInternalView:fromInternalView toInternalView:toInternalView duration:duration animations:^{
       fromInternalView.frame = CGRectMake(-blockSelf.parentView.frame.size.width, 0, blockSelf.parentView.frame.size.width, blockSelf.parentView.frame.size.height);
       [blockSelf _showInternalView:toInternalView];
     }];
   } else if ((options & GHSUIViewAnimationOptionTransitionSlideOver) == GHSUIViewAnimationOptionTransitionSlideOver) {
     [self _setupToShowInternalView:toInternalView];
     __block GHUIViewStack *blockSelf = self;
-    [self _addAnimationsForView:view fromInternalView:fromInternalView toInternalView:toInternalView duration:duration options:options animations:^{
-      if (CATransform3DIsIdentity(fromInternalView.layer.transform)) {
-        fromInternalView.layer.transform = CATransform3DMakeScale(0.9, 0.9, 1.0);
-      }
+    [self _addAnimationsForView:view fromInternalView:fromInternalView toInternalView:toInternalView duration:duration animations:^{
+      // Fun with scaling
+      // if (CATransform3DIsIdentity(fromInternalView.layer.transform)) {
+      //   fromInternalView.layer.transform = CATransform3DMakeScale(0.9, 0.9, 1.0);
+      // }
       [blockSelf _showInternalView:toInternalView];
     }];
   } else {
@@ -227,7 +243,7 @@
     [fromInternalView viewWillDisappear:YES];
     __block GHUIViewStack *blockSelf = self;
     blockSelf.animating = YES;
-    [UIView transitionWithView:_parentView duration:duration options:[self _animationOptions:options motion:YES] animations:^{
+    [UIView transitionWithView:_parentView duration:duration options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
       blockSelf.animating = NO;
       [_parentView addSubview:toInternalView];
     } completion:^(BOOL finished) {
@@ -261,31 +277,6 @@
 - (GHSUIView *)rootView {
   GHSUIInternalView *internalView = [_stack gh_firstObject];
   return internalView.view;
-}
-
-#define ConvertAnimationOption(__OPTIONS__, __OPTION__, __ANIMATION_OPTIONS__, __ANIMATION_OPTION__) do {\
-if ((__OPTIONS__ & __OPTION__) == __OPTION__) { \
-__ANIMATION_OPTIONS__ |= __ANIMATION_OPTION__; \
-} \
-} while (0)
-
-- (UIViewAnimationOptions)_animationOptions:(GHSUIViewAnimationOptions)options motion:(BOOL)motion {
-  UIViewAnimationOptions animationOptions = 0;
-  ConvertAnimationOption(options, GHSUIViewAnimationOptionCurveEaseInOut, animationOptions, UIViewAnimationOptionCurveEaseInOut);
-  ConvertAnimationOption(options, GHSUIViewAnimationOptionCurveEaseIn, animationOptions, UIViewAnimationOptionCurveEaseIn);
-  ConvertAnimationOption(options, GHSUIViewAnimationOptionCurveEaseOut, animationOptions, UIViewAnimationOptionCurveEaseOut);
-  ConvertAnimationOption(options, GHSUIViewAnimationOptionCurveLinear, animationOptions, UIViewAnimationOptionCurveLinear);
-  
-  if (motion) {
-    ConvertAnimationOption(options, GHSUIViewAnimationOptionTransitionFlipFromLeft, animationOptions, UIViewAnimationOptionTransitionFlipFromLeft);
-    ConvertAnimationOption(options, GHSUIViewAnimationOptionTransitionFlipFromRight, animationOptions, UIViewAnimationOptionTransitionFlipFromRight);
-    ConvertAnimationOption(options, GHSUIViewAnimationOptionTransitionCurlUp, animationOptions, UIViewAnimationOptionTransitionCurlUp);
-    ConvertAnimationOption(options, GHSUIViewAnimationOptionTransitionCurlDown, animationOptions, UIViewAnimationOptionTransitionCurlDown);
-    ConvertAnimationOption(options, GHSUIViewAnimationOptionTransitionCrossDissolve, animationOptions, UIViewAnimationOptionTransitionCrossDissolve);
-    ConvertAnimationOption(options, GHSUIViewAnimationOptionTransitionFlipFromTop, animationOptions, UIViewAnimationOptionTransitionFlipFromTop);
-    ConvertAnimationOption(options, GHSUIViewAnimationOptionTransitionFlipFromBottom, animationOptions, UIViewAnimationOptionTransitionFlipFromBottom);
-  }
-  return animationOptions;
 }
 
 @end

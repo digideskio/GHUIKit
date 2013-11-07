@@ -7,6 +7,7 @@
 //
 
 #import "GHUIButton.h"
+#import "GHUIUtils.h"
 
 @implementation GHUIButton
 
@@ -14,14 +15,14 @@
   [super sharedInit];
   self.userInteractionEnabled = YES;
   self.layout = [GHLayout layoutForView:self];
-  self.opaque = YES;
   self.backgroundColor = [UIColor clearColor];
-  self.contentMode = UIViewContentModeRedraw;
+  self.opaque = YES;
+  //self.contentMode = UIViewContentModeRedraw;
   self.titleAlignment = NSTextAlignmentCenter;
   self.insets = UIEdgeInsetsZero;
   self.titleInsets = UIEdgeInsetsZero;
   self.iconImageSize = CGSizeZero;
-  self.highlightedEnabled = YES;
+  self.highlightable = YES;
   self.iconOrigin = CGPointMake(CGFLOAT_MAX, CGFLOAT_MAX);
   self.selectedShadingType = GHUIShadingTypeUnknown;
   self.highlightedShadingType = GHUIShadingTypeUnknown;
@@ -30,20 +31,12 @@
   self.disabledAlpha = 1.0;
   self.titleColor = [UIColor blackColor];
   self.titleFont = [UIFont boldSystemFontOfSize:14.0];
-  self.titleShadowOffset = CGSizeZero;
   self.accessibilityTraits |= UIAccessibilityTraitButton;
 }
 
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title {
   if ((self = [self initWithFrame:frame])) {
     _title = title;
-  }
-  return self;
-}
-
-- (id)initWithContentView:(UIView *)contentView {
-  if ((self = [self initWithFrame:CGRectZero])) {
-    [self setContentView:contentView];
   }
   return self;
 }
@@ -56,46 +49,30 @@
   return [self buttonWithFrame:CGRectZero title:title];
 }
 
-- (CGSize)_sizeForTitle:(NSString *)title constrainedToSize:(CGSize)constrainedToSize {
-  if (_maxLineCount > 0) {
-    CGSize lineSize = [@" " sizeWithFont:self.titleFont];
-    constrainedToSize.height = lineSize.height * self.maxLineCount;
+- (CGSize)_sizeText:(CGSize)constrainedToSize {
+  CGSize size = CGSizeZero;
+  
+  if (_title) {
+    size = [GHUIUtils sizeWithText:_title font:self.titleFont size:constrainedToSize multiline:YES truncate:YES];
   }
   
-  CGSize titleSize = CGSizeZero;
-  
-  if (title) {
-    titleSize = [title sizeWithFont:self.titleFont constrainedToSize:constrainedToSize lineBreakMode:NSLineBreakByTruncatingTail];
-    // TODO: Probably need this because sizeWithFont and draw methods produce different sizing
-    titleSize.width += 2;
+  if (_accessoryTitle) {
+    constrainedToSize.width -= roundf(size.width);
+    UIFont *font = (_accessoryTitleFont ? _accessoryTitleFont : _titleFont);
+    CGSize accessoryTitleSize = [GHUIUtils sizeWithText:_accessoryTitle font:font size:constrainedToSize multiline:NO truncate:YES];
+    size.width += roundf(accessoryTitleSize.width);
   }
   
-  if (_secondaryTitle) {
-    if (_secondaryTitlePosition == GHUIButtonSecondaryTitlePositionDefault || _secondaryTitlePosition == GHUIButtonSecondaryTitlePositionRightAlign) {
-      constrainedToSize.width -= roundf(titleSize.width);
-      CGSize secondaryTitleSize = [_secondaryTitle sizeWithFont:(_secondaryTitleFont ? _secondaryTitleFont : _titleFont) constrainedToSize:constrainedToSize lineBreakMode:NSLineBreakByTruncatingTail];
-      titleSize.width += roundf(secondaryTitleSize.width);
-    } else if (_secondaryTitlePosition == GHUIButtonSecondaryTitlePositionBottom) {
-      CGSize secondaryTitleSize = [_secondaryTitle sizeWithFont:(_secondaryTitleFont ? _secondaryTitleFont : _titleFont) constrainedToSize:constrainedToSize lineBreakMode:NSLineBreakByTruncatingTail];
-      titleSize.height += roundf(secondaryTitleSize.height);
-    } else if (_secondaryTitlePosition == GHUIButtonSecondaryTitlePositionBottomLeftSingle) {
-      CGSize secondaryTitleSize = [_secondaryTitle sizeWithFont:(_secondaryTitleFont ? _secondaryTitleFont : _titleFont)];
-      titleSize.height += roundf(secondaryTitleSize.height);
-    }
+  if (_text) {
+    UIFont *font = (_textFont ? _textFont : _titleFont);
+    CGSize textSize = [GHUIUtils sizeWithText:_text font:font size:constrainedToSize multiline:YES truncate:YES];
+    size.height += roundf(textSize.height);
   }
-  return titleSize;
+  
+  return size;
 }
 
 - (CGSize)layout:(id<GHLayout>)layout size:(CGSize)size {
-  if (_contentView) {
-    CGFloat y = _insets.top;
-    
-    // TODO: UILabel sizeToFit with 0 height will not work? Special case it?
-    CGRect contentViewFrame = [layout setFrame:CGRectMake(_insets.left, y, size.width - _insets.left - _insets.right, 0) view:_contentView options:GHLayoutOptionsSizeToFit|GHLayoutOptionsVariableWidth];
-    y += contentViewFrame.size.height;
-    return CGSizeMake(size.width, y + _insets.bottom);
-  }
-  
   CGFloat y = 0;
   
   y += _insets.top;
@@ -104,9 +81,8 @@
   
   // If the title is nil, but _titleSize hasn't been updated yet
   // Happens when the title gets changed from non-nil to nil.
-  if (!GHCGSizeIsZero(_titleSize) && !_title) {
-    _titleSize = CGSizeZero;
-    _abbreviatedTitleSize = CGSizeZero;
+  if (!GHCGSizeIsZero(_sizeThatFitsText) && !_title) {
+    _sizeThatFitsText = CGSizeZero;
   } else if (_title) {
     CGSize constrainedToSize = size;
     // Subtract insets
@@ -131,21 +107,16 @@
       constrainedToSize.height = 9999;
     }
     
-    _titleSize = [self _sizeForTitle:_title constrainedToSize:constrainedToSize];
-    _abbreviatedTitleSize = [self _sizeForTitle:_abbreviatedTitle constrainedToSize:constrainedToSize];
+    _sizeThatFitsText = [self _sizeText:constrainedToSize];
+    _titleSize = [GHUIUtils sizeWithText:_title font:_titleFont size:constrainedToSize multiline:YES truncate:YES];
     
     if (_activityIndicatorView) {
-      if (_titleHidden) {
-        CGPoint p = GHCGPointToCenter(_activityIndicatorView.frame.size, size);
-        [layout setOrigin:p view:_activityIndicatorView];
-      } else {
-        CGPoint p = GHCGPointToCenter(_titleSize, size);
-        p.x -= _activityIndicatorView.frame.size.width + 4;
-        [layout setOrigin:p view:_activityIndicatorView];
-      }
+      CGPoint p = GHCGPointToCenter(_sizeThatFitsText, size);
+      p.x -= _activityIndicatorView.frame.size.width + 4;
+      [layout setOrigin:p view:_activityIndicatorView];
     }
     
-    y += _titleSize.height;
+    y += _sizeThatFitsText.height;
   }
   
   y += titleInsets.bottom;
@@ -168,30 +139,21 @@
   return titleInsets;
 }
 
-- (CGSize)sizeThatFitsTitle:(CGSize)size minWidth:(CGFloat)minWidth {
-  CGSize sizeThatFitsTitle = [self sizeThatFitsTitle:size];
-  if (sizeThatFitsTitle.width < minWidth) sizeThatFitsTitle.width = minWidth;
-  return sizeThatFitsTitle;
-}
-
-- (CGSize)sizeThatFitsTitle:(CGSize)size {
-  CGSize titleSize = [self _sizeForTitle:_title constrainedToSize:size];
+- (CGSize)sizeThatFitsInSize:(CGSize)size {
+  CGSize sizeThatFitsText = [self _sizeText:size];
   CGSize accessoryImageSize = CGSizeZero;
   if (_accessoryImage) {
     accessoryImageSize = _accessoryImage.size;
     accessoryImageSize.width += 10;
   }
   UIEdgeInsets titleInsets = [self _titleInsets];
-  return CGSizeMake(titleSize.width + _insets.left + _insets.right + titleInsets.left + titleInsets.right + accessoryImageSize.width, titleSize.height + titleInsets.top + titleInsets.bottom + _insets.top + _insets.bottom);
-}
-
-- (CGSize)sizeThatFitsTitleAndIcon:(CGSize)size {
-  CGSize titleSize = [self sizeThatFitsTitle:size];
-  CGSize iconSize = _iconImageSize;
-  if (_iconImageView.image && GHCGSizeIsZero(iconSize)) {
-    iconSize = _iconImageView.image.size;
-  }
-  return CGSizeMake(titleSize.width + iconSize.width, titleSize.height + iconSize.height);
+  CGSize sizeThatFits =  CGSizeMake(sizeThatFitsText.width + _insets.left + _insets.right + titleInsets.left + titleInsets.right + accessoryImageSize.width, sizeThatFitsText.height + titleInsets.top + titleInsets.bottom + _insets.top + _insets.bottom);
+  
+//  CGSize iconSize = _iconImageSize;
+//  if (_iconImageView.image && GHCGSizeIsZero(iconSize)) {
+//    iconSize = _iconImageView.image.size;
+//  }
+  return sizeThatFits;
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
@@ -224,27 +186,13 @@
   [self didChangeValueForKey:@"title"];
 }
 
-- (void)setSecondaryTitle:(NSString *)secondaryTitle {
-  _secondaryTitle = secondaryTitle;
-  [self didChangeValueForKey:@"secondaryTitle"];
-}
-
-- (void)setTitleHidden:(BOOL)titleHidden {
-  _titleHidden = titleHidden;
-  [self didChangeValueForKey:@"titleHidden"];
-}
-
-- (void)setContentView:(UIView *)contentView {
-  [contentView removeFromSuperview];
-  [_contentView removeFromSuperview];
-  _contentView = contentView;
-  [self addSubview:_contentView];
-  [self didChangeValueForKey:@"contentView"];
+- (void)setaccessoryTitle:(NSString *)accessoryTitle {
+  _accessoryTitle = accessoryTitle;
+  [self didChangeValueForKey:@"accessoryTitle"];
 }
 
 - (void)setColor:(UIColor *)color {
   _color = color;
-  // Set shading type to none if a color is set
   if (_shadingType == GHUIShadingTypeUnknown) {
     _shadingType = GHUIShadingTypeNone;
   }
@@ -344,14 +292,9 @@
   return [_activityIndicatorView isAnimating];
 }
 
-- (void)setNeedsDisplay {
-  [super setNeedsDisplay];
-  [_contentView setNeedsDisplay];
-}
-
 - (void)drawInRect:(CGRect)rect {
   // Force layout if we never have
-  if (GHCGSizeIsZero(_titleSize)) [self layoutView];
+  if (GHCGSizeIsZero(_sizeThatFitsText)) [self layoutView];
   
   CGContextRef context = UIGraphicsGetCurrentContext();
   
@@ -362,7 +305,7 @@
   
   size.height -= self.insets.top + self.insets.bottom;
   
-  BOOL isHighlighted = (self.isHighlighted && self.userInteractionEnabled && self.isHighlightedEnabled);
+  BOOL isHighlighted = (self.isHighlighted && self.userInteractionEnabled && self.isHighlightable);
   BOOL isSelected = self.isSelected;
   BOOL isDisabled = !self.isEnabled;
   
@@ -375,16 +318,11 @@
   
   UIImage *image = self.image;
   
-  UIColor *borderShadowColor = self.borderShadowColor;
-  CGFloat borderShadowBlur = self.borderShadowBlur;
-  
   CGFloat cornerRadius = self.cornerRadius;
   if (self.cornerRadiusRatio > 0) {
     cornerRadius = roundf(bounds.size.height/2.0f) * self.cornerRadiusRatio;
   }
   
-  UIColor *titleShadowColor = self.titleShadowColor;
-  CGSize titleShadowOffset = self.titleShadowOffset;
   UIImage *icon = self.iconImageView.image;
   UIImage *accessoryImage = self.accessoryImage;
   
@@ -395,17 +333,12 @@
     if (self.disabledBorderColor) borderColor = self.disabledBorderColor;
     if (self.disabledImage) image = self.disabledImage;
     if (self.disabledIconImage) icon = self.disabledIconImage;
-    if (self.disabledTitleShadowColor) titleShadowColor = self.disabledTitleShadowColor;
   } else if (isHighlighted) {
     if (self.highlightedShadingType != GHUIShadingTypeUnknown) shadingType = self.highlightedShadingType;
     if (self.highlightedColor) color = self.highlightedColor;
     if (self.highlightedColor2) color2 = self.highlightedColor2;
     if (self.highlightedImage) image = self.highlightedImage;
     if (self.highlightedBorderColor) borderColor = self.highlightedBorderColor;
-    if (self.highlightedBorderShadowColor) borderShadowColor = self.highlightedBorderShadowColor;
-    if (self.highlightedBorderShadowBlur) borderShadowBlur = self.highlightedBorderShadowBlur;
-    if (self.highlightedTitleShadowColor) titleShadowColor = self.highlightedTitleShadowColor;
-    if (!CGSizeEqualToSize(self.highlightedTitleShadowOffset, CGSizeZero)) titleShadowOffset = self.highlightedTitleShadowOffset;
     if (self.highlightedIconImage) icon = self.highlightedIconImage;
     if (self.highlightedAccessoryImage) accessoryImage = self.highlightedAccessoryImage;
   } else if (isSelected) {
@@ -417,17 +350,8 @@
     if (self.selectedColor2) color2 = self.selectedColor2;
     else if (self.highlightedColor2) color2 = self.highlightedColor2;
     if (self.highlightedImage) image = self.highlightedImage;
-    if (self.selectedBorderShadowColor) borderShadowColor = self.selectedBorderShadowColor;
-    if (self.selectedBorderShadowBlur) borderShadowBlur = self.selectedBorderShadowBlur;
     if (self.selectedIconImage) icon = self.selectedIconImage;
-    if (self.selectedTitleShadowColor) titleShadowColor = self.selectedTitleShadowColor;
-    else if (_highlightedTitleShadowColor) titleShadowColor = self.highlightedTitleShadowColor;
-    if (!CGSizeEqualToSize(_selectedTitleShadowOffset, CGSizeZero)) titleShadowOffset = self.selectedTitleShadowOffset;
-    else if (!CGSizeEqualToSize(_highlightedTitleShadowOffset, CGSizeZero)) titleShadowOffset = self.highlightedTitleShadowOffset;
   }
-  
-  // Set a sensible default
-  if (borderShadowColor && borderShadowBlur == 0) borderShadowBlur = 3;
   
   UIColor *fillColor = color;
   
@@ -455,19 +379,7 @@
   }
   
   if (self.borderWidth > 0 || cornerRadius > 0) {
-    if (borderShadowColor) {
-      CGContextSaveGState(context);
-      // Need to clip without border width adjustment
-      if (clip) {
-        GHCGContextAddStyledRect(context, bounds, self.borderStyle, 0, cornerRadius);
-        CGContextClip(context);
-      }
-      
-      GHCGContextDrawBorderWithShadow(context, bounds, self.borderStyle, fillColor.CGColor, borderColor.CGColor, borderWidth, cornerRadius, borderShadowColor.CGColor, borderShadowBlur, NO);
-      CGContextRestoreGState(context);
-    } else {
-      GHCGContextDrawBorder(context, bounds, self.borderStyle, fillColor.CGColor, borderColor.CGColor, borderWidth, cornerRadius);
-    }
+    GHCGContextDrawBorder(context, bounds, self.borderStyle, fillColor.CGColor, borderColor.CGColor, borderWidth, cornerRadius);
   } else if (fillColor) {
     [fillColor setFill];
     CGContextFillRect(context, bounds);
@@ -482,18 +394,9 @@
   UIFont *font = self.titleFont;
   
   NSString *title = self.title;
-  CGSize titleSize = _titleSize;
-  
-  // Check if we need to use abbreviated title
-  if (self.abbreviatedTitle) {
-    CGSize titleSizeAbbreviated = [self.title sizeWithFont:self.titleFont];
-    if (titleSizeAbbreviated.width > _titleSize.width) {
-      title = self.abbreviatedTitle;
-      titleSize = _abbreviatedTitleSize;
-    }
-  }
-  
-  CGFloat y = bounds.origin.y + roundf(GHCGPointToCenter(titleSize, size).y) + self.insets.top;
+  CGSize sizeThatFitsText = _sizeThatFitsText;
+    
+  CGFloat y = bounds.origin.y + roundf(GHCGPointToCenter(sizeThatFitsText, size).y) + self.insets.top;
   
   BOOL showIcon = (icon != nil && !self.iconImageView.hidden);
   CGSize iconSize = self.iconImageSize;
@@ -502,94 +405,65 @@
   }
   
   UIEdgeInsets titleInsets = [self _titleInsets];
-  if (!self.titleHidden) {
-    CGFloat lineWidth = titleSize.width + titleInsets.left + titleInsets.right;
-    if (showIcon && self.iconPosition == GHUIButtonIconPositionLeft) lineWidth += iconSize.width;
-    CGFloat x = bounds.origin.x;
-    
-    if (self.titleAlignment == NSTextAlignmentCenter) {
-      CGFloat width = size.width - self.insets.left - self.insets.right;
-      if (accessoryImage) width -= accessoryImage.size.width;
-      x += roundf(width/2.0 - lineWidth/2.0) + self.insets.left;
-    } else {
-      x += self.insets.left;
-    }
-    if (x < 0) x = 0;
-    
-    if (showIcon) {
-      if (self.iconShadowColor) CGContextSetShadowWithColor(context, CGSizeZero, 5.0, self.iconShadowColor.CGColor);
-      switch (self.iconPosition) {
-        case GHUIButtonIconPositionLeft: {
-          CGPoint iconTop = GHCGPointToCenter(iconSize, size);
-          iconTop.x = x;
-          iconTop.y += bounds.origin.y + self.insets.top;
-          //[self.iconImageView drawInRect:CGRectMake(iconTop.x, iconTop.y, iconSize.width, iconSize.height)];
-          x += iconSize.width;
-          break;
-        }
-        case GHUIButtonIconPositionTop: {
-          CGPoint iconTop = GHCGPointToCenter(iconSize, size);
-          //[self.iconImageView drawInRect:CGRectMake(iconTop.x, self.insets.top, iconSize.width, iconSize.height)];
-          y = self.insets.top + iconSize.height + titleInsets.top;
-          break;
-        }
-        case GHUIButtonIconPositionCenter: {
-          CGPoint iconTop = GHCGPointToCenter(iconSize, CGSizeMake(size.width, size.height - titleSize.height));
-          if (self.iconOrigin.x != CGFLOAT_MAX) iconTop.x = self.iconOrigin.x;
-          if (self.iconOrigin.y != CGFLOAT_MAX) iconTop.y = self.iconOrigin.y;
-          //[self.iconImageView drawInRect:CGRectMake(iconTop.x, iconTop.y + self.insets.top, iconSize.width, iconSize.height)];
-          y = iconTop.y + self.insets.top + iconSize.height + titleInsets.top;
-          break;
-        }
-      }
-      CGContextSetShadowWithColor(context, CGSizeZero, 0.0, NULL);
-      showIcon = NO;
-    } else if (!GHCGSizeIsZero(iconSize)) {
-      if (self.iconPosition == GHUIButtonIconPositionLeft) {
+
+  CGFloat lineWidth = sizeThatFitsText.width + titleInsets.left + titleInsets.right;
+  if (showIcon && self.iconPosition == GHUIButtonIconPositionLeft) lineWidth += iconSize.width;
+  CGFloat x = bounds.origin.x;
+  
+  if (self.titleAlignment == NSTextAlignmentCenter) {
+    CGFloat width = size.width - self.insets.left - self.insets.right;
+    if (accessoryImage) width -= accessoryImage.size.width;
+    x += roundf(width/2.0 - lineWidth/2.0) + self.insets.left;
+  } else {
+    x += self.insets.left;
+  }
+  if (x < 0) x = 0;
+  
+  if (showIcon) {
+    switch (self.iconPosition) {
+      case GHUIButtonIconPositionLeft: {
+        CGPoint iconTop = GHCGPointToCenter(iconSize, size);
+        iconTop.x = x;
+        iconTop.y += bounds.origin.y + self.insets.top;
+        [self.iconImageView.image drawInRect:CGRectMake(iconTop.x, iconTop.y, iconSize.width, iconSize.height)];
         x += iconSize.width;
+        break;
+      }
+      case GHUIButtonIconPositionTop: {
+        CGPoint iconTop = GHCGPointToCenter(iconSize, size);
+        [self.iconImageView.image drawInRect:CGRectMake(iconTop.x, self.insets.top, iconSize.width, iconSize.height)];
+        y = self.insets.top + iconSize.height + titleInsets.top;
+        break;
+      }
+      case GHUIButtonIconPositionCenter: {
+        CGPoint iconTop = GHCGPointToCenter(iconSize, CGSizeMake(size.width, size.height - sizeThatFitsText.height));
+        if (self.iconOrigin.x != CGFLOAT_MAX) iconTop.x = self.iconOrigin.x;
+        if (self.iconOrigin.y != CGFLOAT_MAX) iconTop.y = self.iconOrigin.y;
+        [self.iconImageView.image drawInRect:CGRectMake(iconTop.x, iconTop.y + self.insets.top, iconSize.width, iconSize.height)];
+        y = iconTop.y + self.insets.top + iconSize.height + titleInsets.top;
+        break;
       }
     }
-    
-    [textColor setFill];
-    CGContextSetShadowWithColor(context, titleShadowOffset, 0.0, titleShadowColor.CGColor);
-    
-    x += titleInsets.left;
-    if (y < self.insets.top) y = self.insets.top + titleInsets.top;
-    
-    // Draw title. If we have a secondary title, we'll need to adjust for alignment.
-    if (!self.secondaryTitle) {
-      [title drawInRect:CGRectMake(x, y, titleSize.width, titleSize.height) withFont:font lineBreakMode:NSLineBreakByTruncatingTail alignment:self.titleAlignment];
-    } else if (self.secondaryTitle) {
-      if (self.maxLineCount > 0) {
-        // NOTE(nakoury): ideally this check would not be done here. instead self.titleSize should be broken up into self.titleSize and self.secondaryTitleSize because currently self.titleSize is doing a dual purpose. In some cases it is considered the size of self.title + self.secondaryTitle, but in this case it is considered just the size of self.title. See self.sizeForTitle:constrainedToSize for the logic behind self.titleSize.
-        CGSize lineSize = [@" " sizeWithFont:self.titleFont];
-        titleSize.height = lineSize.height * self.maxLineCount;
-      }
-      
-      CGSize titleSizeAdjusted = [title sizeWithFont:self.titleFont constrainedToSize:titleSize lineBreakMode:NSLineBreakByTruncatingTail];
-      titleSizeAdjusted = [title drawInRect:CGRectMake(x, y, titleSizeAdjusted.width, titleSizeAdjusted.height) withFont:font lineBreakMode:NSLineBreakByTruncatingTail alignment:self.titleAlignment];
-      if (self.secondaryTitleColor) [self.secondaryTitleColor set];
-      if (self.secondaryTitleFont) font = self.secondaryTitleFont;
-      if (self.secondaryTitlePosition == GHUIButtonSecondaryTitlePositionDefault) {
-        x += titleSizeAdjusted.width;
-        CGFloat secondaryTitleWidth = size.width - x - self.insets.right - titleInsets.right;
-        CGSize secondaryTitleSize = [self.secondaryTitle sizeWithFont:font forWidth:secondaryTitleWidth lineBreakMode:NSLineBreakByTruncatingTail];
-        [self.secondaryTitle drawInRect:CGRectMake(x, y, secondaryTitleSize.width, secondaryTitleSize.height) withFont:font lineBreakMode:NSLineBreakByTruncatingTail];
-      } else if (self.secondaryTitlePosition == GHUIButtonSecondaryTitlePositionRightAlign) {
-        x += titleSizeAdjusted.width;
-        [self.secondaryTitle drawInRect:CGRectMake(x, y, size.width - x - self.insets.right - self.titleInsets.right, size.height) withFont:font lineBreakMode:NSLineBreakByTruncatingTail alignment:NSTextAlignmentRight];
-      } else if (self.secondaryTitlePosition == GHUIButtonSecondaryTitlePositionBottom) {
-        x = self.insets.left + titleInsets.left + iconSize.width;
-        y += titleSizeAdjusted.height + titleInsets.bottom;
-        // TODO(gabe): Needed to put "+ self.insets.bottom" so secondary text would wrap
-        CGRect secondaryTitleRect = CGRectMake(x, y, size.width - x - self.insets.right - titleInsets.right, size.height - y + self.insets.bottom);
-        [self.secondaryTitle drawInRect:secondaryTitleRect withFont:font lineBreakMode:NSLineBreakByTruncatingTail alignment:NSTextAlignmentCenter];
-      } else if (self.secondaryTitlePosition == GHUIButtonSecondaryTitlePositionBottomLeftSingle) {
-        x = self.insets.left + titleInsets.left + iconSize.width;
-        y += titleSizeAdjusted.height;
-        CGRect secondaryTitleRect = CGRectMake(x, y, size.width - x - self.insets.right - titleInsets.right, 0);
-        [self.secondaryTitle drawAtPoint:secondaryTitleRect.origin forWidth:secondaryTitleRect.size.width withFont:font lineBreakMode:NSLineBreakByTruncatingTail];
-      }
+    showIcon = NO;
+  }
+  
+  x += titleInsets.left;
+  if (y < self.insets.top) y = self.insets.top + titleInsets.top;
+  
+  [GHUIUtils drawText:title rect:CGRectMake(x, y, _titleSize.width, _titleSize.height) font:font color:textColor alignment:self.titleAlignment multiline:YES truncate:YES];
+
+  if (self.accessoryTitle) {
+    if (self.accessoryTitleColor) textColor = self.accessoryTitleColor;
+    if (self.accessoryTitleFont) font = self.accessoryTitleFont;
+    if (self.accessoryTitleAlignment == NSTextAlignmentLeft) {
+      x += _titleSize.width;
+      CGFloat accessoryTitleWidth = size.width - x - self.insets.right - titleInsets.right;
+      [GHUIUtils drawText:self.accessoryTitle rect:CGRectMake(x, y, accessoryTitleWidth, CGFLOAT_MAX) font:font color:textColor alignment:NSTextAlignmentLeft multiline:YES truncate:YES];
+    } else if (self.accessoryTitleAlignment == NSTextAlignmentRight) {
+      x += _titleSize.width;
+      [GHUIUtils drawText:self.accessoryTitle rect:CGRectMake(x, y, size.width - x - self.insets.right - self.titleInsets.right, size.height) font:font color:textColor alignment:NSTextAlignmentRight multiline:YES truncate:YES];
+    } else {
+      NSAssert(NO, @"Unsupported accessory title alignment");
     }
   }
   
@@ -598,8 +472,7 @@
   }
   
   if (showIcon) {
-    if (self.iconShadowColor) CGContextSetShadowWithColor(context, CGSizeZero, 3.0, self.iconShadowColor.CGColor);
-    //[self.iconImageView drawInRect:GHCGRectToCenterInRect(iconSize, bounds)];
+    [self.iconImageView.image drawInRect:GHCGRectToCenterInRect(iconSize, bounds)];
     CGContextSetShadowWithColor(context, CGSizeZero, 0.0, NULL);
   }
   
@@ -616,6 +489,14 @@
     [self.leftArrowColor setStroke];
     [path setLineWidth:3];
     [path stroke];
+  }
+  
+  y += _titleSize.height;
+  
+  if (self.text) {
+    if (self.textColor) textColor = self.textColor;
+    if (self.textFont) font = self.textFont;
+    [GHUIUtils drawText:self.text rect:CGRectMake(self.insets.left, y, size.width - self.insets.left - self.insets.right, CGFLOAT_MAX) font:font color:textColor alignment:self.textAlignment multiline:YES truncate:YES];
   }
 }
 

@@ -11,8 +11,17 @@
 
 @implementation GHUIActionSheet
 
++ (id)actionSheets {
+  static NSMutableArray *actionSheets = NULL;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    actionSheets = [[NSMutableArray alloc] init];
+  });
+  return actionSheets;
+}
+
 - (id)initWithTitle:(NSString *)title cancelButtonTitle:(NSString *)cancelButtonTitle {
-  return [self initWithTitle:title cancelButtonTitle:cancelButtonTitle];
+  return [self initWithTitle:title cancelButtonTitle:cancelButtonTitle cancelTarget:nil destructiveButtonTitle:nil destructiveTarget:nil];
 }
 
 - (id)initWithTitle:(NSString *)title cancelButtonTitle:(NSString *)cancelButtonTitle cancelTarget:(GHUIActionSheetTargetBlock)cancelTarget
@@ -53,23 +62,28 @@ destructiveButtonTitle:(NSString *)destructiveButtonTitle destructiveTarget:(GHU
 
 - (void)showFromToolbar:(UIToolbar *)view {
   [[self actionSheet] showFromToolbar:view];
+  [[GHUIActionSheet actionSheets] addObject:self];
 }
 
 - (void)showFromTabBar:(UITabBar *)view {
   [[self actionSheet] showFromTabBar:view];
+  [[GHUIActionSheet actionSheets] addObject:self];
 }
 
 - (void)showFromBarButtonItem:(UIBarButtonItem *)item animated:(BOOL)animated {
   [[self actionSheet] showFromBarButtonItem:item animated:animated];
+  [[GHUIActionSheet actionSheets] addObject:self];
 }
 
 - (void)showInView:(UIView *)view {
   if (!view) return;
   [[self actionSheet] showInView:view];
+  [[GHUIActionSheet actionSheets] addObject:self];
 }
 
 - (void)showFromRect:(CGRect)rect inView:(UIView *)view animated:(BOOL)animated {
   [[self actionSheet] showFromRect:rect inView:view animated:animated];
+  [[GHUIActionSheet actionSheets] addObject:self];
 }
 
 - (void)dismissWithClickedButtonIndex:(NSInteger)buttonIndex animated:(BOOL)animated {
@@ -88,6 +102,7 @@ destructiveButtonTitle:(NSString *)destructiveButtonTitle destructiveTarget:(GHU
     target();
   }
   _actionSheet.delegate = nil;
+  [[GHUIActionSheet actionSheets] removeObject:self];
 }
 
 

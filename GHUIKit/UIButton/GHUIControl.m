@@ -64,7 +64,7 @@
 }
 
 - (void)callTarget {
-  if (_targetBlock != NULL) _targetBlock(self, _context);
+  if (_targetBlock != NULL) _targetBlock(self);
 }
 
 - (void)_didTouchUpInside {
@@ -118,27 +118,27 @@
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-  if (_highlightedEnabled && self.userInteractionEnabled) {
+  if (self.isHighlightable && self.userInteractionEnabled) {
     if (![self touchesAllInView:touches withEvent:event]) return;
     self.highlighted = YES;
     [self setNeedsDisplay];
   }
   [super touchesBegan:touches withEvent:event];
   
-  if (_delayActionEnabled && _highlightedEnabled && self.userInteractionEnabled) {
+  if (_delayActionEnabled && self.isHighlightable && self.userInteractionEnabled) {
     // Force runloop to redraw so highlighted control appears instantly; must come after call to super
     [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.05]];
   }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-  if (_selectedEnabled && [self touchesAllInView:touches withEvent:event] && self.userInteractionEnabled) {
+  if (self.isSelectable && [self touchesAllInView:touches withEvent:event] && self.userInteractionEnabled) {
     self.selected = !self.isSelected;
   }
   
   [super touchesEnded:touches withEvent:event];
   
-  if (_highlightedEnabled && self.userInteractionEnabled) {
+  if (self.isHighlightable && self.userInteractionEnabled) {
     // Unhighlight the control in a short while to give it a chance to be drawn highlighted
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.05 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
       [self setHighlighted:NO];
@@ -149,7 +149,7 @@
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesCancelled:touches withEvent:event];
-  if (_highlightedEnabled && self.userInteractionEnabled) {
+  if (self.isHighlightable && self.userInteractionEnabled) {
     self.highlighted = NO;
     [self setNeedsDisplay];
   }

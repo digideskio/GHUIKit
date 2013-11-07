@@ -190,8 +190,6 @@
   button.margin = UIEdgeInsetsMake(6, 0, 6, 0);
   button.cornerRadius = 4.0;
   button.borderWidth = 0.5;
-  button.titleShadowColor = [UIColor colorWithWhite:0 alpha:0.5];
-  button.titleShadowOffset = CGSizeMake(0, -1);
   button.shadingType = GHUIShadingTypeLinear;
   button.color = [UIColor colorWithRed:98.0f/255.0f green:120.0f/255.0f blue:170.0f/255.0f alpha:1.0];
   button.color2 = [UIColor colorWithRed:64.0f/255.0f green:90.0f/255.0f blue:136.0f/255.0f alpha:1.0];
@@ -200,7 +198,8 @@
   button.highlightedColor2 = [UIColor colorWithRed:44.0f/255.0f green:70.0f/255.0f blue:126.0f/255.0f alpha:1.0];
   button.borderColor = [UIColor colorWithRed:87.0f/255.0f green:100.0f/255.0f blue:153.0f/255.0f alpha:1.0];
   
-  CGSize size = [button sizeThatFitsTitle:CGSizeMake(120, 999) minWidth:55];
+  CGSize size = [button sizeThatFitsInSize:CGSizeMake(120, 999)];
+  if (size.width < 55) size.width = 55;
   button.frame = CGRectMake(0, 0, size.width, 30 + button.margin.top + button.margin.bottom);
 }
 
