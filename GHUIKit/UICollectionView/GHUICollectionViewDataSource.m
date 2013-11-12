@@ -59,8 +59,18 @@
   [objectsForSection replaceObjectAtIndex:indexPath.row withObject:object];
 }
 
+- (void)removeAllObjectsFromSection:(NSInteger)section {
+  NSMutableArray *objectsForSection = [self objectsForSection:section create:NO];
+  [objectsForSection removeAllObjects];
+}
+
 - (void)removeAllObjects {
   [_sections removeAllObjects];
+}
+
+- (void)setObjects:(NSArray *)objects section:(NSInteger)section {
+  [self removeAllObjectsFromSection:section];
+  [self addObjects:objects section:section];
 }
 
 - (id)objectAtIndexPath:(NSIndexPath *)indexPath {
@@ -125,7 +135,22 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-  if (self.selectBlock) self.selectBlock(collectionView, indexPath);  
+  if (self.selectBlock) {
+    id object = [self objectAtIndexPath:indexPath];
+    self.selectBlock(collectionView, indexPath, object);
+  }
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+  return [self collectionView:collectionView shouldSelectItemAtIndexPath:indexPath];
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  if (self.shouldSelectBlock) {
+    id object = [self objectAtIndexPath:indexPath];
+    return self.shouldSelectBlock(collectionView, indexPath, object);
+  }
+  return YES;
 }
 
 

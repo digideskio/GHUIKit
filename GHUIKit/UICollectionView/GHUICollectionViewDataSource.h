@@ -7,7 +7,8 @@
 //
 
 typedef void (^GHUICollectionViewCellSetBlock)(id cell, id object, NSIndexPath *indexPath);
-typedef void (^GHUICollectionViewSelectBlock)(UICollectionView *collectionView, NSIndexPath *indexPath);
+typedef void (^GHUICollectionViewSelectBlock)(UICollectionView *collectionView, NSIndexPath *indexPath, id object);
+typedef BOOL (^GHUICollectionViewShouldSelectBlock)(UICollectionView *collectionView, NSIndexPath *indexPath, id object);
 
 @interface GHUICollectionViewDataSource : NSObject <UICollectionViewDataSource, UICollectionViewDelegate> {
   NSMutableDictionary *_sections;
@@ -18,6 +19,7 @@ typedef void (^GHUICollectionViewSelectBlock)(UICollectionView *collectionView, 
 
 @property (nonatomic, copy) GHUICollectionViewCellSetBlock cellSetBlock;
 @property (nonatomic, copy) GHUICollectionViewSelectBlock selectBlock;
+@property (nonatomic, copy) GHUICollectionViewShouldSelectBlock shouldSelectBlock;
 
 - (NSMutableArray *)objectsForSection:(NSInteger)section;
 - (NSMutableArray *)objectsForSection:(NSInteger)section create:(BOOL)create;
@@ -37,6 +39,9 @@ typedef void (^GHUICollectionViewSelectBlock)(UICollectionView *collectionView, 
 - (NSUInteger)indexOfObject:(id)object inSection:(NSInteger)section;
 
 - (void)removeAllObjects;
+- (void)removeAllObjectsFromSection:(NSInteger)section;
+
+- (void)setObjects:(NSArray *)objects section:(NSInteger)section;
 
 - (void)setCellClass:(Class)cellClass collectionView:(UICollectionView *)collectionView;
 - (void)setCellClass:(Class)cellClass collectionView:(UICollectionView *)collectionView section:(NSInteger)section;

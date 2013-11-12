@@ -37,12 +37,6 @@ typedef NSUInteger GHSUIViewAnimationOptions;
 @property (readonly, nonatomic, getter=isVisible) BOOL visible;
 
 /*!
- Set if needs refresh.
- If visible, will immediately trigger refresh. Otherwise will call refresh when becoming visible.
- */
-@property (assign, nonatomic) BOOL needsRefresh;
-
-/*!
  View (content). Optional.
  */
 @property (retain, nonatomic) UIView *view;
@@ -90,6 +84,13 @@ typedef NSUInteger GHSUIViewAnimationOptions;
  @param options
  */
 - (void)setView:(GHSUIView *)view duration:(NSTimeInterval)duration options:(GHSUIViewAnimationOptions)options;
+
+/*!
+ Swap the current view.
+ @param view
+ @param animated
+ */
+- (void)swapView:(GHSUIView *)view animated:(BOOL)animated;
 
 /*!
  Swap the current view with transition.

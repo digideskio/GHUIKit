@@ -42,6 +42,13 @@
 
 - (void)popToView:(GHSUIView *)view duration:(NSTimeInterval)duration options:(GHSUIViewAnimationOptions)options;
 
+/*!
+ Swap the current view.
+ @param view
+ @param animated
+ */
+- (void)swapView:(GHSUIView *)view animated:(BOOL)animated;
+
 - (void)swapView:(GHSUIView *)view duration:(NSTimeInterval)duration options:(GHSUIViewAnimationOptions)options;
 
 - (GHSUIView *)visibleView;

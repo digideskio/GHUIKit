@@ -10,6 +10,16 @@
 
 typedef void (^GHUIViewSubviewNeedsLayoutBlock)(UIView *view, BOOL animated);
 
+@class GHUIView;
+
+@protocol GHUIViewNavigationDelegate
+- (void)pushView:(GHUIView *)view animated:(BOOL)animated;
+- (void)popViewAnimated:(BOOL)animated;
+- (void)swapView:(GHUIView *)view animated:(BOOL)animated;
+- (UINavigationItem *)navigationItem;
+- (id<UILayoutSupport>)topLayoutGuide;
+@end
+
 /*!
  View with custom, programatic layout (via GHLayout).
  
@@ -18,26 +28,33 @@ typedef void (^GHUIViewSubviewNeedsLayoutBlock)(UIView *view, BOOL animated);
  
  
       - (void)sharedInit {
-        [super sharedInit];
-        self.layout = [GHLayout layoutForView:self];
-        self.backgroundColor = [UIColor whiteColor];
-       }
+         [super sharedInit];
+         self.layout = [GHLayout layoutForView:self];
+         self.backgroundColor = [UIColor whiteColor];
+      }
  
-       - (CGSize)layout:(id<GHLayout>)layout size:(CGSize)size {
+      - (CGSize)layout:(id<GHLayout>)layout size:(CGSize)size {
          [layout setFrame:CGRectMake(0, 0, size.width, 30)];
          return CGSizeMake(size.width, 30);
-       }
+      }
  
  
  */
 @interface GHUIView : UIView <GHLayoutView> {
-  GHLayout *_layout;
-  
-  GHUIViewSubviewNeedsLayoutBlock _needsLayoutBlock;
+  BOOL _visible;
 }
 
 @property (retain, nonatomic) GHLayout *layout;
 @property (copy, nonatomic) GHUIViewSubviewNeedsLayoutBlock needsLayoutBlock;
+@property (weak, nonatomic) id<GHUIViewNavigationDelegate> navigationDelegate;
+
+/*!
+ Set if needs refresh.
+ If visible, will immediately trigger refresh. Otherwise will call refresh when becoming visible.
+ */
+@property (assign, nonatomic) BOOL needsRefresh;
+
+@property (readonly, nonatomic, getter=isVisible) BOOL visible;
 
 /*!
  Subclasses can override this method to perform initialization tasks that occur during both initWithFrame: and initWithCoder:
@@ -56,5 +73,25 @@ typedef void (^GHUIViewSubviewNeedsLayoutBlock)(UIView *view, BOOL animated);
  @param animated YES if the layout should animate
  */
 - (void)notifyNeedsLayout:(BOOL)animated;
+
+#pragma mark View Callbacks
+
+- (void)viewWillAppear:(BOOL)animated;
+
+- (void)viewDidAppear:(BOOL)animated;
+
+- (void)viewWillDisappear:(BOOL)animated;
+
+- (void)viewDidDisappear:(BOOL)animated;
+
+- (void)viewDidLayoutSubviews;
+
+#pragma mark Refresh
+
+- (void)refresh;
+
+- (void)refreshIfNeeded;
+
+- (void)setNeedsRefresh;
 
 @end

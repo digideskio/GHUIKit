@@ -63,6 +63,59 @@
   else [self setNeedsLayout];
 }
 
+#pragma mark Navigation Callbacks
+
+- (void)_viewWillAppear:(BOOL)animated {
+  _visible = YES;
+  [self refreshIfNeeded];
+  [self viewWillAppear:animated];
+}
+
+- (void)_viewDidAppear:(BOOL)animated {
+  [self viewDidAppear:animated];
+}
+
+- (void)_viewWillDisappear:(BOOL)animated {
+  [self viewWillDisappear:animated];
+  _visible = NO;
+}
+
+- (void)_viewDidDisappear:(BOOL)animated {
+  [self viewDidDisappear:animated];
+}
+
+- (void)_viewDidLayoutSubviews {
+  [self viewDidLayoutSubviews];
+}
+
+- (void)viewWillAppear:(BOOL)animated { }
+
+- (void)viewDidAppear:(BOOL)animated { }
+
+- (void)viewWillDisappear:(BOOL)animated { }
+
+- (void)viewDidDisappear:(BOOL)animated { }
+
+- (void)viewDidLayoutSubviews { }
+
+#pragma mark Refersh
+
+- (void)refresh { }
+
+- (void)refreshIfNeeded {
+  if (self.needsRefresh) {
+    self.needsRefresh = NO;
+    [self refresh];
+  }
+}
+
+- (void)setNeedsRefresh {
+  self.needsRefresh = YES;
+  if (_visible) {
+    [self refreshIfNeeded];
+  }
+}
+
 #pragma mark Drawing/Layout
 
 - (void)layoutView {
@@ -74,6 +127,5 @@
 - (void)drawInRect:(CGRect)rect {
   [_layout drawSubviewsInRect:rect];
 }
-
 
 @end

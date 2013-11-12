@@ -73,6 +73,10 @@
   [_stack setView:view duration:duration options:options];
 }
 
+- (void)swapView:(GHSUIView *)view animated:(BOOL)animated {
+  [_stack swapView:view animated:animated];
+}
+
 - (void)swapView:(GHSUIView *)view duration:(NSTimeInterval)duration options:(GHSUIViewAnimationOptions)options {
   [_stack swapView:view duration:duration options:options];
 }
@@ -95,8 +99,8 @@
 
 - (GHUIButton *)setNavigationButtonWithTitle:(NSString *)title iconImage:(UIImage *)iconImage position:(GHUINavigationPosition)position style:(GHUINavigationButtonStyle)style animated:(BOOL)animated targetBlock:(GHUIControlTargetBlock)targetBlock {
   GHUIButton *button = [[GHUIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 30)];
-  button.title = title;
-  button.iconImage = iconImage;
+  button.label.title = title;
+  button.label.imageView.image = iconImage;
   button.targetBlock = targetBlock;
   [self applyStyleForNavigationButton:button style:style];
   switch (position) {
@@ -121,7 +125,7 @@
       NSString *backTitle = NSLocalizedString(@"Back", nil);
       if (!backTitle || [backTitle length] > 8) backTitle = NSLocalizedString(@"Back", nil);
       GHUIButton *backButton = [[GHUIButton alloc] init];
-      backButton.title = backTitle;
+      backButton.label.title = backTitle;
       //backButton.borderStyle = GHUIBorderStyleRoundedBack;
       [self applyStyleForNavigationButton:backButton style:GHUINavigationButtonStyleBack];
       __block id blockSelf = self;
@@ -168,14 +172,14 @@
 - (void)refresh { }
 
 - (void)refreshIfNeeded {
-  if (_needsRefresh) {
-    _needsRefresh = NO;
+  if (self.needsRefresh) {
+    self.needsRefresh = NO;
     [self refresh];
   }
 }
 
 - (void)setNeedsRefresh {
-  _needsRefresh = YES;
+  self.needsRefresh = YES;
   if (_visible) {
     [self refreshIfNeeded];
   }
@@ -184,23 +188,23 @@
 #pragma mark Style
 
 - (void)applyStyleForNavigationButton:(GHUIButton *)button style:(GHUINavigationButtonStyle)style {
-  button.titleFont = [UIFont boldSystemFontOfSize:12];
-  button.insets = UIEdgeInsetsMake(0, 8, 0, 8);
-  button.titleColor = [UIColor whiteColor];
-  button.margin = UIEdgeInsetsMake(6, 0, 6, 0);
-  button.cornerRadius = 4.0;
-  button.borderWidth = 0.5;
-  button.shadingType = GHUIShadingTypeLinear;
-  button.color = [UIColor colorWithRed:98.0f/255.0f green:120.0f/255.0f blue:170.0f/255.0f alpha:1.0];
-  button.color2 = [UIColor colorWithRed:64.0f/255.0f green:90.0f/255.0f blue:136.0f/255.0f alpha:1.0];
-  button.highlightedShadingType = GHUIShadingTypeLinear;
-  button.highlightedColor = [UIColor colorWithRed:70.0f/255.0f green:92.0f/255.0f blue:138.0f/255.0f alpha:1.0];
-  button.highlightedColor2 = [UIColor colorWithRed:44.0f/255.0f green:70.0f/255.0f blue:126.0f/255.0f alpha:1.0];
-  button.borderColor = [UIColor colorWithRed:87.0f/255.0f green:100.0f/255.0f blue:153.0f/255.0f alpha:1.0];
+  button.label.titleFont = [UIFont boldSystemFontOfSize:12];
+  button.label.insets = UIEdgeInsetsMake(0, 8, 0, 8);
+  button.label.titleColor = [UIColor whiteColor];
+  button.label.margin = UIEdgeInsetsMake(6, 0, 6, 0);
+  button.label.cornerRadius = 4.0;
+  button.label.borderWidth = 0.5;
+  button.label.shadingType = GHUIShadingTypeLinear;
+  button.label.backgroundColor = [UIColor colorWithRed:98.0f/255.0f green:120.0f/255.0f blue:170.0f/255.0f alpha:1.0];
+  button.label.fillColor2 = [UIColor colorWithRed:64.0f/255.0f green:90.0f/255.0f blue:136.0f/255.0f alpha:1.0];
+  button.label.highlightedShadingType = GHUIShadingTypeLinear;
+  button.label.highlightedFillColor = [UIColor colorWithRed:70.0f/255.0f green:92.0f/255.0f blue:138.0f/255.0f alpha:1.0];
+  button.label.highlightedFillColor2 = [UIColor colorWithRed:44.0f/255.0f green:70.0f/255.0f blue:126.0f/255.0f alpha:1.0];
+  button.label.borderColor = [UIColor colorWithRed:87.0f/255.0f green:100.0f/255.0f blue:153.0f/255.0f alpha:1.0];
   
-  CGSize size = [button sizeThatFitsInSize:CGSizeMake(120, 999)];
+  CGSize size = [button sizeThatFits:CGSizeMake(120, 999)];
   if (size.width < 55) size.width = 55;
-  button.frame = CGRectMake(0, 0, size.width, 30 + button.margin.top + button.margin.bottom);
+  button.frame = CGRectMake(0, 0, size.width, 30 + button.label.margin.top + button.label.margin.bottom);
 }
 
 - (void)applyStyleForNavigationBar:(GHUINavigationBar *)navigationBar {

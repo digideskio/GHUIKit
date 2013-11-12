@@ -10,6 +10,15 @@
 
 @implementation GHUIAlertView
 
++ (id)delegates {
+  static NSMutableArray *gDelegates = NULL;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    gDelegates = [[NSMutableArray alloc] init];
+  });
+  return gDelegates;
+}
+
 - (id)initWithBlock:(GHUIAlertViewBlock)block {
   if ((self = [super init])) {
     _block = block;
@@ -27,6 +36,7 @@
 + (void)showAlertWithBlock:(GHUIAlertViewBlock)block title:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitle:(NSString *)otherButtonTitle args:(va_list)args {
   
   GHUIAlertView *delegate = [[GHUIAlertView alloc] initWithBlock:block]; // Released in alertView:clickedButtonAtIndex: ([self autorelease])
+  [[GHUIAlertView delegates] addObject:delegate];
   
   UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:delegate cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil];
   
@@ -42,6 +52,7 @@
   if (!_block) return;
   _block(buttonIndex);
   _block = NULL;
+  [[GHUIAlertView delegates] removeObject:self];
 }
 
 + (UIAlertView *)showAlertWithMessage:(NSString *)message title:(NSString *)title cancelButtonTitle:(NSString *)cancelButtonTitle {

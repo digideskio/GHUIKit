@@ -31,8 +31,8 @@ typedef enum {
 @property (retain, nonatomic) UIView *rightButton;
 @property (retain, nonatomic) UIView *contentView;
 
-@property (retain, nonatomic) UIColor *backgroundColor1;
-@property (retain, nonatomic) UIColor *backgroundColor2;
+@property (retain, nonatomic) UIColor *fillColor;
+@property (retain, nonatomic) UIColor *fillColor2;
 @property (retain, nonatomic) UIColor *topBorderColor;
 @property (retain, nonatomic) UIColor *bottomBorderColor;
 @property (assign, nonatomic) CGFloat borderWidth;

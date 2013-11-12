@@ -236,8 +236,8 @@
 
 - (void)drawRect:(CGRect)rect {
   CGContextRef context = UIGraphicsGetCurrentContext();
-  if (_backgroundColor1) {
-    GHCGContextDrawShading(context, _backgroundColor1.CGColor, _backgroundColor2.CGColor, NULL, NULL, CGPointZero, CGPointMake(0, self.frame.size.height), GHUIShadingTypeLinear, NO, NO);
+  if (_fillColor) {
+    GHCGContextDrawShading(context, _fillColor.CGColor, _fillColor2.CGColor, NULL, NULL, CGPointZero, CGPointMake(0, self.frame.size.height), GHUIShadingTypeLinear, NO, NO);
   }
   if (_topBorderColor) {
     // Border is actually halved since the top half is cut off (this is on purpose).

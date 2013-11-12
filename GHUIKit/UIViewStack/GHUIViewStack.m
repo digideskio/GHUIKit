@@ -41,6 +41,10 @@
   [self popView:view duration:(animated ? _defaultDuration : 0) options:(animated ? _defaultOptions : 0)];
 }
 
+- (void)swapView:(GHSUIView *)view animated:(BOOL)animated {
+  [self swapView:view duration:(animated ? _defaultDuration : 0) options:(animated ? _defaultOptions : 0)];
+}
+
 - (void)pushView:(GHSUIView *)view duration:(NSTimeInterval)duration options:(GHSUIViewAnimationOptions)options {
   GHSUIInternalView *fromInternalView = [_stack lastObject];
   [self _addView:view fromInternalView:fromInternalView duration:duration options:options];

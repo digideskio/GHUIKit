@@ -27,6 +27,7 @@
 }
 
 + (CGSize)sizeWithText:(NSString *)text font:(UIFont *)font size:(CGSize)size multiline:(BOOL)multiline truncate:(BOOL)truncate {
+  if (!text) return CGSizeZero;
   NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName:font}];
   NSStringDrawingOptions options = 0;
   if (multiline) options |= NSStringDrawingUsesLineFragmentOrigin;

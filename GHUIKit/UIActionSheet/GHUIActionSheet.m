@@ -12,12 +12,12 @@
 @implementation GHUIActionSheet
 
 + (id)actionSheets {
-  static NSMutableArray *actionSheets = NULL;
+  static NSMutableArray *gActionSheets = NULL;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    actionSheets = [[NSMutableArray alloc] init];
+    gActionSheets = [[NSMutableArray alloc] init];
   });
-  return actionSheets;
+  return gActionSheets;
 }
 
 - (id)initWithTitle:(NSString *)title cancelButtonTitle:(NSString *)cancelButtonTitle {
@@ -97,7 +97,7 @@ destructiveButtonTitle:(NSString *)destructiveButtonTitle destructiveTarget:(GHU
 #pragma mark UIActionSheetDelegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-  GHUIActionSheetTargetBlock target = [_targets objectAtIndex:buttonIndex];
+  GHUIActionSheetTargetBlock target = [_targets gh_objectAtIndex:buttonIndex];
   if (target) {
     target();
   }

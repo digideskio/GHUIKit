@@ -28,6 +28,8 @@
 		00A412021829D9CD00C5A20F /* GHUIListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A412011829D9CD00C5A20F /* GHUIListView.m */; };
 		00C0950E1821C64200E37D61 /* GHUIActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C0950D1821C64200E37D61 /* GHUIActivityView.m */; };
 		00C095121821D1CE00E37D61 /* GHUIActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C095111821D1CE00E37D61 /* GHUIActionSheet.m */; };
+		00C1D5E7182D95CA0080E2CF /* GHUILabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C1D5E6182D95CA0080E2CF /* GHUILabel.m */; };
+		00C1D5F1183171E90080E2CF /* GHUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C1D5F0183171E90080E2CF /* GHUIViewController.m */; };
 		00E1A6BC18230DD300BBDFBD /* GHUIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E1A6BB18230DD300BBDFBD /* GHUIAlertView.m */; };
 		00E1A6BF18230F7300BBDFBD /* GHUIActivityLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E1A6BE18230F7300BBDFBD /* GHUIActivityLabel.m */; };
 		CEB2341B467542B980EEF5F6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E609F41752043869A0ED942 /* libPods.a */; };
@@ -92,6 +94,10 @@
 		00C0950D1821C64200E37D61 /* GHUIActivityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIActivityView.m; sourceTree = "<group>"; };
 		00C095101821D1CE00E37D61 /* GHUIActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIActionSheet.h; sourceTree = "<group>"; };
 		00C095111821D1CE00E37D61 /* GHUIActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIActionSheet.m; sourceTree = "<group>"; };
+		00C1D5E5182D95CA0080E2CF /* GHUILabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUILabel.h; sourceTree = "<group>"; };
+		00C1D5E6182D95CA0080E2CF /* GHUILabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUILabel.m; sourceTree = "<group>"; };
+		00C1D5EF183171E90080E2CF /* GHUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIViewController.h; sourceTree = "<group>"; };
+		00C1D5F0183171E90080E2CF /* GHUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIViewController.m; sourceTree = "<group>"; };
 		00E1A6BA18230DD300BBDFBD /* GHUIAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIAlertView.h; sourceTree = "<group>"; };
 		00E1A6BB18230DD300BBDFBD /* GHUIAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIAlertView.m; sourceTree = "<group>"; };
 		00E1A6BD18230F7300BBDFBD /* GHUIActivityLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIActivityLabel.h; sourceTree = "<group>"; };
@@ -162,7 +168,9 @@
 				00E1A6B918230DB100BBDFBD /* UIAlertView */,
 				00A411B5182445D400C5A20F /* UIImageView */,
 				00A411FF1829D9AF00C5A20F /* UIListView */,
+				00C1D5E4182D95BC0080E2CF /* UILabel */,
 				00993259181879BD00556ECC /* Supporting Files */,
+				00C1D5E8183171160080E2CF /* UINavigationController */,
 			);
 			path = GHUIKit;
 			sourceTree = "<group>";
@@ -274,6 +282,24 @@
 			path = UIActionSheet;
 			sourceTree = "<group>";
 		};
+		00C1D5E4182D95BC0080E2CF /* UILabel */ = {
+			isa = PBXGroup;
+			children = (
+				00C1D5E5182D95CA0080E2CF /* GHUILabel.h */,
+				00C1D5E6182D95CA0080E2CF /* GHUILabel.m */,
+			);
+			path = UILabel;
+			sourceTree = "<group>";
+		};
+		00C1D5E8183171160080E2CF /* UINavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				00C1D5EF183171E90080E2CF /* GHUIViewController.h */,
+				00C1D5F0183171E90080E2CF /* GHUIViewController.m */,
+			);
+			path = UINavigationController;
+			sourceTree = "<group>";
+		};
 		00E1A6B918230DB100BBDFBD /* UIAlertView */ = {
 			isa = PBXGroup;
 			children = (
@@ -372,8 +398,10 @@
 				009932AE1820537000556ECC /* GHLayout.m in Sources */,
 				009932A418204EE900556ECC /* GHCGUtils.m in Sources */,
 				009932B1182055C900556ECC /* GHSUIInternalView.m in Sources */,
+				00C1D5E7182D95CA0080E2CF /* GHUILabel.m in Sources */,
 				0099328218187BFE00556ECC /* GHUICollectionView.m in Sources */,
 				009932A818204F4B00556ECC /* GHUIButton.m in Sources */,
+				00C1D5F1183171E90080E2CF /* GHUIViewController.m in Sources */,
 				0099329918204C6600556ECC /* GHSUIView.m in Sources */,
 				00C095121821D1CE00E37D61 /* GHUIActionSheet.m in Sources */,
 				009932B51820571F00556ECC /* GHUINavigationBar.m in Sources */,
