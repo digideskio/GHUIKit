@@ -128,7 +128,7 @@
       backButton.label.title = backTitle;
       //backButton.borderStyle = GHUIBorderStyleRoundedBack;
       [self applyStyleForNavigationButton:backButton style:GHUINavigationButtonStyleBack];
-      __block id blockSelf = self;
+      __weak typeof(self) blockSelf = self;
       backButton.targetBlock = ^() {
         [blockSelf _back];
       };

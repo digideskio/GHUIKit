@@ -12,12 +12,15 @@
 @implementation GHUICollectionViewDataSource
 
 - (NSMutableArray *)objectsForSection:(NSInteger)section create:(BOOL)create {
+  //NSAssert(section > 0, @"Section must be > 0");
+
   if (!_sections && create) _sections = [[NSMutableDictionary alloc] init];
   
-  NSMutableArray *objectsForSection = [_sections objectForKey:[NSNumber numberWithInteger:section]];
+  NSMutableArray *objectsForSection = [_sections objectForKey:@(section)];
   if (create && !objectsForSection) {
     objectsForSection = [NSMutableArray array];
     [_sections setObject:objectsForSection forKey:[NSNumber numberWithInteger:section]];
+    if ((section + 1) > _sectionCount) _sectionCount = (section + 1);
   }
   return objectsForSection;
 }
@@ -28,10 +31,6 @@
 
 - (NSInteger)countForSection:(NSInteger)section {
   return [[self objectsForSection:section] count];
-}
-
-- (NSInteger)sectionCount {
-  return (_sections ? [_sections count] : 0);
 }
 
 - (void)addObjects:(NSArray *)objects {
@@ -89,6 +88,7 @@
 }
 
 - (void)setCellClass:(Class)cellClass collectionView:(UICollectionView *)collectionView section:(NSInteger)section {
+  //NSAssert(section > 0, @"Section must be > 0");
   if (!_cellClasses) _cellClasses = [[NSMutableDictionary alloc] init];
   [_cellClasses setObject:cellClass forKey:@(section)];
   [collectionView registerClass:cellClass forCellWithReuseIdentifier:NSStringFromClass(cellClass)];
@@ -134,6 +134,13 @@
   return [cellForSizing sizeThatFits:collectionView.bounds.size];
 }
 
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+  if ([self countForSection:section] == 0) {
+    return UIEdgeInsetsZero;
+  }
+  return self.sectionInset;
+}
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   if (self.selectBlock) {
     id object = [self objectAtIndexPath:indexPath];
@@ -153,5 +160,10 @@
   return YES;
 }
 
+#pragma mark UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  [self.scrollViewDelegate scrollViewDidScroll:scrollView];
+}
 
 @end

@@ -18,6 +18,7 @@
 
   UIActivityIndicatorView *_activityIndicatorView;
 
+  NSArray *_observeAttributes;
 }
 
 @property (assign, nonatomic, getter=isSelected) BOOL selected;
@@ -132,12 +133,6 @@
  Insets (padding).
  */
 @property (assign, nonatomic) UIEdgeInsets insets;
-
-/*!
- Image to display to the left of the text.
- Alternatively, you can set the imageView.
- */
-@property (strong, nonatomic) UIImage *image;
 
 /*!
  If set, will use this size instead of the image.size.

@@ -23,14 +23,22 @@
   self.titleColor = [UIColor blackColor];
   self.titleFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
   self.textFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+  
+  _observeAttributes = @[@"title", @"titleInsets", @"titleFont", @"titleAlignment", @"text", @"textFont", @"textAlignment", @"cornerRadius", @"cornerRadiusRatio", @"accessoryTitle", @"borderStyle"];
+  for (NSString *attr in _observeAttributes) {
+    [self addObserver:self forKeyPath:attr options:NSKeyValueObservingOptionNew context:nil];
+  }
 }
 
 - (void)dealloc {
+  for (NSString *attr in _observeAttributes) {
+    [self removeObserver:self forKeyPath:attr];
+  }
   [_imageView removeObserver:self forKeyPath:@"image"];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-  [self setNeedsDisplay];
+  [self setNeedsLayout];
 }
 
 - (CGSize)_sizeText:(CGSize)constrainedToSize {
@@ -90,6 +98,7 @@
   if (_activityIndicatorView) {
     CGPoint p = GHCGPointToCenter(_sizeThatFitsText, size);
     p.x -= _activityIndicatorView.frame.size.width + 4;
+    p.y = GHCGPointToCenter(_activityIndicatorView.bounds.size, size).y;
     [layout setOrigin:p view:_activityIndicatorView];
   }
   
@@ -108,7 +117,7 @@
 - (CGSize)_imageSize {
   CGSize imageSize = _imageSize;
   if (GHCGSizeIsZero(imageSize)) {
-    if (self.image) imageSize = self.image.size;
+    if (self.imageView.image) imageSize = self.imageView.image.size;
   }
   return imageSize;
 }
@@ -129,46 +138,21 @@
   self.alpha = (_disabled ? _disabledAlpha : 1.0);
 }
 
-- (void)didChangeValueForKey:(NSString *)key {
-  [super didChangeValueForKey:key];
-  [self setNeedsLayout];
-  [self setNeedsDisplay];
-}
-
-- (void)setTitleInsets:(UIEdgeInsets)titleInsets {
-  _titleInsets = titleInsets;
-  [self didChangeValueForKey:@"titleInsets"];
-}
-
-- (void)setTitleFont:(UIFont *)titleFont {
-  _titleFont = titleFont;
-  [self didChangeValueForKey:@"titleFont"];
-}
-
-- (void)setTitle:(NSString *)title {
-  _title = title;
-  [self didChangeValueForKey:@"title"];
-}
-
-- (void)setAccessoryTitle:(NSString *)accessoryTitle {
-  _accessoryTitle = accessoryTitle;
-  [self didChangeValueForKey:@"accessoryTitle"];
-}
-
 - (void)_cornerRadiusChanged {
   if (_borderStyle == GHUIBorderStyleNone && (_cornerRadius > 0 || _cornerRadiusRatio > 0)) {
-    _borderStyle = GHUIBorderStyleRounded;
-    [self didChangeValueForKey:@"borderStyle"];
+    self.borderStyle = GHUIBorderStyleRounded;
   }
-  [self didChangeValueForKey:@"cornerRadius"];
 }
 
 - (void)setCornerRadius:(CGFloat)cornerRadius {
+  [self willChangeValueForKey:@"cornerRadius"];
   _cornerRadius = cornerRadius;
+  [self didChangeValueForKey:@"cornerRadius"];
   [self _cornerRadiusChanged];
 }
 
 - (void)setCornerRadiusRatio:(CGFloat)cornerRadiusRatio {
+  [self willChangeValueForKey:@"cornerRadiusRatio"];
   _cornerRadiusRatio = cornerRadiusRatio;
   [self didChangeValueForKey:@"cornerRadiusRatio"];
   [self _cornerRadiusChanged];
@@ -230,12 +214,9 @@
 }
 
 - (void)setActivityIndicatorAnimating:(BOOL)animating {
-  UIActivityIndicatorView *activityIndicatorView = [self activityIndicatorView];
-  if (animating) [activityIndicatorView startAnimating];
-  else [activityIndicatorView stopAnimating];
-  self.userInteractionEnabled = !animating;
+  if (animating) [self.activityIndicatorView startAnimating];
+  else [self.activityIndicatorView stopAnimating];
   [self setNeedsLayout];
-  [self setNeedsDisplay];
 }
 
 - (BOOL)isAnimating {

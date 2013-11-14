@@ -17,9 +17,12 @@ typedef BOOL (^GHUICollectionViewShouldSelectBlock)(UICollectionView *collection
   NSMutableDictionary *_cellsForSizing;
 }
 
-@property (nonatomic, copy) GHUICollectionViewCellSetBlock cellSetBlock;
-@property (nonatomic, copy) GHUICollectionViewSelectBlock selectBlock;
-@property (nonatomic, copy) GHUICollectionViewShouldSelectBlock shouldSelectBlock;
+@property (readonly) NSInteger sectionCount;
+@property UIEdgeInsets sectionInset;
+@property (copy) GHUICollectionViewCellSetBlock cellSetBlock;
+@property (copy) GHUICollectionViewSelectBlock selectBlock;
+@property (copy) GHUICollectionViewShouldSelectBlock shouldSelectBlock;
+@property (weak) id<UIScrollViewDelegate> scrollViewDelegate;
 
 - (NSMutableArray *)objectsForSection:(NSInteger)section;
 - (NSMutableArray *)objectsForSection:(NSInteger)section create:(BOOL)create;

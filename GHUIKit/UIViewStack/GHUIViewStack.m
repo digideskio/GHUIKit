@@ -163,7 +163,7 @@
     [toInternalView viewWillAppear:YES];
     [fromInternalView viewWillDisappear:YES];
     if (duration > 0) {
-      __block GHUIViewStack *blockSelf = self;
+      GHWeakSelf blockSelf = self;
       blockSelf.animating = YES;
       [UIView transitionFromView:fromInternalView toView:toInternalView duration:duration options:UIViewAnimationOptionTransitionCrossDissolve completion:^(BOOL finished) {
         blockSelf.animating = NO;
@@ -226,14 +226,14 @@
   
   if ((options & GHSUIViewAnimationOptionTransitionSlide) == GHSUIViewAnimationOptionTransitionSlide) {
     [self _setupToShowInternalView:toInternalView];
-    __block GHUIViewStack *blockSelf = self;
+    GHWeakSelf blockSelf = self;
     [self _addAnimationsForView:view fromInternalView:fromInternalView toInternalView:toInternalView duration:duration animations:^{
       fromInternalView.frame = CGRectMake(-blockSelf.parentView.frame.size.width, 0, blockSelf.parentView.frame.size.width, blockSelf.parentView.frame.size.height);
       [blockSelf _showInternalView:toInternalView];
     }];
   } else if ((options & GHSUIViewAnimationOptionTransitionSlideOver) == GHSUIViewAnimationOptionTransitionSlideOver) {
     [self _setupToShowInternalView:toInternalView];
-    __block GHUIViewStack *blockSelf = self;
+    GHWeakSelf blockSelf = self;
     [self _addAnimationsForView:view fromInternalView:fromInternalView toInternalView:toInternalView duration:duration animations:^{
       // Fun with scaling
       // if (CATransform3DIsIdentity(fromInternalView.layer.transform)) {
@@ -245,7 +245,7 @@
     toInternalView.frame = CGRectMake(0, 0, _parentView.frame.size.width, _parentView.frame.size.height);
     [toInternalView viewWillAppear:YES];
     [fromInternalView viewWillDisappear:YES];
-    __block GHUIViewStack *blockSelf = self;
+    GHWeakSelf blockSelf = self;
     blockSelf.animating = YES;
     [UIView transitionWithView:_parentView duration:duration options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
       blockSelf.animating = NO;

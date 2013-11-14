@@ -25,6 +25,10 @@
   [self setNeedsDisplay];
 }
 
+- (void)setImage:(UIImage *)image {
+  _imageView.image = image;
+}
+
 - (void)setImageWithURL:(NSURL *)URL {
   [_imageView setImageWithURL:URL];
 }

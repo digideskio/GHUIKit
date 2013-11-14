@@ -8,21 +8,18 @@
 
 #import "GHUIView.h"
 
-@interface GHUIImageView : GHUIView {
-  UIImageView *_imageView;
-}
+@interface GHUIImageView : GHUIView
 
-@property (nonatomic, assign) CGFloat cornerRadius;
+@property CGFloat cornerRadius;
+@property CGFloat cornerRadiusPercentage;
+@property (strong) UIColor *overlayColor;
+@property (strong) UIColor *shadowColor;
+@property CGFloat shadowBlur;
+@property (strong) UIColor *strokeColor;
+@property CGFloat strokeWidth;
 
-@property (nonatomic, assign) CGFloat cornerRadiusPercentage;
-
-@property (nonatomic, retain) UIColor *overlayColor;
-
-@property (nonatomic, retain) UIColor *shadowColor;
-@property (nonatomic, assign) CGFloat shadowBlur;
-
-@property (nonatomic, retain) UIColor *strokeColor;
-@property (nonatomic, assign) CGFloat strokeWidth;
+@property (readonly) UIImageView *imageView;
+@property (nonatomic, strong) UIImage *image;
 
 - (void)setImageWithURL:(NSURL *)URL;
 

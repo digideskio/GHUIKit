@@ -17,7 +17,7 @@
   self.label = [[GHUILabel alloc] init];
   
   self.userInteractionEnabled = YES;
-  self.backgroundColor = [UIColor clearColor];
+  self.backgroundColor = [UIColor whiteColor];
   self.opaque = YES;
   self.accessibilityTraits |= UIAccessibilityTraitButton;
   
@@ -30,6 +30,8 @@
   self.label.disabledAlpha = 1.0;
   self.label.titleColor = [UIColor colorWithRed:0 green:122.0f/255.0f blue:1.0f alpha:1.0f];
   self.label.titleFont = [UIFont systemFontOfSize:20.0f];
+  self.label.disabledAlpha = 0.5;
+  self.label.disabledTitleColor = [UIColor grayColor];
   
   [self addSubview:self.label];
 }
@@ -62,6 +64,11 @@
   [super setHighlighted:highlighted];
   [self.label setHighlighted:highlighted];
   [self.label setNeedsDisplay];
+}
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+  [super setBackgroundColor:backgroundColor];
+  [self.label setBackgroundColor:backgroundColor];
 }
 
 - (NSString *)title {
@@ -118,6 +125,13 @@
 
 - (void)setSelectedFillColor:(UIColor *)selectedFillColor {
   self.label.selectedFillColor = selectedFillColor;
+}
+
+- (void)setActivityIndicatorAnimating:(BOOL)animating {
+  if (animating) [self.label.activityIndicatorView startAnimating];
+  else [self.label.activityIndicatorView stopAnimating];
+  self.userInteractionEnabled = !animating;
+  [self setNeedsLayout];
 }
 
 @end
