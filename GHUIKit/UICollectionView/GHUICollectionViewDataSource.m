@@ -8,6 +8,7 @@
 
 #import "GHUICollectionViewDataSource.h"
 #import <GHKit/GHNSArray+Utils.h>
+#import <GHUIKit/GHUICollectionViewLabel.h>
 
 @implementation GHUICollectionViewDataSource
 
@@ -100,6 +101,18 @@
   return cellClass;
 }
 
+- (void)setHeaderText:(NSString *)headerText collectionView:(UICollectionView *)collectionView section:(NSInteger)section {
+  if (!_headerTexts) {
+    _headerTexts = [NSMutableDictionary dictionary];
+    [collectionView registerClass:[GHUICollectionViewLabel class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"Header"];
+  }
+  [_headerTexts setObject:headerText forKey:@(section)];
+}
+
+- (NSString *)headerTextForSection:(NSInteger)section {
+  return [_headerTexts objectForKey:@(section)];
+}
+
 #pragma mark UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -115,6 +128,18 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
   return [self sectionCount];
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+  GHUICollectionViewLabel *view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"Header" forIndexPath:indexPath];
+  NSString *text = [self headerTextForSection:indexPath.section];
+  view.label.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.75];
+  view.label.titleColor = [UIColor colorWithRed:255.0f/255.0f green:125.0f/255.0f blue:0.0f/255.0f alpha:1.0];
+  view.label.titleFont = [UIFont systemFontOfSize:18];
+  view.label.insets = UIEdgeInsetsMake(0, 10, 0, 10);
+  [view.label setBorderStyle:GHUIBorderStyleTopBottom color:[UIColor colorWithWhite:0.9 alpha:1.0] width:1.0 cornerRadius:0];
+  view.label.title = text;
+  return view;
 }
 
 #pragma mark UICollectionViewDelegate
@@ -158,6 +183,13 @@
     return self.shouldSelectBlock(collectionView, indexPath, object);
   }
   return YES;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+  if ([self countForSection:section] == 0) return CGSizeZero;
+  NSString *text = [self headerTextForSection:section];
+  if (text) return CGSizeMake(320, 38);
+  return CGSizeZero;
 }
 
 #pragma mark UIScrollViewDelegate

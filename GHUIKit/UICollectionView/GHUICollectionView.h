@@ -39,4 +39,9 @@ typedef void (^GHUICollectionViewRefreshBlock)(GHUICollectionView *collectionVie
  */
 - (BOOL)isRefreshHeaderEnabled;
 
+/*!
+ Check if header is refreshing.
+ */
+- (BOOL)isHeaderRefreshing;
+
 @end

@@ -49,6 +49,10 @@
   [self setNeedsLayout];
 }
 
+- (BOOL)isHeaderRefreshing {
+  return _refreshControl.isRefreshing;
+}
+
 - (BOOL)isRefreshHeaderEnabled {
   return !!_refreshControl;
 }
