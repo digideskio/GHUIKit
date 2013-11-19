@@ -126,7 +126,9 @@
   CGSize imageSize = [self _imageSize];
   CGSize sizeForHeight = [GHUIUtils sizeWithText:_title font:_titleFont size:size multiline:NO truncate:NO];
   sizeForHeight.width += self.insets.left + self.insets.right;
+  sizeForHeight.height += self.insets.top + self.insets.bottom;
   sizeForHeight.width += self.titleInsets.left + self.titleInsets.right;
+  sizeForHeight.height += self.titleInsets.top + self.titleInsets.bottom;
   sizeForHeight.width += imageSize.width;
   if (self.accessoryImage) sizeForHeight.width += self.accessoryImage.size.width;
   return sizeForHeight;

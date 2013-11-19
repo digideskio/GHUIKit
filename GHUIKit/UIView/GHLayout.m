@@ -9,11 +9,7 @@
 #import "GHLayout.h"
 #import "GHCGUtils.h"
 
-static NSMutableDictionary *gDebugStats = NULL;
-
 @implementation GHLayout
-
-@synthesize sizeThatFits=_sizeThatFits, sizing=_sizing;
 
 - (id)init {
   [NSException raise:NSDestinationInvalidException format:@"Layout must be associated with a view; Use initWithView:"];
@@ -49,9 +45,10 @@ static NSMutableDictionary *gDebugStats = NULL;
 - (CGSize)_layout:(CGSize)size sizing:(BOOL)sizing {
   if (!_view) return size;
   
-  if (GHCGSizeIsEqual(size, _cachedSize) && ((!_needsSizing && sizing) || (!_needsLayout && !sizing))) {
-    return _cachedLayoutSize;
-  }
+  // Disable caching
+//  if (GHCGSizeIsEqual(size, _cachedSize) && ((!_needsSizing && sizing) || (!_needsLayout && !sizing))) {
+//    return _cachedLayoutSize;
+//  }
   
   _sizing = sizing;
   _cachedSize = size;
@@ -66,7 +63,6 @@ static NSMutableDictionary *gDebugStats = NULL;
   }
   _needsSizing = NO;
   _sizing = NO;
-  //[stats.log addObject:[NSString stringWithFormat:@"(%@)=>%@", NSStringFromCGSize(size), NSStringFromCGSize(layoutSize)]];
   return layoutSize;
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import "GHUICollectionViewDataSource.h"
+#import "GHUICollectionViewCell.h"
 #import <GHKit/GHNSArray+Utils.h>
 #import <GHUIKit/GHUICollectionViewLabel.h>
 
@@ -146,17 +147,19 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)layout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   id object = [self objectAtIndexPath:indexPath];
-  Class cellClass = [self cellClassForIndexPath:indexPath];
   
+  // Can't dequeue because that will cause this method and will infinite recurse.
   if (!_cellsForSizing) _cellsForSizing = [[NSMutableDictionary alloc] init];
   id cellForSizing = [_cellsForSizing objectForKey:@(indexPath.section)];
   if (!cellForSizing) {
+    Class cellClass = [self cellClassForIndexPath:indexPath];
     cellForSizing = [[cellClass alloc] init];
     [_cellsForSizing setObject:cellForSizing forKey:@(indexPath.section)];
   }
-  
+  [cellForSizing setNeedsLayout];
   self.cellSetBlock(cellForSizing, object, indexPath);
-  return [cellForSizing sizeThatFits:collectionView.bounds.size];
+  CGSize size = [cellForSizing sizeThatFits:collectionView.bounds.size];
+  return size;
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
@@ -182,7 +185,7 @@
     id object = [self objectAtIndexPath:indexPath];
     return self.shouldSelectBlock(collectionView, indexPath, object);
   }
-  return YES;
+  return (self.selectBlock != NULL);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {

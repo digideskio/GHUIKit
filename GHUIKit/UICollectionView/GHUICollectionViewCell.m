@@ -34,6 +34,11 @@
   return self;
 }
 
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  _viewForContent.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+}
+
 - (CGSize)sizeThatFits:(CGSize)size {
   if (self.viewForContent) {
     return [self.viewForContent sizeThatFits:size];
