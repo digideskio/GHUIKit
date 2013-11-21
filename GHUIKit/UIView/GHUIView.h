@@ -17,6 +17,7 @@ typedef void (^GHUIViewSubviewNeedsLayoutBlock)(UIView *view, BOOL animated);
 - (void)popViewAnimated:(BOOL)animated;
 - (void)swapView:(GHUIView *)view animated:(BOOL)animated;
 - (UINavigationItem *)navigationItem;
+- (UIInterfaceOrientation)interfaceOrientation;
 @end
 
 /*!

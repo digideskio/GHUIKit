@@ -19,4 +19,6 @@
 
 + (void)drawText:(NSString *)text rect:(CGRect)rect font:(UIFont *)font color:(UIColor *)color alignment:(NSTextAlignment)alignment multiline:(BOOL)multiline truncate:(BOOL)truncate;
 
++ (UIView *)subview:(UIView *)view forClass:(Class)class;
+
 @end

@@ -15,7 +15,8 @@
   [super sharedInit];
   self.layout = [GHLayout layoutForView:self];
   self.backgroundColor = [UIColor clearColor];
-  self.userInteractionEnabled = NO;  
+  self.userInteractionEnabled = NO;
+  self.contentMode = UIViewContentModeRedraw;
   self.selectedShadingType = GHUIShadingTypeUnknown;
   self.highlightedShadingType = GHUIShadingTypeUnknown;
   self.disabledShadingType = GHUIShadingTypeUnknown;

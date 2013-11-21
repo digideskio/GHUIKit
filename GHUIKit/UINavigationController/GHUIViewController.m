@@ -8,6 +8,7 @@
 
 #import "GHUIViewController.h"
 #import "GHUIControl.h"
+#import "GHUIUtils.h"
 
 @interface GHUIView (ViewCallbacks)
 - (void)_viewWillAppear:(BOOL)animated;
@@ -51,6 +52,14 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
   [_contentView _viewDidDisappear:animated];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+  [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+  [_contentView setNeedsLayout];
+  
+  UICollectionView *collectionView = (UICollectionView *)[GHUIUtils subview:_contentView forClass:[UICollectionView class]];
+  [collectionView reloadData];
 }
 
 - (void)pushView:(GHUIView *)view animated:(BOOL)animated {

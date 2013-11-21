@@ -138,7 +138,7 @@
   view.label.titleColor = [UIColor colorWithRed:255.0f/255.0f green:125.0f/255.0f blue:0.0f/255.0f alpha:1.0];
   view.label.titleFont = [UIFont systemFontOfSize:18];
   view.label.insets = UIEdgeInsetsMake(0, 10, 0, 10);
-  [view.label setBorderStyle:GHUIBorderStyleTopBottom color:[UIColor colorWithWhite:0.9 alpha:1.0] width:1.0 cornerRadius:0];
+  [view.label setBorderStyle:GHUIBorderStyleTopBottom color:[UIColor colorWithWhite:230.0f/255.0f alpha:1.0] width:1.0 cornerRadius:0];
   view.label.title = text;
   return view;
 }

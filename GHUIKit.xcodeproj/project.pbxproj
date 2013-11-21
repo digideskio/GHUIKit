@@ -123,6 +123,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0059230F183D9F69008E2F5F /* UIMessages */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UIMessages;
+			sourceTree = "<group>";
+		};
 		0099324A181879BD00556ECC = {
 			isa = PBXGroup;
 			children = (
@@ -174,6 +181,7 @@
 				00C1D5E4182D95BC0080E2CF /* UILabel */,
 				00993259181879BD00556ECC /* Supporting Files */,
 				00C1D5E8183171160080E2CF /* UINavigationController */,
+				0059230F183D9F69008E2F5F /* UIMessages */,
 			);
 			path = GHUIKit;
 			sourceTree = "<group>";
