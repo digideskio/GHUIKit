@@ -48,6 +48,8 @@ typedef BOOL (^GHUICollectionViewShouldSelectBlock)(UICollectionView *collection
 
 - (void)setObjects:(NSArray *)objects section:(NSInteger)section;
 
+- (NSIndexPath *)updateObject:(id)object inSection:(NSInteger)section;
+
 - (void)setCellClass:(Class)cellClass collectionView:(UICollectionView *)collectionView;
 - (void)setCellClass:(Class)cellClass collectionView:(UICollectionView *)collectionView section:(NSInteger)section;
 - (Class)cellClassForIndexPath:(NSIndexPath *)indexPath;

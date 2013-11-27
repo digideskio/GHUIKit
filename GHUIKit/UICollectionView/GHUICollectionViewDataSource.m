@@ -85,6 +85,16 @@
   return [objectsForSection indexOfObject:object];
 }
 
+- (NSIndexPath *)updateObject:(id)object inSection:(NSInteger)section {
+  NSInteger index = [self indexOfObject:object inSection:0];
+  NSIndexPath *indexPath = nil;
+  if (index != NSNotFound) {
+    indexPath = [NSIndexPath indexPathForRow:index inSection:section];
+    [self replaceObjectAtIndexPath:indexPath withObject:object];
+  }
+  return indexPath;
+}
+
 - (void)setCellClass:(Class)cellClass collectionView:(UICollectionView *)collectionView {
   [self setCellClass:cellClass collectionView:collectionView section:-1];
 }
