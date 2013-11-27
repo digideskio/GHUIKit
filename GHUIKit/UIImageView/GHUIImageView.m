@@ -13,6 +13,7 @@
 @implementation GHUIImageView
 
 - (void)sharedInit {
+  self.backgroundColor = [UIColor clearColor];
   _imageView = [[UIImageView alloc] init];
   [_imageView addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:nil];
 }
@@ -41,6 +42,10 @@
     cornerRadius = roundf(rect.size.height * _cornerRadiusPercentage * 0.01);
   }
   
+  if (_fillColor) {
+    GHCGContextDrawRoundedRect(context, rect, _fillColor.CGColor, NULL, _strokeWidth, cornerRadius);
+  }
+
   GHCGContextDrawRoundedRectImageWithShadowAndTransform(context, _imageView.image.CGImage, _imageView.image.size, self.bounds, _strokeColor.CGColor, _strokeWidth, cornerRadius, self.contentMode, self.backgroundColor.CGColor, _shadowColor.CGColor, _shadowBlur, self.transform);
   
   if (_overlayColor) {

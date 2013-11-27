@@ -17,6 +17,7 @@
 @property CGFloat shadowBlur;
 @property (strong) UIColor *strokeColor;
 @property CGFloat strokeWidth;
+@property (strong) UIColor *fillColor;
 
 @property (readonly) UIImageView *imageView;
 @property (nonatomic, strong) UIImage *image;
