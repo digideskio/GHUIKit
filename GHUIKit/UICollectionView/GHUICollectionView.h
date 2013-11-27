@@ -44,4 +44,6 @@ typedef void (^GHUICollectionViewRefreshBlock)(GHUICollectionView *collectionVie
  */
 - (BOOL)isHeaderRefreshing;
 
+- (void)scrollToBottom:(BOOL)animated;
+
 @end

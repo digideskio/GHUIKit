@@ -61,4 +61,13 @@
   if (self.refreshBlock) self.refreshBlock(self);
 }
 
+- (void)scrollToBottom:(BOOL)animated {
+  // If you call reloadData right before this method, contentSize isn't updated, so lets do this in a completion block
+  [self performBatchUpdates:^() {} completion:^(BOOL finished) {
+    CGSize size = self.contentSize;
+    CGRect frame = CGRectMake(0, size.height - self.frame.size.height, size.width, self.frame.size.height);
+    [self scrollRectToVisible:frame animated:animated];
+  }];
+}
+
 @end
