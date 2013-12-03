@@ -21,7 +21,7 @@
   self.opaque = YES;
   self.accessibilityTraits |= UIAccessibilityTraitButton;
   
-  self.label.insets = UIEdgeInsetsMake(20, 0, 20, 10);
+  self.label.insets = UIEdgeInsetsMake(20, 10, 20, 10);
   self.label.titleAlignment = NSTextAlignmentCenter;
   self.label.selectedShadingType = GHUIShadingTypeUnknown;
   self.label.highlightedShadingType = GHUIShadingTypeUnknown;
