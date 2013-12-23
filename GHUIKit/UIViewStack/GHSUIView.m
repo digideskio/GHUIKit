@@ -8,7 +8,6 @@
 
 #import "GHSUIView.h"
 #import "GHUIViewStack.h"
-#import "GHCGUtils.h"
 
 @implementation GHSUIView
 

@@ -9,7 +9,7 @@
 #import "GHUICollectionViewDataSource.h"
 #import "GHUICollectionViewCell.h"
 #import <GHKit/GHNSArray+Utils.h>
-#import <GHUIKit/GHUICollectionViewLabel.h>
+#import "GHUICollectionViewLabel.h"
 
 @implementation GHUICollectionViewDataSource
 

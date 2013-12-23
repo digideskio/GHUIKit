@@ -39,18 +39,22 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
   [_contentView _viewWillAppear:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
   [_contentView _viewDidAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
   [_contentView _viewWillDisappear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
+  [super viewDidDisappear:animated];
   [_contentView _viewDidDisappear:animated];
 }
 
@@ -60,6 +64,10 @@
   
   UICollectionView *collectionView = (UICollectionView *)[GHUIUtils subview:_contentView forClass:[UICollectionView class]];
   [collectionView reloadData];
+}
+
+- (UIViewController *)viewController {
+  return self;
 }
 
 - (void)pushView:(GHUIView *)view animated:(BOOL)animated {

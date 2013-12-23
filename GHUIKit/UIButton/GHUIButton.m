@@ -103,6 +103,14 @@
   self.label.fillColor = fillColor;
 }
 
+- (void)setBorderColor:(UIColor *)borderColor {
+  self.label.borderColor = borderColor;
+}
+
+- (UIColor *)borderColor {
+  return self.label.borderColor;
+}
+
 - (CGFloat)cornerRadiusRatio {
   return self.label.cornerRadiusRatio;
 }
@@ -128,8 +136,7 @@
 }
 
 - (void)setActivityIndicatorAnimating:(BOOL)animating {
-  if (animating) [self.label.activityIndicatorView startAnimating];
-  else [self.label.activityIndicatorView stopAnimating];
+  [self.label setActivityIndicatorAnimating:animating];
   self.userInteractionEnabled = !animating;
   [self setNeedsLayout];
 }

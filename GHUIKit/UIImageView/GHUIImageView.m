@@ -7,8 +7,7 @@
 //
 
 #import "GHUIImageView.h"
-
-#import "GHCGUtils.h"
+#import <GHKit/GHCGUtils.h>
 
 @implementation GHUIImageView
 

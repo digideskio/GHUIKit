@@ -7,7 +7,7 @@
 //
 
 #import "GHUIActivityView.h"
-#import "GHCGUtils.h"
+#import <GHKit/GHCGUtils.h>
 
 @implementation GHUIActivityView
 

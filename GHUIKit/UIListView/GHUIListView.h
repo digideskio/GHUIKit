@@ -12,7 +12,11 @@
   NSMutableArray *_views;
 }
 
-@property (assign, nonatomic) UIEdgeInsets insets;
+@property UIEdgeInsets insets;
+@property BOOL sizeToFitEnabled;
+@property UIColor *borderColor;
+
+- (NSArray *)views;
 
 /*!
  Add view.

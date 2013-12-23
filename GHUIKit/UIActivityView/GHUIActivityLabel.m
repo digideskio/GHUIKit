@@ -7,9 +7,9 @@
 //
 
 #import "GHUIActivityLabel.h"
-#import "GHCGUtils.h"
 #import "GHUIUtils.h"
 #import <GHKit/GHNSString+Utils.h>
+#import <GHKit/GHCGUtils.h>
 
 @implementation GHUIActivityLabel
 

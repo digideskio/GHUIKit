@@ -7,7 +7,6 @@
 //
 
 #import "GHUINavigationBar.h"
-#import "GHCGUtils.h"
 #import "GHUIButton.h"
 
 @implementation GHUINavigationBar

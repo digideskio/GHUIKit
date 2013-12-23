@@ -24,7 +24,8 @@
 @property (strong, nonatomic) UIColor *titleColor;
 @property (strong, nonatomic) UIColor *fillColor;
 @property (assign, nonatomic) CGFloat cornerRadius;
-@property (assign, nonatomic) CGFloat cornerRadiusRatio;
+@property CGFloat cornerRadiusRatio;
+@property UIColor *borderColor;
 @property (strong, nonatomic) UIColor *selectedFillColor;
 
 - (void)setActivityIndicatorAnimating:(BOOL)animating;

@@ -7,15 +7,12 @@
 //
 
 #import "GHUIViewStack.h"
-#import "GHCGUtils.h"
 #import "GHSUIInternalView.h"
 #import <QuartzCore/QuartzCore.h>
 #import <GHKit/GHKit.h>
 #import <UIView+MTAnimation.h>
 
 @implementation GHUIViewStack
-
-@synthesize defaultOptions=_defaultOptions, defaultDuration=_defaultDuration, animating=_animating;
 
 - (id)init {
   if ((self = [super init])) {

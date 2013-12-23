@@ -7,11 +7,9 @@
 //
 
 #import "GHUIView.h"
-#import "GHCGUtils.h"
+#import <GHKit/GHCGUtils.h>
 
 @implementation GHUIView
-
-@synthesize layout=_layout, needsLayoutBlock=_needsLayoutBlock;
 
 - (void)sharedInit { }
 
@@ -67,11 +65,11 @@
 
 - (void)_viewWillAppear:(BOOL)animated {
   _visible = YES;
-  [self refreshIfNeeded];
   [self viewWillAppear:animated];
 }
 
 - (void)_viewDidAppear:(BOOL)animated {
+  [self refreshIfNeeded];
   [self viewDidAppear:animated];
 }
 

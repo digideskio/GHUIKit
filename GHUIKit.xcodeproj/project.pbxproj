@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		002ECAFF1868E34F005523A6 /* GHUIMessageInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 002ECAFA1868E34F005523A6 /* GHUIMessageInputView.m */; };
+		002ECB001868E34F005523A6 /* GHUIMessagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 002ECAFC1868E34F005523A6 /* GHUIMessagesView.m */; };
+		002ECB011868E34F005523A6 /* GHUIMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 002ECAFE1868E34F005523A6 /* GHUIMessageView.m */; };
+		002ECB041868E4C5005523A6 /* GHUIKeyboardHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 002ECB031868E4C5005523A6 /* GHUIKeyboardHandler.m */; };
+		00307A48186104E200FA5977 /* GHUIBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00307A47186104E200FA5977 /* GHUIBorderView.m */; };
+		00307A4F1863C6DD00FA5977 /* GHUITextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 00307A4E1863C6DD00FA5977 /* GHUITextField.m */; };
 		00993257181879BD00556ECC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00993256181879BD00556ECC /* Foundation.framework */; };
 		0099325C181879BD00556ECC /* GHUIKit.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0099325B181879BD00556ECC /* GHUIKit.h */; };
 		0099328218187BFE00556ECC /* GHUICollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0099328118187BFE00556ECC /* GHUICollectionView.m */; };
@@ -15,7 +21,6 @@
 		0099329618204BCC00556ECC /* GHUIViewStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 0099329518204BCC00556ECC /* GHUIViewStack.m */; };
 		0099329918204C6600556ECC /* GHSUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0099329818204C6600556ECC /* GHSUIView.m */; };
 		009932A118204D9100556ECC /* GHUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 009932A018204D9100556ECC /* GHUIView.m */; };
-		009932A418204EE900556ECC /* GHCGUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 009932A318204EE900556ECC /* GHCGUtils.m */; };
 		009932A818204F4B00556ECC /* GHUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 009932A718204F4B00556ECC /* GHUIButton.m */; };
 		009932AB1820501800556ECC /* GHUIControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 009932AA1820501800556ECC /* GHUIControl.m */; };
 		009932AE1820537000556ECC /* GHLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 009932AD1820537000556ECC /* GHLayout.m */; };
@@ -50,6 +55,20 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		002ECAF91868E34F005523A6 /* GHUIMessageInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIMessageInputView.h; sourceTree = "<group>"; };
+		002ECAFA1868E34F005523A6 /* GHUIMessageInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIMessageInputView.m; sourceTree = "<group>"; };
+		002ECAFB1868E34F005523A6 /* GHUIMessagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIMessagesView.h; sourceTree = "<group>"; };
+		002ECAFC1868E34F005523A6 /* GHUIMessagesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIMessagesView.m; sourceTree = "<group>"; };
+		002ECAFD1868E34F005523A6 /* GHUIMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIMessageView.h; sourceTree = "<group>"; };
+		002ECAFE1868E34F005523A6 /* GHUIMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIMessageView.m; sourceTree = "<group>"; };
+		002ECB021868E4C5005523A6 /* GHUIKeyboardHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIKeyboardHandler.h; sourceTree = "<group>"; };
+		002ECB031868E4C5005523A6 /* GHUIKeyboardHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIKeyboardHandler.m; sourceTree = "<group>"; };
+		002ECB051868E5A1005523A6 /* GHMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHMessage.h; sourceTree = "<group>"; };
+		002ECB0C1868E7F5005523A6 /* GHUIMessaging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIMessaging.h; sourceTree = "<group>"; };
+		00307A46186104E200FA5977 /* GHUIBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIBorderView.h; sourceTree = "<group>"; };
+		00307A47186104E200FA5977 /* GHUIBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIBorderView.m; sourceTree = "<group>"; };
+		00307A4D1863C6DD00FA5977 /* GHUITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUITextField.h; sourceTree = "<group>"; };
+		00307A4E1863C6DD00FA5977 /* GHUITextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUITextField.m; sourceTree = "<group>"; };
 		00993253181879BD00556ECC /* libGHUIKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGHUIKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		00993256181879BD00556ECC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0099325A181879BD00556ECC /* GHUIKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GHUIKit-Prefix.pch"; sourceTree = "<group>"; };
@@ -66,8 +85,6 @@
 		0099329818204C6600556ECC /* GHSUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHSUIView.m; sourceTree = "<group>"; };
 		0099329F18204D9100556ECC /* GHUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIView.h; sourceTree = "<group>"; };
 		009932A018204D9100556ECC /* GHUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIView.m; sourceTree = "<group>"; };
-		009932A218204E7800556ECC /* GHCGUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHCGUtils.h; sourceTree = "<group>"; };
-		009932A318204EE900556ECC /* GHCGUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHCGUtils.m; sourceTree = "<group>"; };
 		009932A618204F4B00556ECC /* GHUIButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIButton.h; sourceTree = "<group>"; };
 		009932A718204F4B00556ECC /* GHUIButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIButton.m; sourceTree = "<group>"; };
 		009932A91820501800556ECC /* GHUIControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIControl.h; sourceTree = "<group>"; };
@@ -123,6 +140,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		002ECAF81868E34F005523A6 /* UIMessaging */ = {
+			isa = PBXGroup;
+			children = (
+				002ECB0C1868E7F5005523A6 /* GHUIMessaging.h */,
+				002ECAF91868E34F005523A6 /* GHUIMessageInputView.h */,
+				002ECAFA1868E34F005523A6 /* GHUIMessageInputView.m */,
+				002ECAFB1868E34F005523A6 /* GHUIMessagesView.h */,
+				002ECAFC1868E34F005523A6 /* GHUIMessagesView.m */,
+				002ECAFD1868E34F005523A6 /* GHUIMessageView.h */,
+				002ECAFE1868E34F005523A6 /* GHUIMessageView.m */,
+				002ECB051868E5A1005523A6 /* GHMessage.h */,
+			);
+			path = UIMessaging;
+			sourceTree = "<group>";
+		};
+		00307A45186104CF00FA5977 /* UIBorderView */ = {
+			isa = PBXGroup;
+			children = (
+				00307A46186104E200FA5977 /* GHUIBorderView.h */,
+				00307A47186104E200FA5977 /* GHUIBorderView.m */,
+			);
+			path = UIBorderView;
+			sourceTree = "<group>";
+		};
+		00307A4C1863C6CD00FA5977 /* UITextField */ = {
+			isa = PBXGroup;
+			children = (
+				00307A4D1863C6DD00FA5977 /* GHUITextField.h */,
+				00307A4E1863C6DD00FA5977 /* GHUITextField.m */,
+			);
+			path = UITextField;
+			sourceTree = "<group>";
+		};
 		0059230F183D9F69008E2F5F /* UIMessages */ = {
 			isa = PBXGroup;
 			children = (
@@ -182,6 +232,9 @@
 				00993259181879BD00556ECC /* Supporting Files */,
 				00C1D5E8183171160080E2CF /* UINavigationController */,
 				0059230F183D9F69008E2F5F /* UIMessages */,
+				00307A45186104CF00FA5977 /* UIBorderView */,
+				00307A4C1863C6CD00FA5977 /* UITextField */,
+				002ECAF81868E34F005523A6 /* UIMessaging */,
 			);
 			path = GHUIKit;
 			sourceTree = "<group>";
@@ -227,10 +280,10 @@
 			children = (
 				0099329F18204D9100556ECC /* GHUIView.h */,
 				009932A018204D9100556ECC /* GHUIView.m */,
-				009932A218204E7800556ECC /* GHCGUtils.h */,
-				009932A318204EE900556ECC /* GHCGUtils.m */,
 				009932AC1820537000556ECC /* GHLayout.h */,
 				009932AD1820537000556ECC /* GHLayout.m */,
+				002ECB021868E4C5005523A6 /* GHUIKeyboardHandler.h */,
+				002ECB031868E4C5005523A6 /* GHUIKeyboardHandler.m */,
 			);
 			path = UIView;
 			sourceTree = "<group>";
@@ -408,9 +461,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00307A4F1863C6DD00FA5977 /* GHUITextField.m in Sources */,
+				002ECB001868E34F005523A6 /* GHUIMessagesView.m in Sources */,
 				009932AE1820537000556ECC /* GHLayout.m in Sources */,
-				009932A418204EE900556ECC /* GHCGUtils.m in Sources */,
+				00307A48186104E200FA5977 /* GHUIBorderView.m in Sources */,
 				009932B1182055C900556ECC /* GHSUIInternalView.m in Sources */,
+				002ECB011868E34F005523A6 /* GHUIMessageView.m in Sources */,
 				00C1D5E7182D95CA0080E2CF /* GHUILabel.m in Sources */,
 				0099328218187BFE00556ECC /* GHUICollectionView.m in Sources */,
 				009932A818204F4B00556ECC /* GHUIButton.m in Sources */,
@@ -420,6 +476,8 @@
 				009932B51820571F00556ECC /* GHUINavigationBar.m in Sources */,
 				00E1A6BF18230F7300BBDFBD /* GHUIActivityLabel.m in Sources */,
 				009932A118204D9100556ECC /* GHUIView.m in Sources */,
+				002ECB041868E4C5005523A6 /* GHUIKeyboardHandler.m in Sources */,
+				002ECAFF1868E34F005523A6 /* GHUIMessageInputView.m in Sources */,
 				00A411C11829A16000C5A20F /* GHUIUtils.m in Sources */,
 				009932BA18206DFF00556ECC /* GHUISwitchButton.m in Sources */,
 				00A411BB182457CE00C5A20F /* GHUICollectionViewDataSource.m in Sources */,

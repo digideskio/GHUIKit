@@ -18,6 +18,7 @@ typedef void (^GHUIViewSubviewNeedsLayoutBlock)(UIView *view, BOOL animated);
 - (void)swapView:(GHUIView *)view animated:(BOOL)animated;
 - (UINavigationItem *)navigationItem;
 - (UIInterfaceOrientation)interfaceOrientation;
+- (UIViewController *)viewController;
 @end
 
 /*!
@@ -41,7 +42,7 @@ typedef void (^GHUIViewSubviewNeedsLayoutBlock)(UIView *view, BOOL animated);
  
  */
 @interface GHUIView : UIView <GHLayoutView> {
-  BOOL _visible;
+  BOOL _visible;  
 }
 
 @property (retain, nonatomic) GHLayout *layout;

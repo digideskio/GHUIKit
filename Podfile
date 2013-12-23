@@ -1,3 +1,4 @@
-platform :ios, '6.0'
-#pod 'GHKit'
+platform :ios, '7.0'
+
 pod 'GHKit', :path => "../gh-kit/"
+pod 'MTAnimation'

@@ -15,7 +15,6 @@
 #import "GHUICollectionViewDataSource.h"
 
 #import "GHUIView.h"
-#import "GHCGUtils.h"
 
 #import "GHUINavigationBar.h"
 
@@ -41,3 +40,6 @@
 #import "GHUILabel.h"
 
 #import "GHUIViewController.h"
+
+#import "GHUIBorderView.h"
+#import "GHUITextField.h"

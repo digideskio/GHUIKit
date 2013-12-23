@@ -21,6 +21,7 @@
   self.highlightedShadingType = GHUIShadingTypeUnknown;
   self.disabledShadingType = GHUIShadingTypeUnknown;
   self.disabledAlpha = 1.0;
+  self.borderWidth = 1.0;
   self.titleColor = [UIColor blackColor];
   self.titleFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
   self.textFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
@@ -42,34 +43,38 @@
   [self setNeedsLayout];
 }
 
-- (CGSize)_sizeText:(CGSize)constrainedToSize {
-  CGSize size = CGSizeZero;
+- (void)_sizeText:(CGSize)constrainedToSize size:(CGSize *)size titleSize:(CGSize *)titleSize {
+  *size = CGSizeZero;
+  *titleSize = CGSizeZero;
+  if (_textHidden) return;
+  CGSize sizeText = CGSizeZero;
   
   if (_title) {
-    size = [GHUIUtils sizeWithText:_title font:self.titleFont size:constrainedToSize multiline:YES truncate:YES];
+    sizeText = [GHUIUtils sizeWithText:_title font:_titleFont size:constrainedToSize multiline:YES truncate:YES];
+    *titleSize = sizeText;
   }
   
   if (_accessoryTitle) {
-    constrainedToSize.width -= roundf(size.width);
+    constrainedToSize.width -= roundf(sizeText.width);
     UIFont *font = (_accessoryTitleFont ? _accessoryTitleFont : _titleFont);
     CGSize accessoryTitleSize = [GHUIUtils sizeWithText:_accessoryTitle font:font size:constrainedToSize multiline:NO truncate:YES];
-    size.width += roundf(accessoryTitleSize.width);
+    sizeText.width += roundf(accessoryTitleSize.width);
   }
   
   if (_text) {
     UIFont *font = (_textFont ? _textFont : _titleFont);
     CGSize textSize = [GHUIUtils sizeWithText:_text font:font size:constrainedToSize multiline:YES truncate:YES];
-    size.height += roundf(textSize.height);
+    sizeText.height += roundf(textSize.height);
   }
   
-  return size;
+  *size = sizeText;
 }
 
 - (CGSize)layout:(id<GHLayout>)layout size:(CGSize)size {
   CGFloat y = 0;
   
   y += _insets.top;
-  UIEdgeInsets titleInsets = _titleInsets;
+  UIEdgeInsets titleInsets = (_textHidden ? UIEdgeInsetsZero : _titleInsets);
   y += titleInsets.top;
   
   CGSize imageSize = [self _imageSize];
@@ -93,13 +98,13 @@
     constrainedToSize.height = CGFLOAT_MAX;
   }
   
-  _sizeThatFitsText = [self _sizeText:constrainedToSize];
-  _titleSize = [GHUIUtils sizeWithText:_title font:_titleFont size:constrainedToSize multiline:YES truncate:YES];
+  [self _sizeText:constrainedToSize size:&_sizeThatFitsText titleSize:&_titleSize];
   
   if (_activityIndicatorView) {
-    CGPoint p = GHCGPointToCenter(_sizeThatFitsText, size);
-    p.x -= _activityIndicatorView.frame.size.width + 4;
-    p.y = GHCGPointToCenter(_activityIndicatorView.bounds.size, size).y;
+    CGPoint p = GHCGPointToCenter(_activityIndicatorView.frame.size, size);
+    if (!_textHidden) {
+      p.x -= _activityIndicatorView.frame.size.width + 4;
+    }
     [layout setOrigin:p view:_activityIndicatorView];
   }
   
@@ -169,6 +174,10 @@
   return _imageView;
 }
 
+- (void)setImage:(UIImage *)image {
+  self.imageView.image = image;
+}
+
 - (void)sizeToFitWithMinimumSize:(CGSize)minSize {
   CGSize size = [self sizeThatFits:minSize];
   if (size.width < minSize.width) size.width = minSize.width;
@@ -217,8 +226,13 @@
 }
 
 - (void)setActivityIndicatorAnimating:(BOOL)animating {
-  if (animating) [self.activityIndicatorView startAnimating];
-  else [self.activityIndicatorView stopAnimating];
+  if (animating) {
+    [self.activityIndicatorView startAnimating];
+    if (self.hideTextIfAnimating) self.textHidden = YES;
+  } else {
+    [self.activityIndicatorView stopAnimating];
+    if (self.hideTextIfAnimating) self.textHidden = NO;
+  }
   [self setNeedsLayout];
 }
 
@@ -320,8 +334,6 @@
   
   UIFont *font = self.titleFont;
   
-  NSString *title = self.title;
-  
   UIImage *image = self.imageView.image;
   CGSize imageSize = self.imageSize;
   if (image && GHCGSizeIsZero(imageSize)) {
@@ -348,7 +360,7 @@
   if (x < 0) x = 0;
   
   if (image) {
-    [self.imageView.image drawInRect:CGRectMake(x, y, imageSize.width, imageSize.height)];
+    [image drawInRect:CGRectMake(x, y, imageSize.width, imageSize.height)];
   }
   x += imageSize.width;
   
@@ -356,9 +368,9 @@
   
   CGPoint titleOrigin = CGPointMake(x, y);
   
-  [GHUIUtils drawText:title rect:CGRectMake(titleOrigin.x, titleOrigin.y, _titleSize.width, _titleSize.height) font:font color:textColor alignment:self.titleAlignment multiline:YES truncate:YES];
+  if (self.title && !self.textHidden) [GHUIUtils drawText:self.title rect:CGRectMake(titleOrigin.x, titleOrigin.y, _titleSize.width, _titleSize.height) font:font color:textColor alignment:self.titleAlignment multiline:YES truncate:YES];
   
-  if (self.accessoryTitle) {
+  if (self.accessoryTitle && !self.textHidden) {
     if (self.accessoryTitleColor) textColor = self.accessoryTitleColor;
     if (self.accessoryTitleFont) font = self.accessoryTitleFont;
     if (self.accessoryTitleAlignment == NSTextAlignmentLeft) {
@@ -394,7 +406,7 @@
   
   y += _titleSize.height;
   
-  if (self.text) {
+  if (self.text && !self.textHidden) {
     if (self.textColor) textColor = self.textColor;
     if (self.textFont) font = self.textFont;
     if (self.titleAlignment == NSTextAlignmentLeft) {
