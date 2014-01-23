@@ -10,17 +10,17 @@
 
 @interface GHUIImageView : GHUIView
 
-@property CGFloat cornerRadius;
-@property CGFloat cornerRadiusPercentage;
-@property (strong) UIColor *overlayColor;
-@property (strong) UIColor *shadowColor;
-@property CGFloat shadowBlur;
-@property (strong) UIColor *strokeColor;
-@property CGFloat strokeWidth;
-@property (strong) UIColor *fillColor;
+@property CGFloat cornerRadius UI_APPEARANCE_SELECTOR;
+@property CGFloat cornerRadiusRatio UI_APPEARANCE_SELECTOR;
+@property UIColor *overlayColor UI_APPEARANCE_SELECTOR;
+@property UIColor *shadowColor UI_APPEARANCE_SELECTOR;
+@property CGFloat shadowBlur UI_APPEARANCE_SELECTOR;
+@property UIColor *strokeColor UI_APPEARANCE_SELECTOR;
+@property CGFloat strokeWidth UI_APPEARANCE_SELECTOR;
+@property UIColor *fillColor UI_APPEARANCE_SELECTOR;
 
 @property (readonly) UIImageView *imageView;
-@property (nonatomic, strong) UIImage *image;
+@property (nonatomic) UIImage *image;
 
 - (void)setImageWithURL:(NSURL *)URL;
 

@@ -42,6 +42,12 @@
   _keyboardVisible = YES;
 }
 
+static BOOL gIsAnimating = NO;
+
++ (BOOL)isAnimating {
+  return gIsAnimating;
+}
+
 - (void)keyboardWillToggle:(NSNotification *)notification {
   NSDictionary *userInfo = [notification userInfo];
   NSTimeInterval duration;
@@ -67,10 +73,13 @@
   
   GHWeakSelf blockSelf = self;
   [UIView animateWithDuration:duration delay:0 options:(animationCurve << 16)|UIViewAnimationOptionBeginFromCurrentState animations:^{
+    gIsAnimating = YES;
     blockSelf.view.frame = containerFrame;
     [blockSelf.view layoutView];
     if (blockSelf.keyboardBlock) blockSelf.keyboardBlock(blockSelf);
-  } completion:NULL];
+  } completion:^(BOOL finished) {
+    gIsAnimating = NO;
+  }];
 }
 
 @end

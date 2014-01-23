@@ -13,88 +13,6 @@
 
 @implementation GHUICollectionViewDataSource
 
-- (NSMutableArray *)objectsForSection:(NSInteger)section create:(BOOL)create {
-  //NSAssert(section > 0, @"Section must be > 0");
-
-  if (!_sections && create) _sections = [[NSMutableDictionary alloc] init];
-  
-  NSMutableArray *objectsForSection = [_sections objectForKey:@(section)];
-  if (create && !objectsForSection) {
-    objectsForSection = [NSMutableArray array];
-    [_sections setObject:objectsForSection forKey:[NSNumber numberWithInteger:section]];
-    if ((section + 1) > _sectionCount) _sectionCount = (section + 1);
-  }
-  return objectsForSection;
-}
-
-- (NSMutableArray *)objectsForSection:(NSInteger)section {
-  return [self objectsForSection:section create:NO];
-}
-
-- (NSInteger)countForSection:(NSInteger)section {
-  return [[self objectsForSection:section] count];
-}
-
-- (void)addObjects:(NSArray *)objects {
-  [self addObjects:objects section:0 indexPaths:nil];
-}
-
-- (void)addObjects:(NSArray *)objects section:(NSInteger)section {
-  [self addObjects:objects section:section indexPaths:nil];
-}
-
-- (void)addObjects:(NSArray *)objects section:(NSInteger)section indexPaths:(NSMutableArray **)indexPaths {
-  NSMutableArray *objectsForSection = [self objectsForSection:section create:YES];
-  NSInteger previousCount = [objectsForSection count];
-  [objectsForSection addObjectsFromArray:objects];
-  
-  if (indexPaths) {
-    for(NSInteger i = 0, count = [objects count]; i < count; i++) {
-      [*indexPaths addObject:[NSIndexPath indexPathForRow:(i + previousCount) inSection:section]];
-    }
-  }
-}
-
-- (void)replaceObjectAtIndexPath:(NSIndexPath *)indexPath withObject:(id)object {
-  NSMutableArray *objectsForSection = [self objectsForSection:indexPath.section create:YES];
-  [objectsForSection replaceObjectAtIndex:indexPath.row withObject:object];
-}
-
-- (void)removeAllObjectsFromSection:(NSInteger)section {
-  NSMutableArray *objectsForSection = [self objectsForSection:section create:NO];
-  [objectsForSection removeAllObjects];
-}
-
-- (void)removeAllObjects {
-  [_sections removeAllObjects];
-}
-
-- (void)setObjects:(NSArray *)objects section:(NSInteger)section {
-  [self removeAllObjectsFromSection:section];
-  [self addObjects:objects section:section];
-}
-
-- (id)objectAtIndexPath:(NSIndexPath *)indexPath {
-  NSArray *objects = [self objectsForSection:indexPath.section];
-  return [objects objectAtIndex:indexPath.row];
-}
-
-- (NSUInteger)indexOfObject:(id)object inSection:(NSInteger)section {
-  NSArray *objectsForSection = [self objectsForSection:section create:NO];
-  if (!objectsForSection) return NSNotFound;
-  return [objectsForSection indexOfObject:object];
-}
-
-- (NSIndexPath *)updateObject:(id)object inSection:(NSInteger)section {
-  NSInteger index = [self indexOfObject:object inSection:0];
-  NSIndexPath *indexPath = nil;
-  if (index != NSNotFound) {
-    indexPath = [NSIndexPath indexPathForRow:index inSection:section];
-    [self replaceObjectAtIndexPath:indexPath withObject:object];
-  }
-  return indexPath;
-}
-
 - (void)setCellClass:(Class)cellClass collectionView:(UICollectionView *)collectionView {
   [self setCellClass:cellClass collectionView:collectionView section:-1];
 }
@@ -104,12 +22,6 @@
   if (!_cellClasses) _cellClasses = [[NSMutableDictionary alloc] init];
   [_cellClasses setObject:cellClass forKey:@(section)];
   [collectionView registerClass:cellClass forCellWithReuseIdentifier:NSStringFromClass(cellClass)];
-}
-
-- (Class)cellClassForIndexPath:(NSIndexPath *)indexPath {
-  Class cellClass = [_cellClasses objectForKey:@(indexPath.section)];
-  if (!cellClass) cellClass = [_cellClasses objectForKey:@(-1)];
-  return cellClass;
 }
 
 - (void)setHeaderText:(NSString *)headerText collectionView:(UICollectionView *)collectionView section:(NSInteger)section {
@@ -156,20 +68,7 @@
 #pragma mark UICollectionViewDelegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)layout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  id object = [self objectAtIndexPath:indexPath];
-  
-  // Can't dequeue because that will cause this method and will infinite recurse.
-  if (!_cellsForSizing) _cellsForSizing = [[NSMutableDictionary alloc] init];
-  id cellForSizing = [_cellsForSizing objectForKey:@(indexPath.section)];
-  if (!cellForSizing) {
-    Class cellClass = [self cellClassForIndexPath:indexPath];
-    cellForSizing = [[cellClass alloc] init];
-    [_cellsForSizing setObject:cellForSizing forKey:@(indexPath.section)];
-  }
-  [cellForSizing setNeedsLayout];
-  self.cellSetBlock(cellForSizing, object, indexPath);
-  CGSize size = [cellForSizing sizeThatFits:collectionView.bounds.size];
-  return size;
+  return [self sizeForCellAtIndexPath:indexPath view:collectionView];
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {

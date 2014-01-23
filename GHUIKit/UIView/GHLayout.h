@@ -126,6 +126,14 @@ typedef enum {
 - (CGRect)setFrame:(CGRect)frame inRect:(CGRect)inRect view:(id)view options:(GHLayoutOptions)options;
 
 /*!
+ Set the (sub)view frame.
+ Calls sizeThatFits on the view and then centers it horizontally inRect.
+ @param inRect The containing rectangle.
+ @param view View
+ */
+- (CGRect)setFrameInRect:(CGRect)inRect view:(id)view;
+
+/*!
  Set origin for the (sub)view (for views with fixed sizes).
  If we are calculating sizeThatFits, this doesn't actually set the views frame.
  Use this value instead of view.frame since the views frame might not have been set.
@@ -284,23 +292,18 @@ typedef enum {
  */
 @interface GHLayout : NSObject <GHLayout> {
   
-  UIView *_view; // weak
-  
   BOOL _needsLayout;
   BOOL _needsSizing;
   CGSize _cachedSize;
   CGSize _cachedLayoutSize;
-  NSMutableArray *_accessibleElements;
-  
-  BOOL _sizing;
   
   NSMutableArray *_subviews; // For manual subview handling
   
   CGSize _sizeThatFits;
 }
 
-@property (readonly, retain, nonatomic) NSArray *accessibleElements;
 @property (readonly, nonatomic, getter=isSizing) BOOL sizing;
+@property (weak) UIView *view;
 
 /*!
  Set a custon/fixed size that fits.

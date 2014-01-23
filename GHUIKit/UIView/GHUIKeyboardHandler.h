@@ -18,4 +18,6 @@
 
 - (void)registerKeyboardNotificationsForView:(GHUIView *)view;
 
++ (BOOL)isAnimating;
+
 @end

@@ -11,10 +11,16 @@
 
 @implementation GHUIView
 
+- (void)_sharedInit {
+  self.autoresizesSubviews = NO;
+  self.autoresizingMask = UIViewAutoresizingNone;
+}
+
 - (void)sharedInit { }
 
 - (id)initWithFrame:(CGRect)frame {
   if ((self = [super initWithFrame:frame])) {
+    [self _sharedInit];
     [self sharedInit];
   }
   return self;
@@ -22,6 +28,7 @@
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
   if ((self = [super initWithCoder:aDecoder])) {
+    [self _sharedInit];
     [self sharedInit];
   }
   return self;

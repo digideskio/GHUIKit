@@ -37,8 +37,8 @@
   CGContextRef context = UIGraphicsGetCurrentContext();
   
   CGFloat cornerRadius = _cornerRadius;
-  if (_cornerRadiusPercentage > 0) {
-    cornerRadius = roundf(rect.size.height * _cornerRadiusPercentage * 0.01);
+  if (_cornerRadiusRatio > 0) {
+    cornerRadius = roundf(rect.size.height * _cornerRadiusRatio);
   }
   
   if (_fillColor) {

@@ -24,18 +24,11 @@
       return nil;
     }
     
-    _cachedSize = CGSizeZero;
-    _accessibleElements = [[NSMutableArray alloc] init];
     _view = view;
-    _sizeThatFits = CGSizeZero;
     _needsLayout = YES;
     _needsSizing = YES;
   }
   return self;
-}
-
-- (NSArray *)accessibleElements {
-  return _accessibleElements;
 }
 
 + (GHLayout *)layoutForView:(UIView *)view {
@@ -52,10 +45,6 @@
   
   _sizing = sizing;
   _cachedSize = size;
-  if (!_sizing) {
-    // Remove previous accessible elements before they're recreated in layout:size:()
-    [_accessibleElements removeAllObjects];
-  }
   CGSize layoutSize = [(id<GHLayoutView>)_view layout:self size:size];
   _cachedLayoutSize = layoutSize;
   if (!_sizing) {
@@ -92,6 +81,12 @@
 
 - (CGRect)setFrame:(CGRect)frame view:(id)view options:(GHLayoutOptions)options {
   return [self setFrame:frame inRect:CGRectZero view:view options:options];
+}
+
+- (CGRect)setFrameInRect:(CGRect)inRect view:(id)view {
+  CGSize sizeThatFits = [view sizeThatFits:CGSizeMake(inRect.size.width, inRect.size.height)];
+  inRect.size.height = sizeThatFits.height;
+  return [self setFrame:CGRectMake(0, 0, sizeThatFits.width, sizeThatFits.height) inRect:inRect view:view options:GHLayoutOptionsCenter];
 }
 
 - (CGRect)setFrame:(CGRect)frame inRect:(CGRect)inRect view:(id)view options:(GHLayoutOptions)options {
@@ -206,16 +201,10 @@
   if (!view) return CGRectZero;
   if (!_sizing) {
     [view setFrame:frame];
-    if (view) {
-      [_accessibleElements addObject:view];
-    }
     // Since we are applying the frame, the subview will need to
     // apply their layout next at this frame
     if (needsLayout) [view setNeedsLayout];
   }
-  // Some stupid views (cough UIPickerView cough) will snap to certain frame
-  // values. This makes sure we return the actual frame of the view
-  if (!_sizing) return [view frame];
   return frame;
 }
 

@@ -28,6 +28,23 @@
   return self;
 }
 
+- (void)setMinimumLineSpacing:(CGFloat)minimumLineSpacing {
+  if (self.collectionViewLayout && [self.collectionViewLayout isKindOfClass:[UICollectionViewFlowLayout class]]) {
+    ((UICollectionViewFlowLayout *)self.collectionViewLayout).minimumLineSpacing = minimumLineSpacing;
+  } else {
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    flowLayout.minimumLineSpacing = minimumLineSpacing;
+    self.collectionViewLayout = flowLayout;
+  }
+}
+
+- (CGFloat)minimumLineSpacing {
+  if (self.collectionViewLayout && [self.collectionViewLayout isKindOfClass:[UICollectionViewFlowLayout class]]) {
+    return ((UICollectionViewFlowLayout *)self.collectionViewLayout).minimumLineSpacing;
+  }
+  return 0;
+}
+
 - (void)setHeaderRefreshing:(BOOL)refreshing {
   if (refreshing && !_refreshControl.refreshing) {
     [_refreshControl beginRefreshing];

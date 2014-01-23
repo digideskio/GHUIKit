@@ -14,6 +14,9 @@
 #import "GHUICollectionViewCell.h"
 #import "GHUICollectionViewDataSource.h"
 
+#import "GHUITableView.h"
+#import "GHUITableViewDataSource.h"
+
 #import "GHUIView.h"
 
 #import "GHUINavigationBar.h"
@@ -41,5 +44,4 @@
 
 #import "GHUIViewController.h"
 
-#import "GHUIBorderView.h"
 #import "GHUITextField.h"

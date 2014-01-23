@@ -16,10 +16,13 @@ typedef void (^GHUIViewSubviewNeedsLayoutBlock)(UIView *view, BOOL animated);
 - (void)pushView:(GHUIView *)view animated:(BOOL)animated;
 - (void)popViewAnimated:(BOOL)animated;
 - (void)swapView:(GHUIView *)view animated:(BOOL)animated;
+- (void)setViews:(NSArray *)views animated:(BOOL)animated;
 - (UINavigationItem *)navigationItem;
 - (UIInterfaceOrientation)interfaceOrientation;
 - (UIViewController *)viewController;
 @end
+
+typedef id<GHUIViewNavigationDelegate> (^GHUIViewNavigationDelegateBlock)();
 
 /*!
  View with custom, programatic layout (via GHLayout).

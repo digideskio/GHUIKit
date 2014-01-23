@@ -12,8 +12,9 @@ typedef void (^GHUICollectionViewRefreshBlock)(GHUICollectionView *collectionVie
 
 @interface GHUICollectionView : UICollectionView <UICollectionViewDelegate>
 
-@property (readonly, nonatomic) UIRefreshControl *refreshControl;
-@property (copy, nonatomic) GHUICollectionViewRefreshBlock refreshBlock;
+@property (readonly) UIRefreshControl *refreshControl;
+@property (copy) GHUICollectionViewRefreshBlock refreshBlock;
+@property CGFloat minimumLineSpacing;
 
 /*!
  Shared init.

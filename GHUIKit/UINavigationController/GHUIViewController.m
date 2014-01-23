@@ -87,4 +87,12 @@
   [self.navigationController setViewControllers:viewControllers animated:animated];
 }
 
+- (void)setViews:(NSArray *)views animated:(BOOL)animated {
+  NSMutableArray *viewControllers = [[NSMutableArray alloc] init];
+  for (GHUIView *view in views) {
+    [viewControllers addObject:[[GHUIViewController alloc] initWithView:view]];
+  }
+  [self.navigationController setViewControllers:viewControllers animated:animated];
+}
+
 @end
