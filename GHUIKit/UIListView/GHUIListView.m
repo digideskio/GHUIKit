@@ -22,7 +22,12 @@
   CGFloat x = _insets.left;
   CGFloat y = _insets.top;
   for (UIView *view in _views) {
-    CGRect viewRect = [layout setFrame:CGRectMake(x, y, size.width - x - _insets.right, view.frame.size.height) view:view sizeToFit:self.sizeToFitEnabled];
+    CGRect viewRect = CGRectZero;
+    if (view.autoresizesSubviews) {
+      viewRect = [layout setFrame:CGRectMake(x, y, size.width - x - _insets.right, view.frame.size.height) view:view sizeToFit:YES];
+    } else {
+      viewRect = [layout setFrame:CGRectMake(x, y, view.frame.size.width, view.frame.size.height) view:view];
+    }
     y += viewRect.size.height + _insets.bottom;
   }
   y += _insets.bottom;

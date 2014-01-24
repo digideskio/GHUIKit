@@ -9,6 +9,12 @@
 #import "GHUIButton.h"
 #import "GHUILabel.h"
 
+@interface GHUIButton ()
+@property GHUILabel *label;
+@end
+
+// We could use objective-c message forwarding for NSProxy for a GHUILabel which this wraps, but fuck it,
+// lets just write the methods out and be non-magical.
 @implementation GHUIButton
 
 - (void)sharedInit {
@@ -95,6 +101,70 @@
   self.label.titleColor = titleColor;
 }
 
+- (NSString *)text {
+  return self.label.text;
+}
+
+- (void)setText:(NSString *)text {
+  self.label.text = text;
+}
+
+- (UIFont *)textFont {
+  return self.label.textFont;
+}
+
+- (void)setTextFont:(UIFont *)textFont {
+  self.label.textFont = textFont;
+}
+
+- (UIColor *)textColor {
+  return self.label.textColor;
+}
+
+- (void)setTextColor:(UIColor *)textColor {
+  self.label.textColor = textColor;
+}
+
+- (NSString *)accessoryTitle {
+  return self.label.accessoryTitle;
+}
+
+- (void)setAccessoryTitle:(NSString *)accessoryTitle {
+  self.label.accessoryTitle = accessoryTitle;
+}
+
+- (UIFont *)accessoryTitleFont {
+  return self.label.accessoryTitleFont;
+}
+
+- (void)setAccessoryTitleFont:(UIFont *)accessoryTitleFont {
+  self.label.accessoryTitleFont = accessoryTitleFont;
+}
+
+- (UIColor *)accessoryTitleColor {
+  return self.label.accessoryTitleColor;
+}
+
+- (void)setAccessoryTitleColor:(UIColor *)accessoryTitleColor {
+  self.label.accessoryTitleColor = accessoryTitleColor;
+}
+
+- (NSTextAlignment)accessoryTitleAlignment {
+  return self.label.accessoryTitleAlignment;
+}
+
+- (void)setAccessoryTitleAlignment:(NSTextAlignment)accessoryTitleAlignment {
+  self.label.accessoryTitleAlignment = accessoryTitleAlignment;
+}
+
+- (UIImage *)accessoryImage {
+  return self.label.accessoryImage;
+}
+
+- (void)setAccessoryImage:(UIImage *)accessoryImage {
+  self.label.accessoryImage = accessoryImage;
+}
+
 - (UIColor *)fillColor {
   return self.label.fillColor;
 }
@@ -103,12 +173,28 @@
   self.label.fillColor = fillColor;
 }
 
+- (UIColor *)fillColor2 {
+  return self.label.fillColor2;
+}
+
+- (void)setFillColor2:(UIColor *)fillColor2 {
+  self.label.fillColor2 = fillColor2;
+}
+
 - (void)setBorderColor:(UIColor *)borderColor {
   self.label.borderColor = borderColor;
 }
 
 - (UIColor *)borderColor {
   return self.label.borderColor;
+}
+
+- (void)setBorderWidth:(CGFloat)borderWidth {
+  self.label.borderWidth = borderWidth;
+}
+
+- (CGFloat)borderWidth {
+  return self.label.borderWidth;
 }
 
 - (CGFloat)cornerRadiusRatio {
@@ -133,6 +219,98 @@
 
 - (void)setSelectedFillColor:(UIColor *)selectedFillColor {
   self.label.selectedFillColor = selectedFillColor;
+}
+
+- (UIColor *)highlightedTitleColor {
+  return self.label.highlightedTitleColor;
+}
+
+- (void)setHighlightedTitleColorFillColor:(UIColor *)highlightedTitleColor {
+  self.label.highlightedTitleColor = highlightedTitleColor;
+}
+
+- (UIColor *)highlightedFillColor {
+  return self.label.highlightedFillColor;
+}
+
+- (void)setHighlightedFillColorFillColor:(UIColor *)highlightedFillColor {
+  self.label.highlightedFillColor = highlightedFillColor;
+}
+
+- (UIColor *)highlightedFillColor2 {
+  return self.label.highlightedFillColor2;
+}
+
+- (void)setHighlightedFillColorFillColor2:(UIColor *)highlightedFillColor2 {
+  self.label.highlightedFillColor2 = highlightedFillColor2;
+}
+
+- (UIColor *)disabledFillColor {
+  return self.label.disabledFillColor;
+}
+
+- (void)setDisabledFillColorFillColor:(UIColor *)disabledFillColor {
+  self.label.disabledFillColor = disabledFillColor;
+}
+
+- (UIColor *)disabledFillColor2 {
+  return self.label.disabledFillColor2;
+}
+
+- (void)setDisabledFillColorFillColor2:(UIColor *)disabledFillColor2 {
+  self.label.disabledFillColor2 = disabledFillColor2;
+}
+
+- (void)setImageSize:(CGSize)imageSize {
+  self.label.imageSize = imageSize;
+}
+
+- (CGSize)imageSize {
+  return self.label.imageSize;
+}
+
+- (UIImageView *)imageView {
+  return self.label.imageView;
+}
+
+- (void)setInsets:(UIEdgeInsets)insets {
+  self.label.insets = insets;
+}
+
+- (UIEdgeInsets)titleInsets {
+  return self.label.titleInsets;
+}
+
+- (void)setTitleInsets:(UIEdgeInsets)titleInsets {
+  self.label.titleInsets = titleInsets;
+}
+
+- (NSTextAlignment)titleAlignment {
+  return self.label.titleAlignment;
+}
+
+- (void)setTitleAlignment:(NSTextAlignment)titleAlignment {
+  self.label.titleAlignment = titleAlignment;
+}
+
+- (UIEdgeInsets)insets {
+  return self.label.insets;
+}
+
+- (void)setMargin:(UIEdgeInsets)margin {
+  self.label.margin = margin;
+}
+
+- (UIEdgeInsets)margin {
+  return self.label.margin;
+}
+
+- (void)setBorderStyle:(GHUIBorderStyle)borderStyle {
+  self.label.borderStyle = borderStyle;
+}
+
+- (GHUIBorderStyle)borderStyle {
+  return self.label.borderStyle;
 }
 
 - (void)setActivityIndicatorAnimating:(BOOL)animating {

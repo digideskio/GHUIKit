@@ -26,12 +26,25 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   Class cellClass = [self cellClassForIndexPath:indexPath];
   id cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(cellClass) forIndexPath:indexPath];
-  self.cellSetBlock(cell, [self objectAtIndexPath:indexPath], indexPath);
+  self.cellSetBlock(cell, [self objectAtIndexPath:indexPath], indexPath);  
   return cell;
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
   return [self sectionCount];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+  return (!!self.deleteBlock);
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+  if (editingStyle == UITableViewCellEditingStyleDelete) {
+    id object = [self objectAtIndexPath:indexPath];
+    [self removeObjectAtIndexPath:indexPath];
+    if (self.deleteBlock) self.deleteBlock(tableView, indexPath, object);
+    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+  }
 }
 
 #pragma mark UICollectionViewDelegate

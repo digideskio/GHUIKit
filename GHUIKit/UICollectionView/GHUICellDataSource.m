@@ -71,6 +71,11 @@
   [self removeObjects:objects section:0];
 }
 
+- (void)removeObjectAtIndexPath:(NSIndexPath *)indexPath {
+  NSMutableArray *objectsForSection = [self objectsForSection:indexPath.section create:NO];
+  [objectsForSection removeObjectAtIndex:indexPath.row];
+}
+
 - (void)removeObjects:(NSArray *)objects section:(NSInteger)section {
   NSMutableArray *objectsForSection = [self objectsForSection:section create:NO];
   [objectsForSection removeObjectsInArray:objects];
@@ -94,17 +99,23 @@
   return [objects objectAtIndex:indexPath.row];
 }
 
-- (NSUInteger)indexOfObject:(id)object inSection:(NSInteger)section {
+- (NSUInteger)indexOfObject:(id)object section:(NSInteger)section {
   NSArray *objectsForSection = [self objectsForSection:section create:NO];
   if (!objectsForSection) return NSNotFound;
   return [objectsForSection indexOfObject:object];
 }
 
-- (NSIndexPath *)updateObject:(id)object inSection:(NSInteger)section {
-  NSInteger index = [self indexOfObject:object inSection:0];
-  NSIndexPath *indexPath = nil;
+- (NSIndexPath *)indexPathOfObject:(id)object section:(NSInteger)section {
+  NSUInteger index = [self indexOfObject:object section:section];
   if (index != NSNotFound) {
-    indexPath = [NSIndexPath indexPathForRow:index inSection:section];
+    return [NSIndexPath indexPathForRow:index inSection:section];
+  }
+  return nil;
+}
+
+- (NSIndexPath *)updateObject:(id)object inSection:(NSInteger)section {
+  NSIndexPath *indexPath = [self indexPathOfObject:object section:0];
+  if (indexPath) {
     [self replaceObjectAtIndexPath:indexPath withObject:object];
   }
   return indexPath;

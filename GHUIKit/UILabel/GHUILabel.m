@@ -87,8 +87,6 @@
   constrainedToSize.width -= (titleInsets.left + titleInsets.right);
   constrainedToSize.width -= (_insets.left + _insets.right);
   
-  constrainedToSize.width -= imageSize.width;
-  
   // Subtract activity indicator view
   if (_activityIndicatorView && _activityIndicatorView.isAnimating) {
     constrainedToSize.width -= _activityIndicatorView.frame.size.width;
@@ -263,11 +261,9 @@
   UIColor *fillColor4 = self.fillColor4;
   UIColor *borderColor = self.borderColor;
   
-  UIImage *backgroundImage = self.backgroundImage;
-  
   CGFloat cornerRadius = self.cornerRadius;
   if (self.cornerRadiusRatio > 0) {
-    cornerRadius = roundf(bounds.size.height/2.0f) * self.cornerRadiusRatio;
+    cornerRadius = roundf((bounds.size.height/2.0f) * self.cornerRadiusRatio);
   }
   
   UIImage *accessoryImage = self.accessoryImage;
@@ -277,12 +273,10 @@
     if (self.disabledFillColor) fillColor = self.disabledFillColor;
     if (self.disabledFillColor2) fillColor2 = self.disabledFillColor2;
     if (self.disabledBorderColor) borderColor = self.disabledBorderColor;
-    if (self.disabledBackgroundImage) backgroundImage = self.disabledBackgroundImage;
   } else if (isHighlighted) {
     if (self.highlightedShadingType != GHUIShadingTypeUnknown) shadingType = self.highlightedShadingType;
     if (self.highlightedFillColor) fillColor = self.highlightedFillColor;
     if (self.highlightedFillColor2) fillColor2 = self.highlightedFillColor2;
-    if (self.highlightedBackgroundImage) backgroundImage = self.highlightedBackgroundImage;
     if (self.highlightedBorderColor) borderColor = self.highlightedBorderColor;
     if (self.highlightedAccessoryImage) accessoryImage = self.highlightedAccessoryImage;
   } else if (isSelected) {
@@ -293,41 +287,25 @@
     else if (self.highlightedFillColor) fillColor = self.highlightedFillColor;
     if (self.selectedFillColor2) fillColor2 = self.selectedFillColor2;
     else if (self.highlightedFillColor2) fillColor2 = self.highlightedFillColor2;
-    if (self.highlightedBackgroundImage) backgroundImage = self.highlightedBackgroundImage;
   }
   
   CGFloat borderWidth = self.borderWidth;
   
   // Clip for border styles that support it (that form a cohesive path)
-  BOOL clip = (self.borderStyle != GHUIBorderStyleTopOnly && self.borderStyle != GHUIBorderStyleBottomOnly && self.borderStyle != GHUIBorderStyleTopBottom && self.borderStyle != GHUIBorderStyleNone && self.borderStyle != GHUIBorderStyleNormal);
+  BOOL clip = GHIsBorderStyleClippable(self.borderStyle, cornerRadius);
   
-  if (fillColor && shadingType != GHUIShadingTypeNone) {
-    if (clip) {
-      CGContextSaveGState(context);
-    }
-    
-    GHCGContextAddStyledRect(context, bounds, self.borderStyle, borderWidth, cornerRadius);
-    if (clip) {
-      CGContextClip(context);
-    }
-    
-    GHCGContextDrawShading(context, fillColor.CGColor, fillColor2.CGColor, fillColor3.CGColor, fillColor4.CGColor, bounds.origin, CGPointMake(bounds.origin.x, CGRectGetMaxY(bounds)), shadingType, NO, NO);
-    fillColor = nil;
-    
-    if (clip) {
-      CGContextRestoreGState(context);
-    }
+  GHCGContextAddStyledRect(context, bounds, self.borderStyle, borderWidth, cornerRadius);
+  if (clip) {
+    CGContextSaveGState(context);
+    CGContextClip(context);
   }
   
-  if (self.borderWidth > 0 || cornerRadius > 0) {
-    GHCGContextDrawBorder(context, bounds, self.borderStyle, fillColor.CGColor, borderColor.CGColor, borderWidth, cornerRadius);
+  if (fillColor && shadingType != GHUIShadingTypeNone) {
+    GHCGContextDrawShading(context, fillColor.CGColor, fillColor2.CGColor, fillColor3.CGColor, fillColor4.CGColor, bounds.origin, CGPointMake(bounds.origin.x, CGRectGetMaxY(bounds)), shadingType, NO, NO);
+    fillColor = nil;
   } else if (fillColor) {
     [fillColor setFill];
     CGContextFillRect(context, bounds);
-  }
-  
-  if (backgroundImage) {
-    [backgroundImage drawInRect:bounds];
   }
   
   UIColor *textColor = [self textColorForState];
@@ -340,17 +318,21 @@
     imageSize = image.size;
   }
   
-  CGSize sizeThatFits = _sizeThatFitsText;
-  if (imageSize.height > sizeThatFits.height) {
-    sizeThatFits.height = imageSize.height;
+  CGFloat x = bounds.origin.x;
+  CGFloat y = bounds.origin.y;
+  
+  if (image) {
+    [image drawInRect:CGRectMake(x, y, imageSize.width, imageSize.height)];
   }
   
-  CGFloat y = bounds.origin.y + roundf(GHCGPointToCenter(sizeThatFits, size).y) + self.insets.top;
+  CGSize sizeThatFits = _sizeThatFitsText;
+
+  x += self.insets.left;
+  y += roundf(GHCGPointToCenter(sizeThatFits, size).y) + self.insets.top;
   
   UIEdgeInsets titleInsets = _titleInsets;
   
-  CGFloat x = bounds.origin.x + self.insets.left;
-  CGFloat lineWidth = sizeThatFits.width + titleInsets.left + titleInsets.right + imageSize.width;
+  CGFloat lineWidth = sizeThatFits.width + titleInsets.left + titleInsets.right;
   if (accessoryImage) lineWidth += accessoryImage.size.width;
   
   if (self.titleAlignment == NSTextAlignmentCenter) {
@@ -358,11 +340,6 @@
     x += roundf(width/2.0f - lineWidth/2.0f);
   }
   if (x < 0) x = 0;
-  
-  if (image) {
-    [image drawInRect:CGRectMake(x, y, imageSize.width, imageSize.height)];
-  }
-  x += imageSize.width;
   
   x += titleInsets.left;
   
@@ -415,6 +392,14 @@
       x = self.insets.left;
     }
     [GHUIUtils drawText:self.text rect:CGRectMake(x, y, size.width - x - self.insets.right, CGFLOAT_MAX) font:font color:textColor alignment:self.textAlignment multiline:YES truncate:YES];
+  }
+  
+  if (clip) {
+    CGContextRestoreGState(context);
+  }
+  
+  if (borderWidth > 0 || cornerRadius > 0) {
+    GHCGContextDrawBorder(context, bounds, self.borderStyle, NULL, borderColor.CGColor, borderWidth, cornerRadius);
   }
 }
 

@@ -15,6 +15,7 @@
 #import "GHUICollectionViewDataSource.h"
 
 #import "GHUITableView.h"
+#import "GHUITableViewCell.h"
 #import "GHUITableViewDataSource.h"
 
 #import "GHUIView.h"

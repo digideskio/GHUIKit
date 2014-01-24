@@ -37,6 +37,7 @@
 		00E1A6BC18230DD300BBDFBD /* GHUIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E1A6BB18230DD300BBDFBD /* GHUIAlertView.m */; };
 		00E1A6BF18230F7300BBDFBD /* GHUIActivityLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E1A6BE18230F7300BBDFBD /* GHUIActivityLabel.m */; };
 		00EF3D621835C52E00C6B5C0 /* GHUICollectionViewLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 00EF3D611835C52E00C6B5C0 /* GHUICollectionViewLabel.m */; };
+		00F238951890A58F00EE58D9 /* GHUITableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F238941890A58F00EE58D9 /* GHUITableViewCell.m */; };
 		CEB2341B467542B980EEF5F6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E609F41752043869A0ED942 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -117,6 +118,8 @@
 		00E1A6BE18230F7300BBDFBD /* GHUIActivityLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIActivityLabel.m; sourceTree = "<group>"; };
 		00EF3D601835C52E00C6B5C0 /* GHUICollectionViewLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUICollectionViewLabel.h; sourceTree = "<group>"; };
 		00EF3D611835C52E00C6B5C0 /* GHUICollectionViewLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUICollectionViewLabel.m; sourceTree = "<group>"; };
+		00F238931890A58F00EE58D9 /* GHUITableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUITableViewCell.h; sourceTree = "<group>"; };
+		00F238941890A58F00EE58D9 /* GHUITableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUITableViewCell.m; sourceTree = "<group>"; };
 		41180B493CA648BEBF3F8549 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		5E609F41752043869A0ED942 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -151,6 +154,8 @@
 				004CB3C518909A2A00EFE8F7 /* GHUITableView.m */,
 				004CB3C718909A3A00EFE8F7 /* GHUITableViewDataSource.h */,
 				004CB3C818909A3A00EFE8F7 /* GHUITableViewDataSource.m */,
+				00F238931890A58F00EE58D9 /* GHUITableViewCell.h */,
+				00F238941890A58F00EE58D9 /* GHUITableViewCell.m */,
 			);
 			path = UITableView;
 			sourceTree = "<group>";
@@ -446,6 +451,7 @@
 				00C1D5F1183171E90080E2CF /* GHUIViewController.m in Sources */,
 				0099329918204C6600556ECC /* GHSUIView.m in Sources */,
 				00C095121821D1CE00E37D61 /* GHUIActionSheet.m in Sources */,
+				00F238951890A58F00EE58D9 /* GHUITableViewCell.m in Sources */,
 				009932B51820571F00556ECC /* GHUINavigationBar.m in Sources */,
 				00E1A6BF18230F7300BBDFBD /* GHUIActivityLabel.m in Sources */,
 				004CB3C918909A3A00EFE8F7 /* GHUITableViewDataSource.m in Sources */,

@@ -43,8 +43,10 @@ typedef BOOL (^GHUICellShouldSelectBlock)(id sender, NSIndexPath *indexPath, id 
 
 - (id)objectAtIndexPath:(NSIndexPath *)indexPath;
 
-- (NSUInteger)indexOfObject:(id)object inSection:(NSInteger)section;
+- (NSUInteger)indexOfObject:(id)object section:(NSInteger)section;
+- (NSIndexPath *)indexPathOfObject:(id)object section:(NSInteger)section;
 
+- (void)removeObjectAtIndexPath:(NSIndexPath *)indexPath;
 - (void)removeObjects:(NSArray *)objects;
 - (void)removeObjects:(NSArray *)objects section:(NSInteger)section;
 - (void)removeAllObjects;

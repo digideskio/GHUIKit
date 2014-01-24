@@ -37,6 +37,9 @@ typedef enum {
   // Whether width specified will be set as the width. Using this option will
   // use the specified width regardless of the width returned by sizeThatFits.
   GHLayoutOptionsFixedWidth = 1 << 11,
+  // Whether width specified will be set as the height. Using this option will
+  // use the specified width regardless of the height returned by sizeThatFits.
+  GHLayoutOptionsFixedHeight = 1 << 12,
 } GHLayoutOptions;
 
 @protocol GHLayoutView;

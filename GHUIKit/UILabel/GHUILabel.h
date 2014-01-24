@@ -100,24 +100,9 @@
 @property (nonatomic) CGFloat cornerRadiusRatio;
 
 /*!
- Background image.
- */
-@property (nonatomic) UIImage *backgroundImage;
-
-/*!
  Margins for element.
  */
 @property (nonatomic) UIEdgeInsets margin;
-
-/*!
- Background image (highlighted).
- */
-@property (nonatomic) UIImage *highlightedBackgroundImage;
-
-/*@!
- Background image (disabled).
- */
-@property (nonatomic) UIImage *disabledBackgroundImage;
 
 /*!
  Image to display on the right side of the button.

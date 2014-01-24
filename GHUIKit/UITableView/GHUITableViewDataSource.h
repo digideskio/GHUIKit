@@ -8,7 +8,11 @@
 
 #import "GHUICellDataSource.h"
 
+typedef void (^GHUICellDeleteBlock)(id sender, NSIndexPath *indexPath, id object);
+
 @interface GHUITableViewDataSource : GHUICellDataSource <UITableViewDataSource, UITableViewDelegate>
+
+@property (copy) GHUICellDeleteBlock deleteBlock;
 
 - (void)setCellClass:(Class)cellClass tableView:(UITableView *)tableView section:(NSInteger)section;
 

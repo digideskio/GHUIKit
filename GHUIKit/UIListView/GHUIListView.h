@@ -13,7 +13,6 @@
 }
 
 @property UIEdgeInsets insets;
-@property BOOL sizeToFitEnabled;
 @property UIColor *borderColor;
 
 - (NSArray *)views;
