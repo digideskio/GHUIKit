@@ -7,10 +7,11 @@
 //
 
 #import "GHUIView.h"
+#import "GHUIViewControllerAnimation.h"
 
-@interface GHUIViewController : UIViewController <GHUIViewNavigationDelegate> {
-  GHUIView *_contentView;
-}
+@interface GHUIViewController : UIViewController <GHUIViewNavigationDelegate, UINavigationControllerDelegate>
+
+@property GHUIViewControllerAnimation *animationController;
 
 - (id)initWithView:(GHUIView *)view;
 

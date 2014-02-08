@@ -10,6 +10,10 @@
 #import "GHUIControl.h"
 #import "GHUIUtils.h"
 
+@interface GHUIViewController ()
+@property GHUIView *contentView;
+@end
+
 @interface GHUIView (ViewCallbacks)
 - (void)_viewWillAppear:(BOOL)animated;
 - (void)_viewDidAppear:(BOOL)animated;
@@ -24,7 +28,6 @@
   if ((self = [super init])) {
     _contentView = view;
     _contentView.navigationDelegate = self;
-    self.edgesForExtendedLayout = UIRectEdgeNone;
   }
   return self;
 }
@@ -75,8 +78,20 @@
   [self.navigationController pushViewController:viewController animated:animated];
 }
 
+- (void)pushView:(GHUIView *)view animation:(id<UIViewControllerAnimatedTransitioning>)animation {
+  GHUIViewController *viewController = [[GHUIViewController alloc] initWithView:view];
+  self.navigationController.delegate = viewController;
+  
+  viewController.animationController = animation;
+  [self.navigationController pushViewController:viewController animated:YES];
+}
+
 - (void)popViewAnimated:(BOOL)animated {
   [self.navigationController popViewControllerAnimated:animated];
+}
+
+- (void)popToRootViewAnimated:(BOOL)animated {
+  [self.navigationController popToRootViewControllerAnimated:animated];
 }
 
 - (void)swapView:(GHUIView *)view animated:(BOOL)animated {
@@ -94,5 +109,29 @@
   }
   [self.navigationController setViewControllers:viewControllers animated:animated];
 }
+
+#pragma mark UIViewControllerAnimatedTransitioning
+
+- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController {
+    
+  GHUIViewControllerAnimation *animationController = self.animationController;
+  if (!animationController) return nil;
+
+  switch (operation) {
+    case UINavigationControllerOperationPush:
+      animationController.animationType = GHUIViewControllerAnimationTypePresent;
+      return animationController;
+    case UINavigationControllerOperationPop:
+      animationController.animationType = GHUIViewControllerAnimationTypeDismiss;
+      return animationController;
+    default:
+      return nil;
+  }
+}
+
+- (id<UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController interactionControllerForAnimationController:(id<UIViewControllerAnimatedTransitioning>)animationController {
+  return nil;
+}
+
 
 @end

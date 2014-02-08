@@ -17,12 +17,11 @@
 #import "GHUITableView.h"
 #import "GHUITableViewCell.h"
 #import "GHUITableViewDataSource.h"
+#import "GHUITableViewDetailCell.h"
 
 #import "GHUIView.h"
 
 #import "GHUINavigationBar.h"
-
-#import "GHUIViewStack.h"
 
 #import "GHUIControl.h"
 #import "GHUIButton.h"

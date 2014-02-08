@@ -17,19 +17,21 @@
 		0099328218187BFE00556ECC /* GHUICollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0099328118187BFE00556ECC /* GHUICollectionView.m */; };
 		0099328418187DBE00556ECC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0099328318187DBE00556ECC /* UIKit.framework */; };
 		0099328F181ADDEB00556ECC /* GHUICollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0099328E181ADDEB00556ECC /* GHUICollectionViewCell.m */; };
-		0099329618204BCC00556ECC /* GHUIViewStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 0099329518204BCC00556ECC /* GHUIViewStack.m */; };
-		0099329918204C6600556ECC /* GHSUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0099329818204C6600556ECC /* GHSUIView.m */; };
 		009932A118204D9100556ECC /* GHUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 009932A018204D9100556ECC /* GHUIView.m */; };
 		009932A818204F4B00556ECC /* GHUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 009932A718204F4B00556ECC /* GHUIButton.m */; };
 		009932AB1820501800556ECC /* GHUIControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 009932AA1820501800556ECC /* GHUIControl.m */; };
 		009932AE1820537000556ECC /* GHLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 009932AD1820537000556ECC /* GHLayout.m */; };
-		009932B1182055C900556ECC /* GHSUIInternalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 009932B0182055C900556ECC /* GHSUIInternalView.m */; };
 		009932B51820571F00556ECC /* GHUINavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 009932B41820571F00556ECC /* GHUINavigationBar.m */; };
 		009932BA18206DFF00556ECC /* GHUISwitchButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 009932B918206DFF00556ECC /* GHUISwitchButton.m */; };
 		00A411B8182445E200C5A20F /* GHUIImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A411B7182445E200C5A20F /* GHUIImageView.m */; };
 		00A411BB182457CE00C5A20F /* GHUICollectionViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A411BA182457CE00C5A20F /* GHUICollectionViewDataSource.m */; };
 		00A411C11829A16000C5A20F /* GHUIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A411C01829A16000C5A20F /* GHUIUtils.m */; };
 		00A412021829D9CD00C5A20F /* GHUIListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A412011829D9CD00C5A20F /* GHUIListView.m */; };
+		00AFEFA318A5A93A0072632C /* GHUIViewControllerAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 00AFEFA218A5A93A0072632C /* GHUIViewControllerAnimation.m */; };
+		00AFEFA618A5AA100072632C /* GHUIViewControllerDropAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 00AFEFA518A5AA100072632C /* GHUIViewControllerDropAnimation.m */; };
+		00AFEFAD18A5B6F90072632C /* GHUITableViewDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 00AFEFAC18A5B6F90072632C /* GHUITableViewDetailCell.m */; };
+		00AFEFBC18A5C19B0072632C /* GHUIViewControllerModalAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 00AFEFBB18A5C19B0072632C /* GHUIViewControllerModalAnimation.m */; };
+		00AFEFBF18A5C4330072632C /* GHUIViewControllerSlideAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 00AFEFBE18A5C4330072632C /* GHUIViewControllerSlideAnimation.m */; };
 		00C0950E1821C64200E37D61 /* GHUIActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C0950D1821C64200E37D61 /* GHUIActivityView.m */; };
 		00C095121821D1CE00E37D61 /* GHUIActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C095111821D1CE00E37D61 /* GHUIActionSheet.m */; };
 		00C1D5E7182D95CA0080E2CF /* GHUILabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C1D5E6182D95CA0080E2CF /* GHUILabel.m */; };
@@ -75,10 +77,6 @@
 		0099328A1819A68A00556ECC /* GHUIDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIDefines.h; sourceTree = "<group>"; };
 		0099328D181ADDEB00556ECC /* GHUICollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUICollectionViewCell.h; sourceTree = "<group>"; };
 		0099328E181ADDEB00556ECC /* GHUICollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUICollectionViewCell.m; sourceTree = "<group>"; };
-		0099329418204BCC00556ECC /* GHUIViewStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIViewStack.h; sourceTree = "<group>"; };
-		0099329518204BCC00556ECC /* GHUIViewStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIViewStack.m; sourceTree = "<group>"; };
-		0099329718204C6600556ECC /* GHSUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHSUIView.h; sourceTree = "<group>"; };
-		0099329818204C6600556ECC /* GHSUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHSUIView.m; sourceTree = "<group>"; };
 		0099329F18204D9100556ECC /* GHUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIView.h; sourceTree = "<group>"; };
 		009932A018204D9100556ECC /* GHUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIView.m; sourceTree = "<group>"; };
 		009932A618204F4B00556ECC /* GHUIButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIButton.h; sourceTree = "<group>"; };
@@ -87,8 +85,6 @@
 		009932AA1820501800556ECC /* GHUIControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIControl.m; sourceTree = "<group>"; };
 		009932AC1820537000556ECC /* GHLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHLayout.h; sourceTree = "<group>"; };
 		009932AD1820537000556ECC /* GHLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHLayout.m; sourceTree = "<group>"; };
-		009932AF182055C900556ECC /* GHSUIInternalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHSUIInternalView.h; sourceTree = "<group>"; };
-		009932B0182055C900556ECC /* GHSUIInternalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHSUIInternalView.m; sourceTree = "<group>"; };
 		009932B31820571F00556ECC /* GHUINavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUINavigationBar.h; sourceTree = "<group>"; };
 		009932B41820571F00556ECC /* GHUINavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUINavigationBar.m; sourceTree = "<group>"; };
 		009932B61820691100556ECC /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -104,6 +100,16 @@
 		00A411D21829D6EA00C5A20F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		00A412001829D9CD00C5A20F /* GHUIListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIListView.h; sourceTree = "<group>"; };
 		00A412011829D9CD00C5A20F /* GHUIListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIListView.m; sourceTree = "<group>"; };
+		00AFEFA118A5A93A0072632C /* GHUIViewControllerAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIViewControllerAnimation.h; sourceTree = "<group>"; };
+		00AFEFA218A5A93A0072632C /* GHUIViewControllerAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIViewControllerAnimation.m; sourceTree = "<group>"; };
+		00AFEFA418A5AA100072632C /* GHUIViewControllerDropAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIViewControllerDropAnimation.h; sourceTree = "<group>"; };
+		00AFEFA518A5AA100072632C /* GHUIViewControllerDropAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIViewControllerDropAnimation.m; sourceTree = "<group>"; };
+		00AFEFAB18A5B6F90072632C /* GHUITableViewDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUITableViewDetailCell.h; sourceTree = "<group>"; };
+		00AFEFAC18A5B6F90072632C /* GHUITableViewDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUITableViewDetailCell.m; sourceTree = "<group>"; };
+		00AFEFBA18A5C19B0072632C /* GHUIViewControllerModalAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIViewControllerModalAnimation.h; sourceTree = "<group>"; };
+		00AFEFBB18A5C19B0072632C /* GHUIViewControllerModalAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIViewControllerModalAnimation.m; sourceTree = "<group>"; };
+		00AFEFBD18A5C4330072632C /* GHUIViewControllerSlideAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIViewControllerSlideAnimation.h; sourceTree = "<group>"; };
+		00AFEFBE18A5C4330072632C /* GHUIViewControllerSlideAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIViewControllerSlideAnimation.m; sourceTree = "<group>"; };
 		00C0950C1821C64200E37D61 /* GHUIActivityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIActivityView.h; sourceTree = "<group>"; };
 		00C0950D1821C64200E37D61 /* GHUIActivityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIActivityView.m; sourceTree = "<group>"; };
 		00C095101821D1CE00E37D61 /* GHUIActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIActionSheet.h; sourceTree = "<group>"; };
@@ -156,6 +162,8 @@
 				004CB3C818909A3A00EFE8F7 /* GHUITableViewDataSource.m */,
 				00F238931890A58F00EE58D9 /* GHUITableViewCell.h */,
 				00F238941890A58F00EE58D9 /* GHUITableViewCell.m */,
+				00AFEFAB18A5B6F90072632C /* GHUITableViewDetailCell.h */,
+				00AFEFAC18A5B6F90072632C /* GHUITableViewDetailCell.m */,
 			);
 			path = UITableView;
 			sourceTree = "<group>";
@@ -202,7 +210,6 @@
 				004CB3C318909A1100EFE8F7 /* UITableView */,
 				0099329E18204D8600556ECC /* UIView */,
 				009932B21820570F00556ECC /* UINavigationBar */,
-				0099329318204BC000556ECC /* UIViewStack */,
 				009932A518204F3200556ECC /* UIButton */,
 				00C0950B1821C63200E37D61 /* UIActivityView */,
 				00C0950F1821D1B500E37D61 /* UIActionSheet */,
@@ -240,19 +247,6 @@
 				004CB3CB18909AED00EFE8F7 /* GHUICellDataSource.m */,
 			);
 			path = UICollectionView;
-			sourceTree = "<group>";
-		};
-		0099329318204BC000556ECC /* UIViewStack */ = {
-			isa = PBXGroup;
-			children = (
-				0099329418204BCC00556ECC /* GHUIViewStack.h */,
-				0099329518204BCC00556ECC /* GHUIViewStack.m */,
-				0099329718204C6600556ECC /* GHSUIView.h */,
-				0099329818204C6600556ECC /* GHSUIView.m */,
-				009932AF182055C900556ECC /* GHSUIInternalView.h */,
-				009932B0182055C900556ECC /* GHSUIInternalView.m */,
-			);
-			path = UIViewStack;
 			sourceTree = "<group>";
 		};
 		0099329E18204D8600556ECC /* UIView */ = {
@@ -342,6 +336,14 @@
 			children = (
 				00C1D5EF183171E90080E2CF /* GHUIViewController.h */,
 				00C1D5F0183171E90080E2CF /* GHUIViewController.m */,
+				00AFEFA118A5A93A0072632C /* GHUIViewControllerAnimation.h */,
+				00AFEFA218A5A93A0072632C /* GHUIViewControllerAnimation.m */,
+				00AFEFA418A5AA100072632C /* GHUIViewControllerDropAnimation.h */,
+				00AFEFA518A5AA100072632C /* GHUIViewControllerDropAnimation.m */,
+				00AFEFBA18A5C19B0072632C /* GHUIViewControllerModalAnimation.h */,
+				00AFEFBB18A5C19B0072632C /* GHUIViewControllerModalAnimation.m */,
+				00AFEFBD18A5C4330072632C /* GHUIViewControllerSlideAnimation.h */,
+				00AFEFBE18A5C4330072632C /* GHUIViewControllerSlideAnimation.m */,
 			);
 			path = UINavigationController;
 			sourceTree = "<group>";
@@ -443,29 +445,31 @@
 			files = (
 				00307A4F1863C6DD00FA5977 /* GHUITextField.m in Sources */,
 				009932AE1820537000556ECC /* GHLayout.m in Sources */,
-				009932B1182055C900556ECC /* GHSUIInternalView.m in Sources */,
 				00C1D5E7182D95CA0080E2CF /* GHUILabel.m in Sources */,
 				0099328218187BFE00556ECC /* GHUICollectionView.m in Sources */,
 				004CB3CC18909AED00EFE8F7 /* GHUICellDataSource.m in Sources */,
 				009932A818204F4B00556ECC /* GHUIButton.m in Sources */,
+				00AFEFA618A5AA100072632C /* GHUIViewControllerDropAnimation.m in Sources */,
 				00C1D5F1183171E90080E2CF /* GHUIViewController.m in Sources */,
-				0099329918204C6600556ECC /* GHSUIView.m in Sources */,
 				00C095121821D1CE00E37D61 /* GHUIActionSheet.m in Sources */,
 				00F238951890A58F00EE58D9 /* GHUITableViewCell.m in Sources */,
 				009932B51820571F00556ECC /* GHUINavigationBar.m in Sources */,
 				00E1A6BF18230F7300BBDFBD /* GHUIActivityLabel.m in Sources */,
+				00AFEFBC18A5C19B0072632C /* GHUIViewControllerModalAnimation.m in Sources */,
 				004CB3C918909A3A00EFE8F7 /* GHUITableViewDataSource.m in Sources */,
 				009932A118204D9100556ECC /* GHUIView.m in Sources */,
+				00AFEFBF18A5C4330072632C /* GHUIViewControllerSlideAnimation.m in Sources */,
 				002ECB041868E4C5005523A6 /* GHUIKeyboardHandler.m in Sources */,
 				00A411C11829A16000C5A20F /* GHUIUtils.m in Sources */,
 				009932BA18206DFF00556ECC /* GHUISwitchButton.m in Sources */,
 				004CB3C618909A2A00EFE8F7 /* GHUITableView.m in Sources */,
 				00A411BB182457CE00C5A20F /* GHUICollectionViewDataSource.m in Sources */,
 				00A412021829D9CD00C5A20F /* GHUIListView.m in Sources */,
+				00AFEFAD18A5B6F90072632C /* GHUITableViewDetailCell.m in Sources */,
 				0099328F181ADDEB00556ECC /* GHUICollectionViewCell.m in Sources */,
 				00EF3D621835C52E00C6B5C0 /* GHUICollectionViewLabel.m in Sources */,
 				009932AB1820501800556ECC /* GHUIControl.m in Sources */,
-				0099329618204BCC00556ECC /* GHUIViewStack.m in Sources */,
+				00AFEFA318A5A93A0072632C /* GHUIViewControllerAnimation.m in Sources */,
 				00A411B8182445E200C5A20F /* GHUIImageView.m in Sources */,
 				00C0950E1821C64200E37D61 /* GHUIActivityView.m in Sources */,
 				00E1A6BC18230DD300BBDFBD /* GHUIAlertView.m in Sources */,
