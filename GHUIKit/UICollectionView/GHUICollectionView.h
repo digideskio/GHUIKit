@@ -48,4 +48,6 @@ typedef void (^GHUICollectionViewRefreshBlock)(GHUICollectionView *collectionVie
 - (void)scrollToBottom:(BOOL)animated;
 - (void)scrollToBottomAfterReload:(BOOL)animated;
 
+- (void)registerCellClass:(Class)cellClass;
+
 @end

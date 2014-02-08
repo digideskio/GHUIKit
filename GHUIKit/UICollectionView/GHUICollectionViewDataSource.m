@@ -57,11 +57,11 @@
   GHUICollectionViewLabel *view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"Header" forIndexPath:indexPath];
   NSString *text = [self headerTextForSection:indexPath.section];
   view.label.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.75];
-  view.label.titleColor = [UIColor colorWithRed:255.0f/255.0f green:125.0f/255.0f blue:0.0f/255.0f alpha:1.0];
-  view.label.titleFont = [UIFont systemFontOfSize:18];
+  view.label.textColor = [UIColor colorWithRed:255.0f/255.0f green:125.0f/255.0f blue:0.0f/255.0f alpha:1.0];
+  view.label.font = [UIFont systemFontOfSize:18];
   view.label.insets = UIEdgeInsetsMake(0, 10, 0, 10);
   [view.label setBorderStyle:GHUIBorderStyleTopBottom color:[UIColor colorWithWhite:230.0f/255.0f alpha:1.0] width:1.0 cornerRadius:0];
-  view.label.title = text;
+  view.label.text = text;
   return view;
 }
 
@@ -100,7 +100,7 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
   if ([self countForSection:section] == 0) return CGSizeZero;
   NSString *text = [self headerTextForSection:section];
-  if (text) return CGSizeMake(320, 38);
+  if (text) return CGSizeMake(320, 38); // TODO: Configurable size
   return CGSizeZero;
 }
 

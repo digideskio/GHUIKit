@@ -10,6 +10,8 @@
 
 @interface GHUICollectionViewCell : UICollectionViewCell
 
-@property (nonatomic) UIView *viewForContent;
++ (Class)contentViewClass;
+
+- (id)viewForContent;
 
 @end

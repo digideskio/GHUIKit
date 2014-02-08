@@ -8,6 +8,10 @@
 
 #import "GHUICollectionViewCell.h"
 
+@interface GHUICollectionViewCell ()
+@property (nonatomic) UIView *viewForContent;
+@end
+
 @implementation GHUICollectionViewCell
 
 - (void)sharedInit {
@@ -36,19 +40,26 @@
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  _viewForContent.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+  self.viewForContent.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  if (self.viewForContent) {
-    return [self.viewForContent sizeThatFits:size];
-  }
-  return [super sizeThatFits:size];
+  return [self.viewForContent sizeThatFits:size];
 }
 
-- (void)setViewForContent:(UIView *)viewForContent {
-  _viewForContent = viewForContent;
-  [self.contentView addSubview:_viewForContent];
++ (Class)contentViewClass {
+  // Abstract method
+  return nil;
+}
+
+- (UIView *)viewForContent {
+  if (!_viewForContent) {
+    Class contentViewClass = [[self class] contentViewClass];
+    NSAssert(contentViewClass, @"Not contentViewClass. You forgot to implement contentViewClass class method?");
+    _viewForContent = [[contentViewClass alloc] init];
+    [self.contentView addSubview:_viewForContent];
+  }
+  return _viewForContent;
 }
 
 @end

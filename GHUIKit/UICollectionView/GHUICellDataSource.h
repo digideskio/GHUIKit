@@ -9,6 +9,7 @@
 typedef void (^GHUICellSetBlock)(id cell, id object, NSIndexPath *indexPath);
 typedef void (^GHUICellSelectBlock)(id sender, NSIndexPath *indexPath, id object);
 typedef BOOL (^GHUICellShouldSelectBlock)(id sender, NSIndexPath *indexPath, id object);
+typedef Class (^GHUICellClassBlock)(id object, NSIndexPath *indexPath);
 
 @interface GHUICellDataSource : NSObject  {
   NSMutableDictionary *_sections;
@@ -24,6 +25,7 @@ typedef BOOL (^GHUICellShouldSelectBlock)(id sender, NSIndexPath *indexPath, id 
 @property (copy) GHUICellSetBlock cellSetBlock;
 @property (copy) GHUICellSelectBlock selectBlock;
 @property (copy) GHUICellShouldSelectBlock shouldSelectBlock;
+@property (copy) GHUICellClassBlock classBlock;
 @property (weak) id<UIScrollViewDelegate> scrollViewDelegate;
 
 
@@ -40,8 +42,10 @@ typedef BOOL (^GHUICellShouldSelectBlock)(id sender, NSIndexPath *indexPath, id 
 
 - (void)replaceObjectAtIndexPath:(NSIndexPath *)indexPath withObject:(id)object;
 - (void)replaceObjects:(NSArray *)fromObjects withObjects:(NSArray *)objects section:(NSInteger)section;
+- (NSIndexPath *)replaceObject:(id)object section:(NSInteger)section;
 
 - (id)objectAtIndexPath:(NSIndexPath *)indexPath;
+- (id)lastObjectInSection:(NSInteger)section;
 
 - (NSUInteger)indexOfObject:(id)object section:(NSInteger)section;
 - (NSIndexPath *)indexPathOfObject:(id)object section:(NSInteger)section;
@@ -55,7 +59,6 @@ typedef BOOL (^GHUICellShouldSelectBlock)(id sender, NSIndexPath *indexPath, id 
 - (void)setObjects:(NSArray *)objects;
 - (void)setObjects:(NSArray *)objects section:(NSInteger)section;
 
-- (NSIndexPath *)updateObject:(id)object inSection:(NSInteger)section;
 
 - (Class)cellClassForIndexPath:(NSIndexPath *)indexPath;
 

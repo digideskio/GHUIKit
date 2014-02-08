@@ -12,6 +12,7 @@
 
 - (void)sharedInit {
   self.alwaysBounceVertical = YES;
+  [self setMinimumLineSpacing:1];
 }
 
 - (id)initWithCoder:(NSCoder *)coder {
@@ -82,6 +83,10 @@
   CGSize size = self.contentSize;
   CGRect frame = CGRectMake(0, size.height - self.frame.size.height, size.width, self.frame.size.height);
   [self scrollRectToVisible:frame animated:animated];
+}
+
+- (void)registerCellClass:(Class)cellClass {
+  [self registerClass:cellClass forCellWithReuseIdentifier:NSStringFromClass(cellClass)];
 }
 
 - (void)scrollToBottomAfterReload:(BOOL)animated {

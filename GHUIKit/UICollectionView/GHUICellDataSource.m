@@ -99,6 +99,12 @@
   return [objects objectAtIndex:indexPath.row];
 }
 
+- (id)lastObjectInSection:(NSInteger)section {
+  NSInteger count = [self countForSection:section];
+  if (count == 0) return nil;
+  return [self objectAtIndexPath:[NSIndexPath indexPathForItem:(count - 1) inSection:section]];
+}
+
 - (NSUInteger)indexOfObject:(id)object section:(NSInteger)section {
   NSArray *objectsForSection = [self objectsForSection:section create:NO];
   if (!objectsForSection) return NSNotFound;
@@ -113,7 +119,7 @@
   return nil;
 }
 
-- (NSIndexPath *)updateObject:(id)object inSection:(NSInteger)section {
+- (NSIndexPath *)replaceObject:(id)object section:(NSInteger)section {
   NSIndexPath *indexPath = [self indexPathOfObject:object section:0];
   if (indexPath) {
     [self replaceObjectAtIndexPath:indexPath withObject:object];
@@ -122,6 +128,11 @@
 }
 
 - (Class)cellClassForIndexPath:(NSIndexPath *)indexPath {
+  if (self.classBlock) {
+    id object = [self objectAtIndexPath:indexPath];
+    return self.classBlock(object, indexPath);
+  }
+  
   Class cellClass = [_cellClasses objectForKey:@(indexPath.section)];
   if (!cellClass) cellClass = [_cellClasses objectForKey:@(-1)];
   return cellClass;
@@ -130,16 +141,16 @@
 - (CGSize)sizeForCellAtIndexPath:(NSIndexPath *)indexPath view:(UIView *)view {
   id object = [self objectAtIndexPath:indexPath];
   
-  // Can't dequeue because that will cause this method and will infinite recurse.
-  if (!_cellsForSizing) _cellsForSizing = [[NSMutableDictionary alloc] init];
-  id cellForSizing = [_cellsForSizing objectForKey:@(indexPath.section)];
+  // We can't dequeue because that will cause this method and will infinite recurse.
+  
+  Class cellClass = [self cellClassForIndexPath:indexPath];
+  if (!_cellsForSizing) _cellsForSizing = [NSMutableDictionary dictionary];
+  id cellForSizing = _cellsForSizing[NSStringFromClass(cellClass)];
   if (!cellForSizing) {
-    Class cellClass = [self cellClassForIndexPath:indexPath];
-    if (cellClass) {
-      cellForSizing = [[cellClass alloc] init];
-      [_cellsForSizing setObject:cellForSizing forKey:@(indexPath.section)];
-    }
+    cellForSizing = [[cellClass alloc] init];
+    _cellsForSizing[NSStringFromClass(cellClass)] = cellForSizing;
   }
+  
   [cellForSizing setNeedsLayout];
   self.cellSetBlock(cellForSizing, object, indexPath);
   CGSize size = [cellForSizing sizeThatFits:view.bounds.size];
