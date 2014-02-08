@@ -14,9 +14,11 @@ typedef void (^GHUIViewSubviewNeedsLayoutBlock)(UIView *view, BOOL animated);
 
 @protocol GHUIViewNavigationDelegate
 - (void)pushView:(GHUIView *)view animated:(BOOL)animated;
+- (void)pushView:(GHUIView *)view animation:(id<UIViewControllerAnimatedTransitioning>)animation;
 - (void)popViewAnimated:(BOOL)animated;
 - (void)swapView:(GHUIView *)view animated:(BOOL)animated;
 - (void)setViews:(NSArray *)views animated:(BOOL)animated;
+- (void)popToRootViewAnimated:(BOOL)animated;
 - (UINavigationItem *)navigationItem;
 - (UIInterfaceOrientation)interfaceOrientation;
 - (UIViewController *)viewController;
@@ -45,20 +47,22 @@ typedef id<GHUIViewNavigationDelegate> (^GHUIViewNavigationDelegateBlock)();
  
  */
 @interface GHUIView : UIView <GHLayoutView> {
-  BOOL _visible;  
+  BOOL _visible;
 }
 
-@property (retain, nonatomic) GHLayout *layout;
-@property (copy, nonatomic) GHUIViewSubviewNeedsLayoutBlock needsLayoutBlock;
-@property (weak, nonatomic) id<GHUIViewNavigationDelegate> navigationDelegate;
+@property GHLayout *layout;
+@property (copy) GHUIViewSubviewNeedsLayoutBlock needsLayoutBlock;
+@property (weak) id<GHUIViewNavigationDelegate> navigationDelegate;
 
 /*!
  Set if needs refresh.
  If visible, will immediately trigger refresh. Otherwise will call refresh when becoming visible.
  */
-@property (assign, nonatomic) BOOL needsRefresh;
+@property BOOL needsRefresh;
 
-@property (readonly, nonatomic, getter=isVisible) BOOL visible;
+@property (readonly, getter=isVisible) BOOL visible;
+
+@property (nonatomic) NSString *title;
 
 /*!
  Subclasses can override this method to perform initialization tasks that occur during both initWithFrame: and initWithCoder:
@@ -77,6 +81,11 @@ typedef id<GHUIViewNavigationDelegate> (^GHUIViewNavigationDelegateBlock)();
  @param animated YES if the layout should animate
  */
 - (void)notifyNeedsLayout:(BOOL)animated;
+
+/*!
+ Add a list of attributed that will call setNeedsDisplay and setNeedsLayout on change.
+ */
+- (void)setAttributesNeedUpdate:(NSArray *)attributes;
 
 #pragma mark View Callbacks
 

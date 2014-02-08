@@ -206,7 +206,7 @@ typedef enum {
 /*!
  Layout object belonging to the class implementing this protocol.
  */
-@property (retain, nonatomic) id <GHLayout>layout;
+@property id <GHLayout>layout;
 
 @optional
 

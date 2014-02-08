@@ -9,6 +9,10 @@
 #import "GHUIView.h"
 #import <GHKit/GHCGUtils.h>
 
+@interface GHUIView ()
+@property NSMutableArray *observeAttributes;
+@end
+
 @implementation GHUIView
 
 - (void)_sharedInit {
@@ -32,6 +36,27 @@
     [self sharedInit];
   }
   return self;
+}
+
+- (void)dealloc {
+  for (NSString *attr in _observeAttributes) {
+    [self removeObserver:self forKeyPath:attr context:@"attributesNeedUpdate"];
+  }
+}
+
+- (void)setAttributesNeedUpdate:(NSArray *)attributes {
+  if (!_observeAttributes) _observeAttributes = [NSMutableArray array];
+  [_observeAttributes addObjectsFromArray:attributes];
+  for (NSString *attr in attributes) {
+    [self addObserver:self forKeyPath:attr options:NSKeyValueObservingOptionNew context:@"attributesNeedUpdate"];
+  }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+  if ([_observeAttributes containsObject:keyPath]) {
+    [self setNeedsDisplay];
+    [self setNeedsLayout];
+  }
 }
 
 - (void)setFrame:(CGRect)frame {
@@ -68,10 +93,22 @@
   else [self setNeedsLayout];
 }
 
+#pragma mark Title
+
+- (void)setTitle:(NSString *)title {
+  _title = title;
+  self.navigationDelegate.navigationItem.title = _title;
+}
+
 #pragma mark Navigation Callbacks
 
 - (void)_viewWillAppear:(BOOL)animated {
   _visible = YES;
+  
+  if (self.title) {
+    self.navigationDelegate.navigationItem.title = self.title;
+  }
+  
   [self viewWillAppear:animated];
 }
 
