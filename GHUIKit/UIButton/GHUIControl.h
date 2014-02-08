@@ -26,16 +26,16 @@ typedef void (^GHUIControlTargetBlock)();
   UILongPressGestureRecognizer *_longPressGestureRecognizer;
 }
 
-@property (assign, nonatomic, getter=isSelectable) BOOL selectable; // If YES, will set selected state when touch (ended); Default is NO
-@property (assign, nonatomic, getter=isDelayActionEnabled) BOOL delayActionEnabled; // If YES, the action on the control is delayed in order to display the highlighted state
-@property (retain, nonatomic) id<GHLayout> layout;
-@property (copy, nonatomic) GHUIControlTargetBlock targetBlock;
-@property (retain, nonatomic) NSString *valueForCopy;
+@property (getter=isSelectable) BOOL selectable; // If YES, will set selected state when touch (ended); Default is NO
+@property (getter=isDelayActionEnabled) BOOL delayActionEnabled; // If YES, the action on the control is delayed in order to display the highlighted state
+@property id<GHLayout> layout;
+@property (copy) GHUIControlTargetBlock targetBlock;
+@property (nonatomic) NSString *valueForCopy;
 
 /*!
  If YES, then touching the button will not callTarget.
  */
-@property (assign, nonatomic, getter=isTargetDisabled) BOOL targetDisabled;
+@property (getter=isTargetDisabled) BOOL targetDisabled;
 
 /*!
  This method gets called by both initWithFrame and initWithCoder. Subclasses taking advantage of

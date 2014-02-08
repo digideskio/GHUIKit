@@ -27,17 +27,19 @@
   self.opaque = YES;
   self.accessibilityTraits |= UIAccessibilityTraitButton;
   
-  self.label.insets = UIEdgeInsetsMake(20, 10, 20, 10);
-  self.label.titleAlignment = NSTextAlignmentCenter;
-  self.label.selectedShadingType = GHUIShadingTypeUnknown;
-  self.label.highlightedShadingType = GHUIShadingTypeUnknown;
-  self.label.highlightedFillColor = [UIColor colorWithWhite:(217.0f/255.0f) alpha:1.0f];
-  self.label.disabledShadingType = GHUIShadingTypeUnknown;
-  self.label.disabledAlpha = 1.0;
-  self.label.titleColor = [UIColor colorWithRed:0 green:122.0f/255.0f blue:1.0f alpha:1.0f];
-  self.label.titleFont = [UIFont systemFontOfSize:20.0f];
-  self.label.disabledAlpha = 0.5;
-  self.label.disabledTitleColor = [UIColor grayColor];
+  self.insets = UIEdgeInsetsMake(20, 10, 20, 10);
+  self.borderWidth = 1.0;
+  self.borderColor = [UIColor grayColor];
+  self.textAlignment = NSTextAlignmentCenter;
+  self.highlightedShadingType = GHUIShadingTypeUnknown;
+  self.highlightedFillColor = [UIColor colorWithWhite:(217.0f/255.0f) alpha:1.0f];
+  self.disabledShadingType = GHUIShadingTypeUnknown;
+  self.textColor = [UIColor colorWithRed:0 green:122.0f/255.0f blue:1.0f alpha:1.0f];
+  self.font = [UIFont systemFontOfSize:20.0f];
+  self.style.disabledAlpha = 0.5;
+  self.style.disabledTextColor = [UIColor grayColor];
+  self.style.selectedShadingType = GHUIShadingTypeUnknown;
+  self.style.disabledAlpha = 1.0;
   
   [self addSubview:self.label];
 }
@@ -77,30 +79,6 @@
   [self.label setBackgroundColor:backgroundColor];
 }
 
-- (NSString *)title {
-  return self.label.title;
-}
-
-- (void)setTitle:(NSString *)title {
-  self.label.title = title;
-}
-
-- (UIFont *)titleFont {
-  return self.label.titleFont;
-}
-
-- (void)setTitleFont:(UIFont *)titleFont {
-  self.label.titleFont = titleFont;
-}
-
-- (UIColor *)titleColor {
-  return self.label.titleColor;
-}
-
-- (void)setTitleColor:(UIColor *)titleColor {
-  self.label.titleColor = titleColor;
-}
-
 - (NSString *)text {
   return self.label.text;
 }
@@ -109,12 +87,12 @@
   self.label.text = text;
 }
 
-- (UIFont *)textFont {
-  return self.label.textFont;
+- (UIFont *)font {
+  return self.label.font;
 }
 
-- (void)setTextFont:(UIFont *)textFont {
-  self.label.textFont = textFont;
+- (void)setFont:(UIFont *)font {
+  self.label.font = font;
 }
 
 - (UIColor *)textColor {
@@ -125,36 +103,60 @@
   self.label.textColor = textColor;
 }
 
-- (NSString *)accessoryTitle {
-  return self.label.accessoryTitle;
+- (NSString *)secondaryText {
+  return self.label.secondaryText;
 }
 
-- (void)setAccessoryTitle:(NSString *)accessoryTitle {
-  self.label.accessoryTitle = accessoryTitle;
+- (void)setSecondaryText:(NSString *)secondaryText {
+  self.label.secondaryText = secondaryText;
 }
 
-- (UIFont *)accessoryTitleFont {
-  return self.label.accessoryTitleFont;
+- (UIFont *)secondaryTextFont {
+  return self.label.secondaryTextFont;
 }
 
-- (void)setAccessoryTitleFont:(UIFont *)accessoryTitleFont {
-  self.label.accessoryTitleFont = accessoryTitleFont;
+- (void)setSecondaryTextFont:(UIFont *)secondaryTextFont {
+  self.label.secondaryTextFont = secondaryTextFont;
 }
 
-- (UIColor *)accessoryTitleColor {
-  return self.label.accessoryTitleColor;
+- (UIColor *)secondaryTextColor {
+  return self.label.secondaryTextColor;
 }
 
-- (void)setAccessoryTitleColor:(UIColor *)accessoryTitleColor {
-  self.label.accessoryTitleColor = accessoryTitleColor;
+- (void)setSecondaryTextColor:(UIColor *)secondaryTextColor {
+  self.label.secondaryTextColor = secondaryTextColor;
 }
 
-- (NSTextAlignment)accessoryTitleAlignment {
-  return self.label.accessoryTitleAlignment;
+- (NSString *)accessoryText {
+  return self.label.accessoryText;
 }
 
-- (void)setAccessoryTitleAlignment:(NSTextAlignment)accessoryTitleAlignment {
-  self.label.accessoryTitleAlignment = accessoryTitleAlignment;
+- (void)setAccessoryText:(NSString *)accessoryText {
+  self.label.accessoryText = accessoryText;
+}
+
+- (UIFont *)accessoryTextFont {
+  return self.label.accessoryTextFont;
+}
+
+- (void)setAccessoryTextFont:(UIFont *)accessoryTextFont {
+  self.label.accessoryTextFont = accessoryTextFont;
+}
+
+- (UIColor *)accessoryTextColor {
+  return self.label.accessoryTextColor;
+}
+
+- (void)setAccessoryTextColor:(UIColor *)accessoryTextColor {
+  self.label.accessoryTextColor = accessoryTextColor;
+}
+
+- (NSTextAlignment)accessoryTextAlignment {
+  return self.label.accessoryTextAlignment;
+}
+
+- (void)setAccessoryTextAlignment:(NSTextAlignment)accessoryTextAlignment {
+  self.label.accessoryTextAlignment = accessoryTextAlignment;
 }
 
 - (UIImage *)accessoryImage {
@@ -221,19 +223,19 @@
   self.label.selectedFillColor = selectedFillColor;
 }
 
-- (UIColor *)highlightedTitleColor {
-  return self.label.highlightedTitleColor;
+- (UIColor *)highlightedTextColor {
+  return self.label.highlightedTextColor;
 }
 
-- (void)setHighlightedTitleColorFillColor:(UIColor *)highlightedTitleColor {
-  self.label.highlightedTitleColor = highlightedTitleColor;
+- (void)setHighlightedTextColorFillColor:(UIColor *)highlightedTextColor {
+  self.label.highlightedTextColor = highlightedTextColor;
 }
 
 - (UIColor *)highlightedFillColor {
   return self.label.highlightedFillColor;
 }
 
-- (void)setHighlightedFillColorFillColor:(UIColor *)highlightedFillColor {
+- (void)setHighlightedFillColor:(UIColor *)highlightedFillColor {
   self.label.highlightedFillColor = highlightedFillColor;
 }
 
@@ -241,7 +243,7 @@
   return self.label.highlightedFillColor2;
 }
 
-- (void)setHighlightedFillColorFillColor2:(UIColor *)highlightedFillColor2 {
+- (void)setHighlightedFillColor2:(UIColor *)highlightedFillColor2 {
   self.label.highlightedFillColor2 = highlightedFillColor2;
 }
 
@@ -249,7 +251,7 @@
   return self.label.disabledFillColor;
 }
 
-- (void)setDisabledFillColorFillColor:(UIColor *)disabledFillColor {
+- (void)setDisabledFillColor:(UIColor *)disabledFillColor {
   self.label.disabledFillColor = disabledFillColor;
 }
 
@@ -257,7 +259,7 @@
   return self.label.disabledFillColor2;
 }
 
-- (void)setDisabledFillColorFillColor2:(UIColor *)disabledFillColor2 {
+- (void)setDisabledFillColor2:(UIColor *)disabledFillColor2 {
   self.label.disabledFillColor2 = disabledFillColor2;
 }
 
@@ -277,20 +279,20 @@
   self.label.insets = insets;
 }
 
-- (UIEdgeInsets)titleInsets {
-  return self.label.titleInsets;
+- (UIEdgeInsets)textInsets {
+  return self.label.textInsets;
 }
 
-- (void)setTitleInsets:(UIEdgeInsets)titleInsets {
-  self.label.titleInsets = titleInsets;
+- (void)settextInsets:(UIEdgeInsets)textInsets {
+  self.label.textInsets = textInsets;
 }
 
-- (NSTextAlignment)titleAlignment {
-  return self.label.titleAlignment;
+- (NSTextAlignment)textAlignment {
+  return self.label.textAlignment;
 }
 
-- (void)setTitleAlignment:(NSTextAlignment)titleAlignment {
-  self.label.titleAlignment = titleAlignment;
+- (void)setTextAlignment:(NSTextAlignment)textAlignment {
+  self.label.textAlignment = textAlignment;
 }
 
 - (UIEdgeInsets)insets {
@@ -313,10 +315,50 @@
   return self.label.borderStyle;
 }
 
+- (void)setShadingType:(GHUIShadingType)shadingType {
+  self.label.shadingType = shadingType;
+}
+
+- (GHUIShadingType)shadingType {
+  return self.label.shadingType;
+}
+
+- (void)setDisabledShadingType:(GHUIShadingType)disabledShadingType {
+  self.label.disabledShadingType = disabledShadingType;
+}
+
+- (GHUIShadingType)disabledShadingType {
+  return self.label.disabledShadingType;
+}
+
+- (void)setHighlightedShadingType:(GHUIShadingType)highlightedShadingType {
+  self.label.highlightedShadingType = highlightedShadingType;
+}
+
+- (GHUIShadingType)highlightedShadingType {
+  return self.label.highlightedShadingType;
+}
+
+- (BOOL)textHidden {
+  return self.label.textHidden;
+}
+
+- (void)setTextHidden:(BOOL)textHidden {
+  self.label.textHidden = textHidden;
+}
+
+- (UIActivityIndicatorView *)activityIndicatorView {
+  return self.label.activityIndicatorView;
+}
+
 - (void)setActivityIndicatorAnimating:(BOOL)animating {
   [self.label setActivityIndicatorAnimating:animating];
   self.userInteractionEnabled = !animating;
   [self setNeedsLayout];
+}
+
+- (GHUILabel *)style {
+  return self.label;
 }
 
 @end

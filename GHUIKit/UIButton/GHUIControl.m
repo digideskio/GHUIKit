@@ -20,6 +20,7 @@
 }
 
 - (void)_sharedInit {
+  self.delayActionEnabled = YES;
   [self addTarget:self action:@selector(_didTouchUpInside) forControlEvents:UIControlEventTouchUpInside];
 }
 

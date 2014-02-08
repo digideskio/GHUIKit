@@ -17,41 +17,46 @@
 - (CGSize)sizeForVariableWidth:(CGSize)size;
 
 // Forwarded properties
-@property (nonatomic) NSString *title;
-@property (nonatomic) UIFont *titleFont;
-@property (nonatomic) UIColor *titleColor;
-@property (nonatomic) NSTextAlignment titleAlignment;
-@property (nonatomic) NSString *text;
-@property (nonatomic) UIFont *textFont;
-@property (nonatomic) UIColor *textColor;
-@property (nonatomic) NSString *accessoryTitle;
-@property (nonatomic) UIFont *accessoryTitleFont;
-@property (nonatomic) UIColor *accessoryTitleColor;
-@property (nonatomic) NSTextAlignment accessoryTitleAlignment;
+@property (nonatomic) NSString *text UI_APPEARANCE_SELECTOR;
+@property (nonatomic) UIFont *font UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) UIColor *textColor UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) NSTextAlignment textAlignment UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) NSString *secondaryText UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) UIFont *secondaryTextFont UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) UIColor *secondaryTextColor UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) NSString *accessoryText UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) UIFont *accessoryTextFont UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) UIColor *accessoryTextColor UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) NSTextAlignment accessoryTextAlignment UI_APPEARANCE_SELECTOR;;
 @property (nonatomic) UIImage *accessoryImage;
-@property (nonatomic) UIColor *fillColor;
-@property (nonatomic) UIColor *fillColor2;
-@property (nonatomic) CGFloat cornerRadius;
-@property (nonatomic) CGFloat cornerRadiusRatio;
-@property (nonatomic) UIColor *borderColor;
-@property (nonatomic) CGFloat borderWidth;
-@property (nonatomic) UIColor *selectedFillColor;
-@property (nonatomic) UIColor *highlightedFillColor;
-@property (nonatomic) UIColor *highlightedFillColor2;
-@property (nonatomic) UIColor *highlightedTitleColor;
-@property (nonatomic) UIColor *disabledFillColor;
-@property (nonatomic) UIColor *disabledFillColor2;
+@property (nonatomic) UIColor *fillColor UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) UIColor *fillColor2 UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) CGFloat cornerRadius UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) CGFloat cornerRadiusRatio UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) UIColor *borderColor UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) CGFloat borderWidth UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) UIColor *selectedFillColor UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) UIColor *highlightedFillColor UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) UIColor *highlightedFillColor2 UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) UIColor *highlightedtextColor UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) UIColor *disabledFillColor UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) UIColor *disabledFillColor2 UI_APPEARANCE_SELECTOR;;
 @property (nonatomic, readonly) UIImageView *imageView;
 @property (nonatomic) CGSize imageSize;
-@property (nonatomic) UIEdgeInsets insets;
-@property (nonatomic) UIEdgeInsets titleInsets;
-@property (nonatomic) UIEdgeInsets margin;
-@property (nonatomic) GHUIBorderStyle borderStyle;
-@property (nonatomic) GHUIShadingType shadingType;
-@property (nonatomic) GHUIShadingType highlightedShadingType;
-@property (nonatomic) GHUIShadingType disabledShadingType;
+@property (nonatomic) UIEdgeInsets insets UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) UIEdgeInsets textInsets UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) UIEdgeInsets margin UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) GHUIBorderStyle borderStyle UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) GHUIShadingType shadingType UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) GHUIShadingType highlightedShadingType UI_APPEARANCE_SELECTOR;;
+@property (nonatomic) GHUIShadingType disabledShadingType UI_APPEARANCE_SELECTOR;;
+@property (nonatomic, readonly) UIActivityIndicatorView *activityIndicatorView;
+@property (nonatomic) BOOL textHidden;
 
 - (void)setActivityIndicatorAnimating:(BOOL)animating;
+
+// For additional styles
+- (GHUILabel *)style;
 
 @end
 
