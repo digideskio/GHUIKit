@@ -21,49 +21,49 @@
   self.highlightedShadingType = GHUIShadingTypeUnknown;
   self.disabledShadingType = GHUIShadingTypeUnknown;
   self.disabledAlpha = 1.0;
-  self.borderWidth = 1.0;
-  self.titleColor = [UIColor blackColor];
-  self.titleFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-  self.textFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-  
-  _observeAttributes = @[@"title", @"titleInsets", @"titleFont", @"titleAlignment", @"text", @"textFont", @"textAlignment", @"cornerRadius", @"cornerRadiusRatio", @"accessoryTitle", @"borderStyle"];
-  for (NSString *attr in _observeAttributes) {
-    [self addObserver:self forKeyPath:attr options:NSKeyValueObservingOptionNew context:nil];
-  }
+  self.textColor = [UIColor blackColor];
+  self.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+  self.secondaryTextColor = [UIColor blackColor];
+  self.secondaryTextFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+
+  [self setAttributesNeedUpdate:@[@"text", @"textInsets", @"textFont", @"textAlignment", @"text", @"textFont", @"textAlignment", @"cornerRadius", @"cornerRadiusRatio", @"accessoryText", @"borderStyle"]];
 }
 
 - (void)dealloc {
-  for (NSString *attr in _observeAttributes) {
-    [self removeObserver:self forKeyPath:attr];
-  }
   [_imageView removeObserver:self forKeyPath:@"image"];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+  [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+  [self setNeedsDisplay];
   [self setNeedsLayout];
 }
 
-- (void)_sizeText:(CGSize)constrainedToSize size:(CGSize *)size titleSize:(CGSize *)titleSize {
+- (BOOL)shouldDrawText {
+  return ![self isAnimating] && !self.textHidden;
+}
+
+- (void)_sizeText:(CGSize)constrainedToSize size:(CGSize *)size textSize:(CGSize *)textSize {
   *size = CGSizeZero;
-  *titleSize = CGSizeZero;
-  if (_textHidden) return;
+  *textSize = CGSizeZero;
+  if (![self shouldDrawText]) return;
   CGSize sizeText = CGSizeZero;
   
-  if (_title) {
-    sizeText = [GHUIUtils sizeWithText:_title font:_titleFont size:constrainedToSize multiline:YES truncate:YES];
-    *titleSize = sizeText;
-  }
-  
-  if (_accessoryTitle) {
-    constrainedToSize.width -= roundf(sizeText.width);
-    UIFont *font = (_accessoryTitleFont ? _accessoryTitleFont : _titleFont);
-    CGSize accessoryTitleSize = [GHUIUtils sizeWithText:_accessoryTitle font:font size:constrainedToSize multiline:NO truncate:YES];
-    sizeText.width += roundf(accessoryTitleSize.width);
-  }
-  
   if (_text) {
-    UIFont *font = (_textFont ? _textFont : _titleFont);
-    CGSize textSize = [GHUIUtils sizeWithText:_text font:font size:constrainedToSize multiline:YES truncate:YES];
+    sizeText = [GHUIUtils sizeWithText:_text font:_font size:constrainedToSize multiline:YES truncate:YES];
+    *textSize = sizeText;
+  }
+  
+  if (_accessoryText) {
+    constrainedToSize.width -= roundf(sizeText.width);
+    UIFont *font = (_accessoryTextFont ? _accessoryTextFont : _font);
+    CGSize accessoryTextSize = [GHUIUtils sizeWithText:_accessoryText font:font size:constrainedToSize multiline:NO truncate:YES];
+    sizeText.width += roundf(accessoryTextSize.width);
+  }
+  
+  if (_secondaryText) {
+    UIFont *font = (_secondaryTextFont ? _secondaryTextFont : _font);
+    CGSize textSize = [GHUIUtils sizeWithText:_secondaryText font:font size:constrainedToSize multiline:YES truncate:YES];
     sizeText.height += roundf(textSize.height);
   }
   
@@ -74,17 +74,17 @@
   CGFloat y = 0;
   
   y += _insets.top;
-  UIEdgeInsets titleInsets = (_textHidden ? UIEdgeInsetsZero : _titleInsets);
-  y += titleInsets.top;
+  UIEdgeInsets textInsets = ([self shouldDrawText] ? UIEdgeInsetsZero : _textInsets);
+  y += textInsets.top;
   
   CGSize imageSize = [self _imageSize];
   
   _sizeThatFitsText = CGSizeZero;
-  _titleSize = CGSizeZero;
+  _textSize = CGSizeZero;
   
   CGSize constrainedToSize = size;
   // Subtract insets
-  constrainedToSize.width -= (titleInsets.left + titleInsets.right);
+  constrainedToSize.width -= (textInsets.left + textInsets.right);
   constrainedToSize.width -= (_insets.left + _insets.right);
   
   // Subtract activity indicator view
@@ -96,15 +96,7 @@
     constrainedToSize.height = CGFLOAT_MAX;
   }
   
-  [self _sizeText:constrainedToSize size:&_sizeThatFitsText titleSize:&_titleSize];
-  
-  if (_activityIndicatorView) {
-    CGPoint p = GHCGPointToCenter(_activityIndicatorView.frame.size, size);
-    if (!_textHidden) {
-      p.x -= _activityIndicatorView.frame.size.width + 4;
-    }
-    [layout setOrigin:p view:_activityIndicatorView];
-  }
+  [self _sizeText:constrainedToSize size:&_sizeThatFitsText textSize:&_textSize];
   
   if (imageSize.height > _sizeThatFitsText.height) {
     y += imageSize.height;
@@ -112,8 +104,13 @@
     y += _sizeThatFitsText.height;
   }
   
-  y += titleInsets.bottom;
+  y += textInsets.bottom;
   y += _insets.bottom;
+  
+  if (_activityIndicatorView) {
+    [layout setOrigin:GHCGPointToCenter(_activityIndicatorView.frame.size, CGSizeMake(size.width, y - _insets.top - _insets.bottom))
+                 view:_activityIndicatorView];
+  }
   
   return CGSizeMake(size.width, y);
 }
@@ -127,14 +124,17 @@
 }
 
 - (CGSize)sizeForVariableWidth:(CGSize)size {
-  CGSize imageSize = [self _imageSize];
-  CGSize sizeForHeight = [GHUIUtils sizeWithText:_title font:_titleFont size:size multiline:NO truncate:NO];
+  CGSize sizeForHeight = [GHUIUtils sizeWithText:_text font:_font size:size multiline:NO truncate:NO];
   sizeForHeight.width += self.insets.left + self.insets.right;
   sizeForHeight.height += self.insets.top + self.insets.bottom;
-  sizeForHeight.width += self.titleInsets.left + self.titleInsets.right;
-  sizeForHeight.height += self.titleInsets.top + self.titleInsets.bottom;
-  sizeForHeight.width += imageSize.width;
+  sizeForHeight.width += _textInsets.left + _textInsets.right;
+  sizeForHeight.height += _textInsets.top + _textInsets.bottom;
   if (self.accessoryImage) sizeForHeight.width += self.accessoryImage.size.width;
+  
+  CGSize imageSize = [self _imageSize];
+  if (sizeForHeight.width < imageSize.width) sizeForHeight.width = imageSize.width;
+  if (sizeForHeight.height < imageSize.height) sizeForHeight.height = imageSize.height;
+  
   return sizeForHeight;
 }
 
@@ -201,14 +201,14 @@
   BOOL isHighlighted = self.isHighlighted;
   BOOL isDisabled = self.isDisabled;
   
-  if (_selectedTitleColor && isSelected) {
-    return _selectedTitleColor;
-  } else if (_highlightedTitleColor && isHighlighted) {
-    return _highlightedTitleColor;
-  } else if (_disabledTitleColor && isDisabled) {
-    return _disabledTitleColor;
-  } else if (_titleColor) {
-    return _titleColor;
+  if (_selectedTextColor && isSelected) {
+    return _selectedTextColor;
+  } else if (_highlightedTextColor && isHighlighted) {
+    return _highlightedTextColor;
+  } else if (_disabledTextColor && isDisabled) {
+    return _disabledTextColor;
+  } else if (_textColor) {
+    return _textColor;
   } else {
     return [UIColor blackColor];
   }
@@ -226,10 +226,8 @@
 - (void)setActivityIndicatorAnimating:(BOOL)animating {
   if (animating) {
     [self.activityIndicatorView startAnimating];
-    if (self.hideTextIfAnimating) self.textHidden = YES;
   } else {
-    [self.activityIndicatorView stopAnimating];
-    if (self.hideTextIfAnimating) self.textHidden = NO;
+    [_activityIndicatorView stopAnimating];
   }
   [self setNeedsLayout];
 }
@@ -310,17 +308,17 @@
   
   UIColor *textColor = [self textColorForState];
   
-  UIFont *font = self.titleFont;
+  UIFont *font = _font;
   
+  CGFloat x = bounds.origin.x;
+  CGFloat y = bounds.origin.y;
+  
+  // Draw image
   UIImage *image = self.imageView.image;
   CGSize imageSize = self.imageSize;
   if (image && GHCGSizeIsZero(imageSize)) {
     imageSize = image.size;
   }
-  
-  CGFloat x = bounds.origin.x;
-  CGFloat y = bounds.origin.y;
-  
   if (image) {
     [image drawInRect:CGRectMake(x, y, imageSize.width, imageSize.height)];
   }
@@ -330,35 +328,37 @@
   x += self.insets.left;
   y += roundf(GHCGPointToCenter(sizeThatFits, size).y) + self.insets.top;
   
-  UIEdgeInsets titleInsets = _titleInsets;
+  UIEdgeInsets textInsets = _textInsets;
   
-  CGFloat lineWidth = sizeThatFits.width + titleInsets.left + titleInsets.right;
+  CGFloat lineWidth = sizeThatFits.width + textInsets.left + textInsets.right;
   if (accessoryImage) lineWidth += accessoryImage.size.width;
   
-  if (self.titleAlignment == NSTextAlignmentCenter) {
+  if (_textAlignment == NSTextAlignmentCenter) {
     CGFloat width = size.width - self.insets.left - self.insets.right;
     x += roundf(width/2.0f - lineWidth/2.0f);
   }
   if (x < 0) x = 0;
   
-  x += titleInsets.left;
+  x += textInsets.left;
   
-  CGPoint titleOrigin = CGPointMake(x, y);
+  CGPoint textOrigin = CGPointMake(x, y);
   
-  if (self.title && !self.textHidden) [GHUIUtils drawText:self.title rect:CGRectMake(titleOrigin.x, titleOrigin.y, _titleSize.width, _titleSize.height) font:font color:textColor alignment:self.titleAlignment multiline:YES truncate:YES];
+  if (_text && [self shouldDrawText]) {
+    [GHUIUtils drawText:_text rect:CGRectMake(textOrigin.x, textOrigin.y, _textSize.width, _textSize.height) font:font color:textColor alignment:_textAlignment multiline:YES truncate:YES];
+  }
   
-  if (self.accessoryTitle && !self.textHidden) {
-    if (self.accessoryTitleColor) textColor = self.accessoryTitleColor;
-    if (self.accessoryTitleFont) font = self.accessoryTitleFont;
-    if (self.accessoryTitleAlignment == NSTextAlignmentLeft) {
-      x += _titleSize.width;
-      CGFloat accessoryTitleWidth = size.width - x - self.insets.right - titleInsets.right;
-      [GHUIUtils drawText:self.accessoryTitle rect:CGRectMake(x, y, accessoryTitleWidth, CGFLOAT_MAX) font:font color:textColor alignment:NSTextAlignmentLeft multiline:YES truncate:YES];
-    } else if (self.accessoryTitleAlignment == NSTextAlignmentRight) {
-      x += _titleSize.width;
-      [GHUIUtils drawText:self.accessoryTitle rect:CGRectMake(x, y, size.width - x - self.insets.right - self.titleInsets.right, size.height) font:font color:textColor alignment:NSTextAlignmentRight multiline:YES truncate:YES];
+  if (self.accessoryText && [self shouldDrawText]) {
+    if (self.accessoryTextColor) textColor = self.accessoryTextColor;
+    if (self.accessoryTextFont) font = self.accessoryTextFont;
+    if (self.accessoryTextAlignment == NSTextAlignmentLeft) {
+      x += _textSize.width;
+      CGFloat accessoryTextWidth = size.width - x - self.insets.right - textInsets.right;
+      [GHUIUtils drawText:self.accessoryText rect:CGRectMake(x, y, accessoryTextWidth, CGFLOAT_MAX) font:font color:textColor alignment:NSTextAlignmentLeft multiline:YES truncate:YES];
+    } else if (self.accessoryTextAlignment == NSTextAlignmentRight) {
+      x += _textSize.width;
+      [GHUIUtils drawText:self.accessoryText rect:CGRectMake(x, y, size.width - x - self.insets.right - _textInsets.right, size.height) font:font color:textColor alignment:NSTextAlignmentRight multiline:YES truncate:YES];
     } else {
-      NSAssert(NO, @"Unsupported accessory title alignment");
+      NSAssert(NO, @"Unsupported accessory text alignment");
     }
   }
   
@@ -366,39 +366,39 @@
     [accessoryImage drawAtPoint:GHCGPointToRight(accessoryImage.size, CGSizeMake(size.width - 10, bounds.size.height))];
   }
   
-  // Arrow
-  if (self.leftArrowColor) {
-    CGContextBeginPath(context); // Clear any paths
-    CGFloat arrowHalf = roundf((size.height - 12.0f)/2.0f);
-    CGFloat arrowX = bounds.origin.x + 2;
-    CGFloat arrowY = bounds.origin.y + 6;
-    UIBezierPath *path = [UIBezierPath bezierPath];
-    [path moveToPoint:CGPointMake(arrowX + arrowHalf, arrowY)];
-    [path addLineToPoint:CGPointMake(arrowX, arrowY + arrowHalf)];
-    [path addLineToPoint:CGPointMake(arrowX + arrowHalf, arrowY + arrowHalf + arrowHalf)];
-    [self.leftArrowColor setStroke];
-    [path setLineWidth:3];
-    [path stroke];
-  }
+//  // Arrow
+//  if (self.leftArrowColor) {
+//    CGContextBeginPath(context); // Clear any paths
+//    CGFloat arrowHalf = roundf((size.height - 12.0f)/2.0f);
+//    CGFloat arrowX = bounds.origin.x + 2;
+//    CGFloat arrowY = bounds.origin.y + 6;
+//    UIBezierPath *path = [UIBezierPath bezierPath];
+//    [path moveToPoint:CGPointMake(arrowX + arrowHalf, arrowY)];
+//    [path addLineToPoint:CGPointMake(arrowX, arrowY + arrowHalf)];
+//    [path addLineToPoint:CGPointMake(arrowX + arrowHalf, arrowY + arrowHalf + arrowHalf)];
+//    [self.leftArrowColor setStroke];
+//    [path setLineWidth:3];
+//    [path stroke];
+//  }
   
-  y += _titleSize.height;
+  y += _textSize.height;
   
-  if (self.text && !self.textHidden) {
-    if (self.textColor) textColor = self.textColor;
-    if (self.textFont) font = self.textFont;
-    if (self.titleAlignment == NSTextAlignmentLeft) {
-      x = titleOrigin.x;
+  if (_secondaryText && [self shouldDrawText]) {
+    if (_secondaryTextColor) textColor = _secondaryTextColor;
+    if (_secondaryTextFont) font = _secondaryTextFont;
+    if (_secondaryTextAlignment == NSTextAlignmentLeft) {
+      x = textOrigin.x;
     } else {
       x = self.insets.left;
     }
-    [GHUIUtils drawText:self.text rect:CGRectMake(x, y, size.width - x - self.insets.right, CGFLOAT_MAX) font:font color:textColor alignment:self.textAlignment multiline:YES truncate:YES];
+    [GHUIUtils drawText:self.secondaryText rect:CGRectMake(x, y, size.width - x - self.insets.right, CGFLOAT_MAX) font:font color:textColor alignment:self.secondaryTextAlignment multiline:YES truncate:YES];
   }
   
   if (clip) {
     CGContextRestoreGState(context);
   }
   
-  if (borderWidth > 0 || cornerRadius > 0) {
+  if (borderWidth > 0 && self.borderColor) {
     GHCGContextDrawBorder(context, bounds, self.borderStyle, NULL, borderColor.CGColor, borderWidth, cornerRadius);
   }
 }

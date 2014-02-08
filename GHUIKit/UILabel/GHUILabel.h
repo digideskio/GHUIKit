@@ -12,7 +12,7 @@
 @interface GHUILabel : GHUIView {
 
   CGSize _sizeThatFitsText;
-  CGSize _titleSize;
+  CGSize _textSize;
 
   UIImageView *_imageView;
 
@@ -28,22 +28,22 @@
 /*!
  Text.
  */
-@property (nonatomic) NSString *title;
+@property (nonatomic) NSString *text;
 
 /*!
  Text font.
  */
-@property (nonatomic) UIFont *titleFont;
+@property (nonatomic) UIFont *font;
 
 /*!
- Text alignment for title. Defaults to center.
+ Text alignment.
  */
-@property (nonatomic) NSTextAlignment titleAlignment;
+@property (nonatomic) NSTextAlignment textAlignment;
 
 /*!
- Text color for title.
+ Text color.
  */
-@property (nonatomic) UIColor *titleColor;
+@property (nonatomic) UIColor *textColor;
 
 /*!
  Background color.
@@ -110,9 +110,9 @@
 @property (nonatomic) UIImage *accessoryImage;
 
 /*!
- Insets for title text.
+ Insets for text text.
  */
-@property (nonatomic) UIEdgeInsets titleInsets;
+@property (nonatomic) UIEdgeInsets textInsets;
 
 /*!
  Insets (padding).
@@ -126,9 +126,9 @@
 @property (nonatomic) CGSize imageSize;
 
 /*!
- Text color for title (highlighted).
+ Text color for text (highlighted).
  */
-@property (nonatomic) UIColor *highlightedTitleColor;
+@property (nonatomic) UIColor *highlightedTextColor;
 
 /*!
  Background color (highlighted).
@@ -158,9 +158,9 @@
 @property (nonatomic) UIImage *highlightedAccessoryImage;
 
 /*!
- Text color for title (selected).
+ Text color for text (selected).
  */
-@property (nonatomic) UIColor *selectedTitleColor;
+@property (nonatomic) UIColor *selectedTextColor;
 
 /*!
  Background color (selected).
@@ -180,9 +180,9 @@
 @property (nonatomic) GHUIShadingType selectedShadingType;
 
 /*!
- Text color for title (selected).
+ Text color for text (selected).
  */
-@property (nonatomic) UIColor *disabledTitleColor;
+@property (nonatomic) UIColor *disabledTextColor;
 
 /*!
  Background color (highlighted).
@@ -212,59 +212,54 @@
 @property (nonatomic) CGFloat disabledAlpha;
 
 /*!
- Accessory title, that appears next to title.
+ Accessory text, that appears next to text.
  */
-@property (nonatomic) NSString *accessoryTitle;
+@property (nonatomic) NSString *accessoryText;
 
 /*!
- Accessory title color. Defaults to titleColor.
+ Accessory text color. Defaults to textColor.
  */
-@property (nonatomic) UIColor *accessoryTitleColor;
+@property (nonatomic) UIColor *accessoryTextColor;
 
 /*!
- Accessory title font. Defaults to titleFont.
+ Accessory text font. Defaults to textFont.
  */
-@property (nonatomic) UIFont *accessoryTitleFont;
+@property (nonatomic) UIFont *accessoryTextFont;
 
 /*!
- Accessory title alignment.
+ Accessory text alignment.
  */
-@property (nonatomic) NSTextAlignment accessoryTitleAlignment;
+@property (nonatomic) NSTextAlignment accessoryTextAlignment;
 
 /*!
- Text (appears under title).
+ Secondary text (appears under text).
  */
-@property (nonatomic) NSString *text;
+@property (nonatomic) NSString *secondaryText;
 
 /*!
- Text (appears under title) color.  Defaults to titleColor.
+ Secondary text (appears under text) color.  Defaults to textColor.
  */
-@property (nonatomic) UIColor *textColor;
+@property (nonatomic) UIColor *secondaryTextColor;
 
 /*!
- Text (appears under title) font. Defaults to titleFont.
+ Secondary text (appears under text) font. Defaults to textFont.
  */
-@property (nonatomic) UIFont *textFont;
+@property (nonatomic) UIFont *secondaryTextFont;
 
 /*!
- Text alignment.
+ Secondary text (appears under text) alignment.
  */
-@property (nonatomic) NSTextAlignment textAlignment;
+@property (nonatomic) NSTextAlignment secondaryTextAlignment;
+
+/*!
+ Hide all text.
+ */
+@property BOOL textHidden;
 
 /*!
  Color for left arrow (iOS7 back button)
  */
-@property (nonatomic) UIColor *leftArrowColor;
-
-/*!
- Set whether to hide the title when animating.
- */
-@property BOOL hideTextIfAnimating;
-
-/*!
- Hide the title.
- */
-@property BOOL textHidden;
+//@property (nonatomic) UIColor *leftArrowColor;
 
 /*!
  Image view.
