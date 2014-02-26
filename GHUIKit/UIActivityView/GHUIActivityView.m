@@ -9,25 +9,21 @@
 #import "GHUIActivityView.h"
 #import <GHKit/GHCGUtils.h>
 
+@interface GHUIActivityView ()
+@property UIActivityIndicatorView *activityIndicator;
+@property BOOL activityEnabled;
+@end
+
 @implementation GHUIActivityView
 
-- (id)initWithFrame:(CGRect)frame {
-  if ((self = [super initWithFrame:frame])) {
-    self.backgroundColor = [UIColor blackColor];
-  }
-  return self;
+- (void)sharedInit {
+  [super sharedInit];
+  self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
   _activityIndicator.frame = GHCGRectCenterInSize(_activityIndicator.frame.size, self.frame.size);
-  _label.frame = CGRectMake(10, 0, self.frame.size.width - 20, self.frame.size.height);
-  [_label setNeedsDisplay];
-}
-
-- (CGSize)sizeThatFits:(CGSize)size {
-  // TODO: Size based on activity style and label height
-  return CGSizeMake(size.width, 60);
 }
 
 - (void)_setActivityEnabled:(BOOL)activityEnabled {
@@ -37,12 +33,12 @@
   } else {
     if (!_activityIndicator) {
       _activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:_activityStyle];
-      _activityIndicator.frame = GHCGRectCenterInSize(_activityIndicator.frame.size, self.frame.size);
       _activityIndicator.hidesWhenStopped = YES;
       [self addSubview:_activityIndicator];
     }
     [_activityIndicator startAnimating];
   }
+  [self setNeedsLayout];
 }
 
 - (void)setActivityStyle:(UIActivityIndicatorViewStyle)activityStyle {
@@ -50,59 +46,41 @@
   if (_activityIndicator) _activityIndicator.activityIndicatorViewStyle = activityStyle;
 }
 
-- (UILabel *)label {
-  if (!_label) {
-    _label = [[UILabel alloc] init];
-    _label.textAlignment = NSTextAlignmentCenter;
-    _label.backgroundColor = [UIColor clearColor];
-    _label.contentMode = UIViewContentModeCenter;
-    _label.numberOfLines = 0;
-    _label.font = [UIFont boldSystemFontOfSize:16.0];
-    _label.textColor = [UIColor whiteColor];
-  }
-  return _label;
-}
-
-- (void)setText:(NSString *)text {
-  if (!text) {
-    if (_label) {
-      _label.hidden = YES;
-    }
-  } else {
-    self.hidden = NO;
-    UILabel *label = self.label;
-    label.hidden = NO;
-    if (![label superview]) {
-      [self addSubview:label];
-    }
-    label.text = text;
-  }
-  [self setNeedsDisplay];
-  [self setNeedsLayout];
-}
-
 - (BOOL)isAnimating {
   return _activityIndicator.isAnimating;
 }
 
 - (void)setAnimating:(BOOL)animating {
-  if (animating) [self start];
-  else [self stop];
+  [self _setActivityEnabled:animating];
 }
 
-- (void)start {
-  [self _setActivityEnabled:YES];
-  [self setText:nil];
+- (void)presentViewInViewController:(UIViewController *)viewController keyboardRect:(CGRect)keyboardRect animated:(BOOL)animated {
+  UIView *view = viewController.view;
+  self.frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height - keyboardRect.size.height);
+  [self setAnimating:YES];
+  [view addSubview:self];
+  [view bringSubviewToFront:self];
+ 
+  if (animated) {
+    self.alpha = 0.0;
+    [UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+      self.alpha = 1.0;
+    } completion:^(BOOL finished) {
+      
+    }];
+  }
 }
 
-- (void)stop {
-  [self _setActivityEnabled:NO];
-  [self setText:nil];
-}
-
-- (void)setErrorWithDescription:(NSString *)description {
-  [self _setActivityEnabled:NO];
-  [self setText:description];
+- (void)dismissView:(BOOL)animated {
+  if (animated) {
+    [UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+      self.alpha = 0.0;
+    } completion:^(BOOL finished) {
+      [self removeFromSuperview];
+    }];
+  } else {
+    [self removeFromSuperview];
+  }
 }
 
 @end

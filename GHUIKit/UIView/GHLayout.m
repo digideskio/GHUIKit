@@ -194,6 +194,10 @@
   return [self setOrigin:origin frame:(view ? [view frame] : CGRectZero) view:view];
 }
 
+- (CGRect)setSize:(CGSize)size view:(id)view {
+  return [self setFrame:CGRectMake([view frame].origin.x, [view frame].origin.y, size.width, size.height) view:view];
+}
+
 - (CGRect)setY:(CGFloat)y view:(id)view {
   return [self setY:y frame:(view ? [view frame] : CGRectZero) view:view];
 }

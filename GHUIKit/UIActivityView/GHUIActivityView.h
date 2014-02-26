@@ -11,26 +11,15 @@
 /*!
  View with activity indicator and label.
  */
-@interface GHUIActivityView : GHUIView {
-  UIActivityIndicatorView *_activityIndicator;
-  BOOL _activityEnabled;
-}
+@interface GHUIActivityView : GHUIView
 
 @property (assign, nonatomic) UIActivityIndicatorViewStyle activityStyle;
-@property (retain, nonatomic) UILabel *label;
-
-/*!
- Set text.
- @param text
- */
-- (void)setText:(NSString *)text;
 
 - (void)setAnimating:(BOOL)animating;
 - (BOOL)isAnimating;
 
-- (void)start;
-- (void)stop;
-- (void)setErrorWithDescription:(NSString *)description;
+- (void)presentViewInViewController:(UIViewController *)viewController keyboardRect:(CGRect)keyboardRect animated:(BOOL)animated;
+- (void)dismissView:(BOOL)animated;
 
 @end
 

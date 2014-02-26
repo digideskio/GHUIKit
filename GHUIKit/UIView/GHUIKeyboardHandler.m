@@ -10,16 +10,29 @@
 
 @implementation GHUIKeyboardHandler
 
++ (id)keyboardHandler {
+  static GHUIKeyboardHandler *gKeyboardHandler = NULL;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    gKeyboardHandler = [[GHUIKeyboardHandler alloc] init];
+    [gKeyboardHandler registerNotifications];
+  });
+  return gKeyboardHandler;
+}
+
 - (void)dealloc {
+  [self unregisterNotifications];
+}
+
+- (void)unregisterNotifications {
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
 }
 
-- (void)registerKeyboardNotificationsForView:(GHUIView *)view {
-  self.view = view;
-
+- (void)registerNotifications {
+  [self unregisterNotifications];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -32,6 +45,7 @@
 
 - (void)keyboardDidHide:(NSNotification *)notification {
   _keyboardVisible = NO;
+  _keyboardRect = CGRectZero;
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification {
@@ -40,6 +54,7 @@
 
 - (void)keyboardDidShow:(NSNotification *)notification {
   _keyboardVisible = YES;
+  _keyboardRect = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
 }
 
 static BOOL gIsAnimating = NO;

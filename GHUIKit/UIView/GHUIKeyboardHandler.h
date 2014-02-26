@@ -11,13 +11,17 @@
 
 @interface GHUIKeyboardHandler : NSObject
 
-@property (assign, nonatomic, getter=isKeyboardVisible) BOOL keyboardVisible;
+@property (readonly) BOOL keyboardVisible;
+@property (readonly) CGRect keyboardRect;
+
 @property (copy) GHTargetBlock keyboardBlock;
 
 @property (weak) GHUIView *view;
 
-- (void)registerKeyboardNotificationsForView:(GHUIView *)view;
+- (void)registerNotifications;
 
 + (BOOL)isAnimating;
+
++ (id)keyboardHandler;
 
 @end

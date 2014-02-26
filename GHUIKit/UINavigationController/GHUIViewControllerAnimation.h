@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Gabriel Handford. All rights reserved.
 //
 
-typedef enum {
+typedef NS_ENUM (NSUInteger, GHUIViewControllerAnimationType) {
   GHUIViewControllerAnimationTypePresent,
   GHUIViewControllerAnimationTypeDismiss
-} GHUIViewControllerAnimationType;
+};
 
 @interface GHUIViewControllerAnimation : NSObject <UIViewControllerAnimatedTransitioning>
 

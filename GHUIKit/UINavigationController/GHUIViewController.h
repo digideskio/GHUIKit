@@ -9,10 +9,13 @@
 #import "GHUIView.h"
 #import "GHUIViewControllerAnimation.h"
 
-@interface GHUIViewController : UIViewController <GHUIViewNavigationDelegate, UINavigationControllerDelegate>
+@interface GHUIViewController : UIViewController <GHUIViewNavigationDelegate>
 
-@property GHUIViewControllerAnimation *animationController;
+@property (readonly) GHUIViewControllerAnimation *animation;
 
 - (id)initWithView:(GHUIView *)view;
+
+- (id)initWithView:(GHUIView *)view animation:(GHUIViewControllerAnimation *)animation;
+
 
 @end

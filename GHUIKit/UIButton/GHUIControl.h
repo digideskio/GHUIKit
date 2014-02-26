@@ -8,7 +8,7 @@
 
 #import "GHLayout.h"
 
-typedef void (^GHUIControlTargetBlock)();
+typedef void (^GHUIControlTargetBlock)(id sender);
 
 /*!
  UIControl with some helpers.

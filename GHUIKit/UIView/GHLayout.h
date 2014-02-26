@@ -154,6 +154,11 @@ typedef enum {
 - (CGRect)setOrigin:(CGPoint)origin view:(id)view;
 
 /*!
+ Set size.
+ */
+- (CGRect)setSize:(CGSize)size view:(id)view;
+
+/*!
  Set origin, x position.
  Use this value instead of view.frame since the views frame might not have been set.
  

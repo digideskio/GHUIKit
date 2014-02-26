@@ -1,17 +1,14 @@
 PODS:
-  - GHKit (1.0.4)
-  - MTAnimation (0.1.5)
+  - GHKit (1.0.6)
 
 DEPENDENCIES:
   - GHKit (from `../gh-kit/`)
-  - MTAnimation
 
 EXTERNAL SOURCES:
   GHKit:
     :path: ../gh-kit/
 
 SPEC CHECKSUMS:
-  GHKit: 15f47ecf1636c2e599f121203cbbb113c440278f
-  MTAnimation: 81b927c0539cf5073f4f4f27a54f4cb7cf54c8e4
+  GHKit: 5201d1bd597516bcdd5dec87f0c8af31f539c69d
 
 COCOAPODS: 0.29.0

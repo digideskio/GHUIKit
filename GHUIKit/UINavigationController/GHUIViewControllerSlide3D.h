@@ -1,5 +1,5 @@
 //
-//  GHUIViewControllerSlideAnimation.h
+//  GHUIViewControllerSlide3D.h
 //  GHUIKit
 //
 //  Created by Gabriel Handford on 2/7/14.
@@ -8,6 +8,6 @@
 
 #import "GHUIViewControllerAnimation.h"
 
-@interface GHUIViewControllerSlideAnimation : GHUIViewControllerAnimation
+@interface GHUIViewControllerSlide3D : GHUIViewControllerAnimation
 
 @end

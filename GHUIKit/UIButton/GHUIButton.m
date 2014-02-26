@@ -8,6 +8,7 @@
 
 #import "GHUIButton.h"
 #import "GHUILabel.h"
+#import <GHKit/GHUIColor+Utils.h>
 
 @interface GHUIButton ()
 @property GHUILabel *label;
@@ -27,14 +28,14 @@
   self.opaque = YES;
   self.accessibilityTraits |= UIAccessibilityTraitButton;
   
-  self.insets = UIEdgeInsetsMake(20, 10, 20, 10);
+  self.insets = UIEdgeInsetsMake(9, 10, 9, 10);
   self.borderWidth = 1.0;
   self.borderColor = [UIColor grayColor];
   self.textAlignment = NSTextAlignmentCenter;
   self.highlightedShadingType = GHUIShadingTypeUnknown;
-  self.highlightedFillColor = [UIColor colorWithWhite:(217.0f/255.0f) alpha:1.0f];
+  self.highlightedFillColor = GHUIColorFromRGB(0xCCCCCC);
   self.disabledShadingType = GHUIShadingTypeUnknown;
-  self.textColor = [UIColor colorWithRed:0 green:122.0f/255.0f blue:1.0f alpha:1.0f];
+  self.textColor = [UIColor colorWithRed:0 green:122.0/255.0 blue:1.0f alpha:1.0f];
   self.font = [UIFont systemFontOfSize:20.0f];
   self.style.disabledAlpha = 0.5;
   self.style.disabledTextColor = [UIColor grayColor];
@@ -44,7 +45,16 @@
   [self addSubview:self.label];
 }
 
+- (id)initWithText:(NSString *)text targetBlock:(GHUIControlTargetBlock)targetBlock {
+  if ((self = [super init])) {
+    self.text = text;
+    self.targetBlock = targetBlock;
+  }
+  return self;
+}
+
 - (void)layoutSubviews {
+  [super layoutSubviews];
   self.label.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height);
 }
 
@@ -223,11 +233,19 @@
   self.label.selectedFillColor = selectedFillColor;
 }
 
+- (UIColor *)selectedTextColor {
+  return self.label.selectedTextColor;
+}
+
+- (void)setSelectedTextColor:(UIColor *)selectedTextColor {
+  self.label.selectedTextColor = selectedTextColor;
+}
+
 - (UIColor *)highlightedTextColor {
   return self.label.highlightedTextColor;
 }
 
-- (void)setHighlightedTextColorFillColor:(UIColor *)highlightedTextColor {
+- (void)setHighlightedTextColor:(UIColor *)highlightedTextColor {
   self.label.highlightedTextColor = highlightedTextColor;
 }
 
@@ -237,6 +255,14 @@
 
 - (void)setHighlightedFillColor:(UIColor *)highlightedFillColor {
   self.label.highlightedFillColor = highlightedFillColor;
+}
+
+- (UIColor *)highlightedBorderColor {
+  return self.label.highlightedBorderColor;
+}
+
+- (void)setHighlightedBorderColor:(UIColor *)highlightedBorderColor {
+  self.label.highlightedBorderColor = highlightedBorderColor;
 }
 
 - (UIColor *)highlightedFillColor2 {
@@ -275,15 +301,23 @@
   return self.label.imageView;
 }
 
-- (void)setInsets:(UIEdgeInsets)insets {
-  self.label.insets = insets;
+- (void)setBackgroundImageSize:(CGSize)backgroundImageSize {
+  self.label.backgroundImageSize = backgroundImageSize;
+}
+
+- (CGSize)backgroundImageSize {
+  return self.label.backgroundImageSize;
+}
+
+- (UIImageView *)backgroundImageView {
+  return self.label.backgroundImageView;
 }
 
 - (UIEdgeInsets)textInsets {
   return self.label.textInsets;
 }
 
-- (void)settextInsets:(UIEdgeInsets)textInsets {
+- (void)setTextInsets:(UIEdgeInsets)textInsets {
   self.label.textInsets = textInsets;
 }
 
@@ -295,16 +329,20 @@
   self.label.textAlignment = textAlignment;
 }
 
+- (NSTextAlignment)secondaryTextAlignment {
+  return self.label.secondaryTextAlignment;
+}
+
+- (void)setSecondaryTextAlignment:(NSTextAlignment)secondaryTextAlignment {
+  self.label.secondaryTextAlignment = secondaryTextAlignment;
+}
+
+- (void)setInsets:(UIEdgeInsets)insets {
+  self.label.insets = insets;
+}
+
 - (UIEdgeInsets)insets {
   return self.label.insets;
-}
-
-- (void)setMargin:(UIEdgeInsets)margin {
-  self.label.margin = margin;
-}
-
-- (UIEdgeInsets)margin {
-  return self.label.margin;
 }
 
 - (void)setBorderStyle:(GHUIBorderStyle)borderStyle {

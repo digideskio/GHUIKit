@@ -14,7 +14,6 @@ typedef void (^GHUIViewSubviewNeedsLayoutBlock)(UIView *view, BOOL animated);
 
 @protocol GHUIViewNavigationDelegate
 - (void)pushView:(GHUIView *)view animated:(BOOL)animated;
-- (void)pushView:(GHUIView *)view animation:(id<UIViewControllerAnimatedTransitioning>)animation;
 - (void)popViewAnimated:(BOOL)animated;
 - (void)swapView:(GHUIView *)view animated:(BOOL)animated;
 - (void)setViews:(NSArray *)views animated:(BOOL)animated;
@@ -22,6 +21,11 @@ typedef void (^GHUIViewSubviewNeedsLayoutBlock)(UIView *view, BOOL animated);
 - (UINavigationItem *)navigationItem;
 - (UIInterfaceOrientation)interfaceOrientation;
 - (UIViewController *)viewController;
+
+- (void)pushView:(GHUIView *)view animation:(id<UIViewControllerAnimatedTransitioning>)animation;
+
+- (void)presentView:(GHUIView *)view animation:(id<UIViewControllerAnimatedTransitioning>)animation completion:(void (^)(void))completion;
+- (void)dismissViewAnimated:(BOOL)animated completion:(void (^)(void))completion;
 @end
 
 typedef id<GHUIViewNavigationDelegate> (^GHUIViewNavigationDelegateBlock)();
@@ -55,19 +59,27 @@ typedef id<GHUIViewNavigationDelegate> (^GHUIViewNavigationDelegateBlock)();
 @property (weak) id<GHUIViewNavigationDelegate> navigationDelegate;
 
 /*!
+ Subclasses can override this method to perform initialization tasks that occur during both initWithFrame: and initWithCoder:
+ */
+- (void)sharedInit;
+
+/*!
+ Check if view is visible.
+ Only available if the contentView in GHUIViewController.
+ */
+@property (readonly, getter=isVisible) BOOL visible;
+ 
+/*!
+ Title for view.
+ Only available if the contentView in GHUIViewController.
+ */
+@property (nonatomic) NSString *title;
+
+/*!
  Set if needs refresh.
  If visible, will immediately trigger refresh. Otherwise will call refresh when becoming visible.
  */
 @property BOOL needsRefresh;
-
-@property (readonly, getter=isVisible) BOOL visible;
-
-@property (nonatomic) NSString *title;
-
-/*!
- Subclasses can override this method to perform initialization tasks that occur during both initWithFrame: and initWithCoder:
- */
-- (void)sharedInit;
 
 /*!
  Force the layout, if using GHLayout.
@@ -81,6 +93,13 @@ typedef id<GHUIViewNavigationDelegate> (^GHUIViewNavigationDelegateBlock)();
  @param animated YES if the layout should animate
  */
 - (void)notifyNeedsLayout:(BOOL)animated;
+
+/*!
+ Get top layout guide (from view controller).
+ */
+- (id<UILayoutSupport>)topLayoutGuide;
+
+#pragma mark Attributes
 
 /*!
  Add a list of attributed that will call setNeedsDisplay and setNeedsLayout on change.

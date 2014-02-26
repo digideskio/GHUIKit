@@ -17,6 +17,8 @@ typedef Class (^GHUICellClassBlock)(id object, NSIndexPath *indexPath);
   NSMutableDictionary *_cellClasses;
   NSMutableDictionary *_cellsForSizing;
   NSMutableDictionary *_headerTexts;
+
+  NSMutableDictionary *_sizeCache;
 }
 
 @property (readonly) NSInteger sectionCount;
@@ -36,12 +38,14 @@ typedef Class (^GHUICellClassBlock)(id object, NSIndexPath *indexPath);
 
 - (NSInteger)sectionCount;
 
+// Invalidate cache
+- (void)invalidateAll;
+
 - (void)addObjects:(NSArray *)objects;
 - (void)addObjects:(NSArray *)objects section:(NSInteger)section;
 - (void)addObjects:(NSArray *)objects section:(NSInteger)section indexPaths:(NSMutableArray **)indexPaths;
 
 - (void)replaceObjectAtIndexPath:(NSIndexPath *)indexPath withObject:(id)object;
-- (void)replaceObjects:(NSArray *)fromObjects withObjects:(NSArray *)objects section:(NSInteger)section;
 - (NSIndexPath *)replaceObject:(id)object section:(NSInteger)section;
 
 - (id)objectAtIndexPath:(NSIndexPath *)indexPath;
@@ -52,12 +56,15 @@ typedef Class (^GHUICellClassBlock)(id object, NSIndexPath *indexPath);
 
 - (void)removeObjectAtIndexPath:(NSIndexPath *)indexPath;
 - (void)removeObjects:(NSArray *)objects;
-- (void)removeObjects:(NSArray *)objects section:(NSInteger)section;
+- (void)removeObjects:(NSArray *)objects section:(NSInteger)section indexPaths:(NSMutableArray **)indexPaths;
 - (void)removeAllObjects;
-- (void)removeAllObjectsFromSection:(NSInteger)section;
+- (void)removeObjectsFromSection:(NSInteger)section indexPaths:(NSMutableArray **)indexPaths;
+
+- (void)replaceObjects:(NSArray *)replaceObjects withObjects:(NSArray *)objects section:(NSInteger)section indexPathsToAdd:(NSMutableArray **)indexPathsToAdd indexPathsToReload:(NSMutableArray **)indexPathsToReload;
 
 - (void)setObjects:(NSArray *)objects;
 - (void)setObjects:(NSArray *)objects section:(NSInteger)section;
+- (void)setObjects:(NSArray *)objects section:(NSInteger)section indexPathsToRemove:(NSMutableArray **)indexPathsToRemove indexPathsToAdd:(NSMutableArray **)indexPathsToAdd;
 
 
 - (Class)cellClassForIndexPath:(NSIndexPath *)indexPath;

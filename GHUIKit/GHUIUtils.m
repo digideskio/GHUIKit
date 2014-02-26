@@ -30,7 +30,7 @@
   if (!text) return CGSizeZero;
   NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName:font}];
   NSStringDrawingOptions options = 0;
-  if (multiline) options |= NSStringDrawingUsesLineFragmentOrigin;
+  options |= NSStringDrawingUsesLineFragmentOrigin;
   if (truncate) options |= NSStringDrawingTruncatesLastVisibleLine;
   CGRect rect = [attributedText boundingRectWithSize:size options:options context:nil];
   return CGSizeMake(ceilf(rect.size.width), ceilf(rect.size.height));
@@ -38,7 +38,7 @@
 
 + (void)drawText:(NSString *)text rect:(CGRect)rect font:(UIFont *)font color:(UIColor *)color alignment:(NSTextAlignment)alignment multiline:(BOOL)multiline truncate:(BOOL)truncate {
   NSStringDrawingOptions options = 0;
-  if (multiline) options |= NSStringDrawingUsesLineFragmentOrigin;
+  options |= NSStringDrawingUsesLineFragmentOrigin;
   if (truncate) options |= NSStringDrawingTruncatesLastVisibleLine;
   NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
   [paragraphStyle setAlignment:alignment];

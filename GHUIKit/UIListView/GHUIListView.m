@@ -30,7 +30,6 @@
     }
     y += viewRect.size.height + _insets.bottom;
   }
-  y += _insets.bottom;
   return CGSizeMake(size.width, y);
 }
 

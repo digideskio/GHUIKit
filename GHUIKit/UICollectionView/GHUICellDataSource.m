@@ -44,54 +44,96 @@
   NSMutableArray *objectsForSection = [self objectsForSection:section create:YES];
   NSInteger previousCount = [objectsForSection count];
   [objectsForSection addObjectsFromArray:objects];
+
+  for(NSInteger i = 0, count = [objects count]; i < count; i++) {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(i + previousCount) inSection:section];
+    [self invalidate:indexPath];
+    if (indexPaths) [*indexPaths addObject:indexPath];
+  }
+}
+
+- (void)replaceObjects:(NSArray *)replaceObjects withObjects:(NSArray *)objects section:(NSInteger)section indexPathsToAdd:(NSMutableArray **)indexPathsToAdd indexPathsToReload:(NSMutableArray **)indexPathsToReload {
   
-  if (indexPaths) {
-    for(NSInteger i = 0, count = [objects count]; i < count; i++) {
-      [*indexPaths addObject:[NSIndexPath indexPathForRow:(i + previousCount) inSection:section]];
+  NSAssert([replaceObjects count] == [objects count], @"Objects length mismatch");
+  
+  for (NSInteger i = 0; i < [objects count]; i++) {
+    id replaceObject = [replaceObjects objectAtIndex:i];
+    id object = [objects objectAtIndex:i];
+    NSIndexPath *indexPath = [self indexPathOfObject:replaceObject section:section];
+    if (indexPath) {
+      [self replaceObjectAtIndexPath:indexPath withObject:object];
+      if (indexPathsToReload) [*indexPathsToReload addObject:indexPath];
+    } else {
+      [self addObjects:@[object] section:section indexPaths:indexPathsToAdd];
     }
   }
+  
 }
 
 - (void)replaceObjectAtIndexPath:(NSIndexPath *)indexPath withObject:(id)object {
   NSMutableArray *objectsForSection = [self objectsForSection:indexPath.section create:YES];
   [objectsForSection replaceObjectAtIndex:indexPath.row withObject:object];
+  [self invalidate:indexPath];
 }
 
-- (void)replaceObjects:(NSArray *)fromObjects withObjects:(NSArray *)objects section:(NSInteger)section {
-  [self removeObjects:fromObjects section:section];
-  [self addObjects:objects section:section];
-}
-
-- (void)removeAllObjectsFromSection:(NSInteger)section {
+- (void)removeObjectsFromSection:(NSInteger)section indexPaths:(NSMutableArray **)indexPaths {
   NSMutableArray *objectsForSection = [self objectsForSection:section create:NO];
+  if (indexPaths) {
+    for (NSInteger i = 0; i < [objectsForSection count]; i++) [*indexPaths addObject:[NSIndexPath indexPathForItem:i inSection:section]];
+  }
   [objectsForSection removeAllObjects];
+  [self invalidateAll];
 }
 
 - (void)removeObjects:(NSArray *)objects {
-  [self removeObjects:objects section:0];
+  [self removeObjects:objects section:0 indexPaths:nil];
 }
 
 - (void)removeObjectAtIndexPath:(NSIndexPath *)indexPath {
   NSMutableArray *objectsForSection = [self objectsForSection:indexPath.section create:NO];
   [objectsForSection removeObjectAtIndex:indexPath.row];
+  [self invalidate:indexPath];
 }
 
-- (void)removeObjects:(NSArray *)objects section:(NSInteger)section {
+- (void)removeObjects:(NSArray *)objects section:(NSInteger)section indexPaths:(NSMutableArray **)indexPaths {
   NSMutableArray *objectsForSection = [self objectsForSection:section create:NO];
-  [objectsForSection removeObjectsInArray:objects];
+  if (!objectsForSection) return;
+  for (id object in objects) {
+    NSInteger index = [objectsForSection indexOfObject:object];
+    if (index != NSNotFound) {
+      [objectsForSection removeObjectAtIndex:index];
+      NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:section];
+      [self invalidate:indexPath];
+      if (indexPaths) [*indexPaths addObject:indexPath];
+    }
+  }
+}
+
+- (void)invalidate:(NSIndexPath *)indexPath {
+  [_sizeCache removeObjectForKey:indexPath];
+}
+
+- (void)invalidateAll {
+  [_sizeCache removeAllObjects];
 }
 
 - (void)removeAllObjects {
   [_sections removeAllObjects];
+  [self invalidateAll];
 }
 
 - (void)setObjects:(NSArray *)objects {
-  [self setObjects:objects section:0];
+  [self setObjects:objects section:0 indexPathsToRemove:nil indexPathsToAdd:nil];
 }
 
 - (void)setObjects:(NSArray *)objects section:(NSInteger)section {
-  [self removeAllObjectsFromSection:section];
-  [self addObjects:objects section:section];
+  [self setObjects:objects section:section indexPathsToRemove:nil indexPathsToAdd:nil];
+}
+
+- (void)setObjects:(NSArray *)objects section:(NSInteger)section indexPathsToRemove:(NSMutableArray **)indexPathsToRemove indexPathsToAdd:(NSMutableArray **)indexPathsToAdd {
+  [self removeObjectsFromSection:section indexPaths:indexPathsToRemove];
+  [self addObjects:objects section:section indexPaths:indexPathsToAdd];
+  [self invalidateAll];
 }
 
 - (id)objectAtIndexPath:(NSIndexPath *)indexPath {
@@ -123,6 +165,7 @@
   NSIndexPath *indexPath = [self indexPathOfObject:object section:0];
   if (indexPath) {
     [self replaceObjectAtIndexPath:indexPath withObject:object];
+    [self invalidate:indexPath];
   }
   return indexPath;
 }
@@ -141,6 +184,9 @@
 - (CGSize)sizeForCellAtIndexPath:(NSIndexPath *)indexPath view:(UIView *)view {
   id object = [self objectAtIndexPath:indexPath];
   
+  NSValue *sizeCacheValue = [_sizeCache objectForKey:indexPath];
+  if (sizeCacheValue) return [sizeCacheValue CGSizeValue];
+  
   // We can't dequeue because that will cause this method and will infinite recurse.
   
   Class cellClass = [self cellClassForIndexPath:indexPath];
@@ -154,6 +200,10 @@
   [cellForSizing setNeedsLayout];
   self.cellSetBlock(cellForSizing, object, indexPath);
   CGSize size = [cellForSizing sizeThatFits:view.bounds.size];
+  
+  if (!_sizeCache) _sizeCache = [NSMutableDictionary dictionary];
+  [_sizeCache setObject:[NSValue valueWithCGSize:size] forKey:indexPath];
+  
   return size;
 }
 

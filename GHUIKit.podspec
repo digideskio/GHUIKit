@@ -18,7 +18,6 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '7.0'
   s.source_files = 'GHUIKit', 'GHUIKit/**/*.{h,m}'
   s.dependency 'GHKit'
-  s.dependency 'MTAnimation'
   s.frameworks = 'QuartzCore'
   s.requires_arc = true
 

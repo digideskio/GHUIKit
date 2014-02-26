@@ -50,7 +50,9 @@
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-  return [self sectionCount];
+  NSInteger sectionCount = [self sectionCount];
+  if (sectionCount == 0) return 1; // Always need at least 1 section
+  return sectionCount;
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
@@ -107,7 +109,27 @@
 #pragma mark UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  [self.scrollViewDelegate scrollViewDidScroll:scrollView];
+  if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidScroll:)]) {
+    [self.scrollViewDelegate scrollViewDidScroll:scrollView];
+  }
+}
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+  if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewWillBeginDecelerating:)]) {
+    [self.scrollViewDelegate scrollViewWillBeginDecelerating:scrollView];
+  }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+  if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidEndDecelerating:)]) {
+    [self.scrollViewDelegate scrollViewDidEndDecelerating:scrollView];
+  }
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+  if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidEndScrollingAnimation:)]) {
+    [self.scrollViewDelegate scrollViewDidEndScrollingAnimation:scrollView];
+  }
 }
 
 @end

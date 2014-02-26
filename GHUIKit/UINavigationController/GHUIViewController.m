@@ -9,27 +9,45 @@
 #import "GHUIViewController.h"
 #import "GHUIControl.h"
 #import "GHUIUtils.h"
+#import <GHKit/GHKitDefines.h>
+#import "GHUIViewTransitioning.h"
 
 @interface GHUIViewController ()
 @property GHUIView *contentView;
+@property GHUIViewTransitioning *transitioning;
 @end
 
+// These need to match "protected" methods in GHUIView
 @interface GHUIView (ViewCallbacks)
 - (void)_viewWillAppear:(BOOL)animated;
 - (void)_viewDidAppear:(BOOL)animated;
 - (void)_viewWillDisappear:(BOOL)animated;
 - (void)_viewDidDisappear:(BOOL)animated;
 - (void)_viewDidLayoutSubviews;
+- (void)_willBecomeActive;
+- (void)_willResignActive;
 @end
 
 @implementation GHUIViewController
 
 - (id)initWithView:(GHUIView *)view {
+  return [self initWithView:view animation:nil];
+}
+
+- (id)initWithView:(GHUIView *)view animation:(GHUIViewControllerAnimation *)animation {
   if ((self = [super init])) {
     _contentView = view;
     _contentView.navigationDelegate = self;
+    _animation = animation;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_willBecomeActive:) name:UIApplicationWillResignActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_willResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
   }
   return self;
+}
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillResignActiveNotification object:nil];
 }
 
 - (void)loadView {
@@ -39,6 +57,14 @@
 
 - (void)viewDidLayoutSubviews {
   [_contentView _viewDidLayoutSubviews];
+}
+
+- (void)_willBecomeActive:(NSNotification *)notification {
+  [_contentView _willBecomeActive];
+}
+
+- (void)_willResignActive:(NSNotification *)notification {
+  [_contentView _willResignActive];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -66,7 +92,11 @@
   [_contentView setNeedsLayout];
   
   UICollectionView *collectionView = (UICollectionView *)[GHUIUtils subview:_contentView forClass:[UICollectionView class]];
+  // This doesn't seem to cause cells to refresh their width
   [collectionView reloadData];
+  
+  UITableView *tableView = (UITableView *)[GHUIUtils subview:_contentView forClass:[UITableView class]];
+  [tableView reloadData];
 }
 
 - (UIViewController *)viewController {
@@ -79,11 +109,30 @@
 }
 
 - (void)pushView:(GHUIView *)view animation:(id<UIViewControllerAnimatedTransitioning>)animation {
-  GHUIViewController *viewController = [[GHUIViewController alloc] initWithView:view];
-  self.navigationController.delegate = viewController;
-  
-  viewController.animationController = animation;
+  GHUIViewController *viewController = [[GHUIViewController alloc] initWithView:view animation:animation];
+  self.navigationController.delegate = [GHUIViewTransitioning sharedTransitioning];
   [self.navigationController pushViewController:viewController animated:YES];
+}
+
+- (void)presentView:(GHUIView *)view animation:(id<UIViewControllerAnimatedTransitioning>)animation completion:(void (^)(void))completion {
+  UIViewController *presentController;
+//  if (navigation) {
+//    GHUIViewController *viewController = [[GHUIViewController alloc] initWithView:view];
+//    viewController.modalPresentationStyle = UIModalPresentationCustom;
+//    presentController = [[UINavigationController alloc] initWithRootViewController:viewController];
+//    self.transitioning = [[GHUIViewTransitioning alloc] initWithAnimation:animation];
+//    presentController.transitioningDelegate = self.transitioning;
+//  } else {
+  GHUIViewController *viewController = [[GHUIViewController alloc] initWithView:view animation:animation];
+  viewController.transitioningDelegate = [GHUIViewTransitioning sharedTransitioning];
+  viewController.modalPresentationStyle = UIModalPresentationCustom;
+  presentController = viewController;
+  
+  [self presentViewController:presentController animated:(!!animation) completion:completion];
+}
+
+- (void)dismissViewAnimated:(BOOL)animated completion:(void (^)(void))completion {
+  [self dismissViewControllerAnimated:animated completion:completion];
 }
 
 - (void)popViewAnimated:(BOOL)animated {
@@ -109,29 +158,5 @@
   }
   [self.navigationController setViewControllers:viewControllers animated:animated];
 }
-
-#pragma mark UIViewControllerAnimatedTransitioning
-
-- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController {
-    
-  GHUIViewControllerAnimation *animationController = self.animationController;
-  if (!animationController) return nil;
-
-  switch (operation) {
-    case UINavigationControllerOperationPush:
-      animationController.animationType = GHUIViewControllerAnimationTypePresent;
-      return animationController;
-    case UINavigationControllerOperationPop:
-      animationController.animationType = GHUIViewControllerAnimationTypeDismiss;
-      return animationController;
-    default:
-      return nil;
-  }
-}
-
-- (id<UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController interactionControllerForAnimationController:(id<UIViewControllerAnimatedTransitioning>)animationController {
-  return nil;
-}
-
 
 @end

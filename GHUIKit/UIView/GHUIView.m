@@ -11,6 +11,7 @@
 
 @interface GHUIView ()
 @property NSMutableArray *observeAttributes;
+@property BOOL resignedActive;
 @end
 
 @implementation GHUIView
@@ -93,6 +94,10 @@
   else [self setNeedsLayout];
 }
 
+- (id<UILayoutSupport>)topLayoutGuide {
+  return self.navigationDelegate.viewController.topLayoutGuide;
+}
+
 #pragma mark Title
 
 - (void)setTitle:(NSString *)title {
@@ -101,6 +106,22 @@
 }
 
 #pragma mark Navigation Callbacks
+
+- (void)_willBecomeActive {
+  if (_resignedActive) {
+    _resignedActive = NO;
+    [self _viewWillAppear:NO];
+    [self _viewDidAppear:NO];
+  }
+}
+
+- (void)_willResignActive {
+  if (_visible) {
+    _resignedActive = YES;
+    [self _viewWillDisappear:NO];
+    [self _viewDidDisappear:NO];
+  }
+}
 
 - (void)_viewWillAppear:(BOOL)animated {
   _visible = YES;

@@ -8,6 +8,11 @@
 
 #import "GHUICollectionView.h"
 
+@protocol GHUICollectionViewInvalidate
+- (void)invalidateAll;
+@end
+
+
 @implementation GHUICollectionView
 
 - (void)sharedInit {
@@ -46,6 +51,14 @@
   return 0;
 }
 
+// Forces reloadData to invalidate a cache in the datasource if present
+- (void)reloadData {
+  if ([self.dataSource respondsToSelector:@selector(invalidateAll)]) {
+    [self.dataSource performSelector:@selector(invalidateAll)];
+  }
+  [super reloadData];
+}
+
 - (void)setHeaderRefreshing:(BOOL)refreshing {
   if (refreshing && !_refreshControl.refreshing) {
     [_refreshControl beginRefreshing];
@@ -80,9 +93,11 @@
 }
 
 - (void)scrollToBottom:(BOOL)animated {
-  CGSize size = self.contentSize;
-  CGRect frame = CGRectMake(0, size.height - self.frame.size.height, size.width, self.frame.size.height);
-  [self scrollRectToVisible:frame animated:animated];
+  CGSize contentSize = self.contentSize;
+  if (contentSize.height > self.frame.size.height) {
+    CGRect frame = CGRectMake(0, contentSize.height - self.frame.size.height, contentSize.width, self.frame.size.height);
+    [self scrollRectToVisible:frame animated:animated];
+  }
 }
 
 - (void)registerCellClass:(Class)cellClass {

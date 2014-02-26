@@ -1,5 +1,5 @@
 //
-//  GHUIViewControllerDropAnimation.h
+//  GHUIViewControllerDropUp.h
 //  GHUIKit
 //
 //  Created by Gabriel Handford on 2/7/14.
@@ -8,6 +8,6 @@
 
 #import "GHUIViewControllerAnimation.h"
 
-@interface GHUIViewControllerDropAnimation : GHUIViewControllerAnimation
+@interface GHUIViewControllerDropUp : GHUIViewControllerAnimation
 
 @end

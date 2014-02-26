@@ -13,8 +13,12 @@
 
   CGSize _sizeThatFitsText;
   CGSize _textSize;
+  CGSize _accessoryTextSize;
+  CGSize _secondaryTextSize;
 
   UIImageView *_imageView;
+  
+  UIImageView *_backgroundImageView;
 
   UIActivityIndicatorView *_activityIndicatorView;
 
@@ -100,11 +104,6 @@
 @property (nonatomic) CGFloat cornerRadiusRatio;
 
 /*!
- Margins for element.
- */
-@property (nonatomic) UIEdgeInsets margin;
-
-/*!
  Image to display on the right side of the button.
  */
 @property (nonatomic) UIImage *accessoryImage;
@@ -124,6 +123,8 @@
  Defaults to CGSizeZero (disabled).
  */
 @property (nonatomic) CGSize imageSize;
+
+@property (nonatomic) CGSize backgroundImageSize;
 
 /*!
  Text color for text (highlighted).
@@ -265,6 +266,8 @@
  Image view.
  */
 - (UIImageView *)imageView;
+
+- (UIImageView *)backgroundImageView;
 
 /*!
  Set border.

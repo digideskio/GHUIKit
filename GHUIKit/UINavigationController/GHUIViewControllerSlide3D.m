@@ -1,14 +1,8 @@
-//
-//  GHUIViewControllerSlideAnimation.m
-//  GHUIKit
-//
-//  Created by Gabriel Handford on 2/7/14.
-//  Copyright (c) 2014 Gabriel Handford. All rights reserved.
-//
+// From VCTransitions
 
-#import "GHUIViewControllerSlideAnimation.h"
+#import "GHUIViewControllerSlide3D.h"
 
-@implementation GHUIViewControllerSlideAnimation
+@implementation GHUIViewControllerSlide3D
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   UIView *containerView = [transitionContext containerView];

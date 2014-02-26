@@ -28,7 +28,7 @@
 #import "GHUISwitchButton.h"
 
 #import "GHUIActivityView.h"
-#import "GHUIActivityLabel.h"
+#import "GHUIErrorView.h"
 
 #import "GHUIActionSheet.h"
 
@@ -45,3 +45,5 @@
 #import "GHUIViewController.h"
 
 #import "GHUITextField.h"
+
+#import "GHUIModalView.h"

@@ -39,7 +39,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-  if (editingStyle == UITableViewCellEditingStyleDelete) {
+  if (indexPath && editingStyle == UITableViewCellEditingStyleDelete) {
     id object = [self objectAtIndexPath:indexPath];
     if (self.deleteBlock) self.deleteBlock(tableView, indexPath, object);
     [self removeObjectAtIndexPath:indexPath];
