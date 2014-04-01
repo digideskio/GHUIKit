@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Gabriel Handford. All rights reserved.
 //
 
-#import "GHUIView.h"
+#import "GHUIContentView.h"
 #import <GHKit/GHKitDefines.h>
 
 @interface GHUIKeyboardHandler : NSObject
@@ -16,7 +16,7 @@
 
 @property (copy) GHTargetBlock keyboardBlock;
 
-@property (weak) GHUIView *view;
+@property (weak) GHUIContentView *view;
 
 - (void)registerNotifications;
 

@@ -12,6 +12,11 @@
 
 @property (nonatomic, assign) GHUITableViewDataSource *dataSource;
 
-- (void)setObjects:(NSArray *)objects;
+- (void)registerClasses:(NSArray */*of Class*/)classes;
+
+- (void)setObjects:(NSArray *)objects animated:(BOOL)animated;
+- (void)setObjects:(NSArray *)objects section:(NSInteger)section animated:(BOOL)animated;
+
+- (void)replaceObjects:(NSArray *)replaceObjects withObjects:(NSArray *)objects section:(NSInteger)section animated:(BOOL)animated;
 
 @end

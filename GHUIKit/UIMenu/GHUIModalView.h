@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Gabriel Handford. All rights reserved.
 //
 
-#import "GHUIView.h"
+#import "GHUIContentView.h"
 
-@interface GHUIModalView : GHUIView
+@interface GHUIModalView : GHUIContentView
 
-- (id)initWithTitle:(NSString *)title navigationDelegate:(id<GHUIViewNavigationDelegate>)navigationDelegate contentView:(UIView *)contentView;
+- (id)initWithTitle:(NSString *)title navigationDelegate:(id<GHUIViewNavigationDelegate>)navigationDelegate contentView:(GHUIContentView *)contentView;
 
 @end

@@ -11,7 +11,6 @@
 
 @interface GHUIView ()
 @property NSMutableArray *observeAttributes;
-@property BOOL resignedActive;
 @end
 
 @implementation GHUIView
@@ -94,73 +93,6 @@
   else [self setNeedsLayout];
 }
 
-- (id<UILayoutSupport>)topLayoutGuide {
-  return self.navigationDelegate.viewController.topLayoutGuide;
-}
-
-#pragma mark Title
-
-- (void)setTitle:(NSString *)title {
-  _title = title;
-  self.navigationDelegate.navigationItem.title = _title;
-}
-
-#pragma mark Navigation Callbacks
-
-- (void)_willBecomeActive {
-  if (_resignedActive) {
-    _resignedActive = NO;
-    [self _viewWillAppear:NO];
-    [self _viewDidAppear:NO];
-  }
-}
-
-- (void)_willResignActive {
-  if (_visible) {
-    _resignedActive = YES;
-    [self _viewWillDisappear:NO];
-    [self _viewDidDisappear:NO];
-  }
-}
-
-- (void)_viewWillAppear:(BOOL)animated {
-  _visible = YES;
-  
-  if (self.title) {
-    self.navigationDelegate.navigationItem.title = self.title;
-  }
-  
-  [self viewWillAppear:animated];
-}
-
-- (void)_viewDidAppear:(BOOL)animated {
-  [self refreshIfNeeded];
-  [self viewDidAppear:animated];
-}
-
-- (void)_viewWillDisappear:(BOOL)animated {
-  [self viewWillDisappear:animated];
-  _visible = NO;
-}
-
-- (void)_viewDidDisappear:(BOOL)animated {
-  [self viewDidDisappear:animated];
-}
-
-- (void)_viewDidLayoutSubviews {
-  [self viewDidLayoutSubviews];
-}
-
-- (void)viewWillAppear:(BOOL)animated { }
-
-- (void)viewDidAppear:(BOOL)animated { }
-
-- (void)viewWillDisappear:(BOOL)animated { }
-
-- (void)viewDidDisappear:(BOOL)animated { }
-
-- (void)viewDidLayoutSubviews { }
-
 #pragma mark Refersh
 
 - (void)refresh { }
@@ -169,13 +101,6 @@
   if (self.needsRefresh) {
     self.needsRefresh = NO;
     [self refresh];
-  }
-}
-
-- (void)setNeedsRefresh {
-  self.needsRefresh = YES;
-  if (_visible) {
-    [self refreshIfNeeded];
   }
 }
 

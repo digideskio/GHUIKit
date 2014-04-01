@@ -10,13 +10,13 @@
 
 @interface GHUIModalView ()
 @property UINavigationBar *navigationBar;
-@property UIView *contentView;
+@property GHUIContentView *contentView;
 @property (weak) id<GHUIViewNavigationDelegate> navigationDelegate;
 @end
 
 @implementation GHUIModalView
 
-- (id)initWithTitle:(NSString *)title navigationDelegate:(id<GHUIViewNavigationDelegate>)navigationDelegate contentView:(UIView *)contentView {
+- (id)initWithTitle:(NSString *)title navigationDelegate:(id<GHUIViewNavigationDelegate>)navigationDelegate contentView:(GHUIContentView *)contentView {
   if ((self = [super init])) {
     self.layout = [GHLayout layoutForView:self];
     self.navigationDelegate = navigationDelegate;
@@ -46,6 +46,26 @@
   [layout setFrame:CGRectMake(0, 0, size.width, 44) view:_navigationBar];
   [layout setFrame:CGRectMake(0, 44, size.width, size.height - 44) view:_contentView];
   return CGSizeMake(size.width, size.height);
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  [_contentView viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+  [_contentView viewDidAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+  [_contentView viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+  [_contentView viewDidDisappear:animated];
+}
+
+- (void)viewDidLayoutSubviews {
+  [_contentView viewDidLayoutSubviews];
 }
 
 - (void)_close {

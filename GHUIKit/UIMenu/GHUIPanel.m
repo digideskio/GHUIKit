@@ -16,6 +16,13 @@
 @property BOOL contentVisible;
 @end
 
+@protocol GHUIPanelAppear
+- (void)viewWillAppear:(BOOL)animated;
+- (void)viewDidAppear:(BOOL)animated;
+- (void)viewWillDisappear:(BOOL)animated;
+- (void)viewDidDisappear:(BOOL)animated;
+@end
+
 
 @implementation GHUIPanel
 
@@ -88,9 +95,15 @@
   
   _contentVisible = YES;
   self.userInteractionEnabled = YES;
+  if ([_contentView respondsToSelector:@selector(viewWillAppear:)]) {
+    [(id<GHUIPanelAppear>)_contentView viewWillAppear:YES];
+  }
   [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:1.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
     _contentView.frame = endFrame;
     _coverView.alpha = 1.0;
+    if ([_contentView respondsToSelector:@selector(viewDidAppear:)]) {
+      [(id<GHUIPanelAppear>)_contentView viewDidAppear:YES];
+    }
   } completion:^(BOOL finished) {
     _presenting = NO;
   }];
@@ -108,9 +121,15 @@
   _contentVisible = NO;
   self.userInteractionEnabled = NO;
   CGRect startFrame = [self _startFrame];
+  if ([_contentView respondsToSelector:@selector(viewWillDisappear:)]) {
+    [(id<GHUIPanelAppear>)_contentView viewWillDisappear:YES];
+  }
   [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:0.8 initialSpringVelocity:1.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
     _contentView.frame = startFrame;
     _coverView.alpha = 0.0;
+    if ([_contentView respondsToSelector:@selector(viewDidDisappear:)]) {
+      [(id<GHUIPanelAppear>)_contentView viewDidDisappear:YES];
+    }
   } completion:^(BOOL finished) {
     _dismissing = NO;
   }];

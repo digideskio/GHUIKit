@@ -18,18 +18,50 @@
 
 - (CGSize)layout:(id<GHLayout>)layout size:(CGSize)size {
   if ([_views count] == 0) return CGSizeMake(size.width, 0);
+  switch (self.viewType) {
+    case GHUIListViewTypeVertical:
+    case GHUIListViewTypeVerticalFill:
+      return [self layoutVertical:layout size:size];
+
+    case GHUIListViewTypeHorizontal:
+      return [self layoutHorizontal:layout size:size];
+  }
+}
+
+- (CGSize)layoutVertical:(id<GHLayout>)layout size:(CGSize)size {
+  if ([_views count] == 0) return CGSizeMake(size.width, 0);
   
   CGFloat x = _insets.left;
   CGFloat y = _insets.top;
   for (UIView *view in _views) {
     CGRect viewRect = CGRectZero;
-    if (view.autoresizesSubviews) {
+    if (self.viewType == GHUIListViewTypeVerticalFill) {
       viewRect = [layout setFrame:CGRectMake(x, y, size.width - x - _insets.right, view.frame.size.height) view:view sizeToFit:YES];
     } else {
+      NSAssert(view.frame.size.width != 0, @"View width is 0, it won't be visible in a vertical (non-fill) layout");
       viewRect = [layout setFrame:CGRectMake(x, y, view.frame.size.width, view.frame.size.height) view:view];
     }
     y += viewRect.size.height + _insets.bottom;
   }
+  return CGSizeMake(size.width, y);
+}
+
+- (CGSize)layoutHorizontal:(id<GHLayout>)layout size:(CGSize)size {
+  if ([_views count] == 0) return CGSizeMake(size.width, 0);
+  
+  CGFloat x = 0;
+  CGFloat y = _insets.top;
+  CGFloat maxHeight = 0;
+  CGFloat totalWidth = (size.width - ((_insets.left + _insets.right) * [_views count]));
+  CGFloat width = floorf(totalWidth / [_views count]);
+  for (UIView *view in _views) {
+    x += _insets.left;
+    CGRect viewRect = [layout setFrame:CGRectMake(x, y, width, view.frame.size.height) view:view sizeToFit:YES];
+    NSAssert(viewRect.size.height != 0, @"View height is 0, it won't be visible in a horizontal layout");
+    x += width + _insets.right;
+    if (maxHeight < viewRect.size.height) maxHeight = viewRect.size.height;
+  }
+  y += maxHeight + _insets.bottom;
   return CGSizeMake(size.width, y);
 }
 

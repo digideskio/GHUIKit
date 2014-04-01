@@ -17,6 +17,13 @@
   [tableView registerClass:cellClass forCellReuseIdentifier:NSStringFromClass(cellClass)];
 }
 
+- (void)setHeaderText:(NSString *)headerText section:(NSInteger)section {
+  if (!_headerTexts) {
+    _headerTexts = [NSMutableDictionary dictionary];
+  }
+  [_headerTexts setObject:headerText forKey:@(section)];
+}
+
 #pragma mark UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -26,12 +33,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   Class cellClass = [self cellClassForIndexPath:indexPath];
   id cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(cellClass) forIndexPath:indexPath];
-  self.cellSetBlock(cell, [self objectAtIndexPath:indexPath], indexPath);  
+  self.cellSetBlock(cell, [self objectAtIndexPath:indexPath], indexPath, tableView);
   return cell;
 }
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-  return [self sectionCount];
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+  NSInteger sectionCount = [self sectionCount];
+  if (sectionCount == 0) return 1; // Always need at least 1 section
+  return sectionCount;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -45,6 +54,10 @@
     [self removeObjectAtIndexPath:indexPath];
     [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
   }
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+  return [_headerTexts objectForKey:@(section)];
 }
 
 #pragma mark UICollectionViewDelegate

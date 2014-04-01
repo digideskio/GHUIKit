@@ -100,7 +100,7 @@
     sizeThatFits = [view sizeThatFits:frame.size];
     
     // If size that fits returns a larger width, then we'll need to constrain it.
-    if (((options & GHLayoutOptionsSizeToFitConstraintWidth) == GHLayoutOptionsSizeToFitConstraintWidth) && sizeThatFits.width > frame.size.width) {
+    if (((options & GHLayoutOptionsSizeToFitConstrainWidth) == GHLayoutOptionsSizeToFitConstrainWidth) && sizeThatFits.width > frame.size.width) {
       sizeThatFits.width = frame.size.width;
     }
     

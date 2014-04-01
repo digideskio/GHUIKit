@@ -10,7 +10,7 @@
 
 typedef void (^GHUICollectionViewRefreshBlock)(GHUICollectionView *collectionView);
 
-@interface GHUICollectionView : UICollectionView <UICollectionViewDelegate>
+@interface GHUICollectionView : UICollectionView <UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (readonly) UIRefreshControl *refreshControl;
 @property (copy) GHUICollectionViewRefreshBlock refreshBlock;
@@ -45,8 +45,9 @@ typedef void (^GHUICollectionViewRefreshBlock)(GHUICollectionView *collectionVie
  */
 - (BOOL)isHeaderRefreshing;
 
-- (void)scrollToBottom:(BOOL)animated;
-- (void)scrollToBottomAfterReload:(BOOL)animated;
+- (void)scrollToBottom:(BOOL)animated topOffset:(CGFloat)topOffset;
+
+- (void)scrollToBottomAfterReload:(BOOL)animated topOffset:(CGFloat)topOffset;
 
 - (void)registerCellClass:(Class)cellClass;
 

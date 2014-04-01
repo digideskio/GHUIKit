@@ -8,12 +8,19 @@
 
 #import "GHUIView.h"
 
+typedef NS_ENUM (NSInteger, GHUIListViewType) {
+  GHUIListViewTypeVerticalFill,
+  GHUIListViewTypeVertical,
+  GHUIListViewTypeHorizontal
+};
+
 @interface GHUIListView : GHUIView {
   NSMutableArray *_views;
 }
 
 @property UIEdgeInsets insets;
 @property UIColor *borderColor;
+@property GHUIListViewType viewType;
 
 - (NSArray *)views;
 

@@ -12,12 +12,14 @@
 
 + (CGSize)sizeWithText:(NSString *)text font:(UIFont *)font;
 + (CGSize)sizeWithText:(NSString *)text font:(UIFont *)font width:(CGFloat)width;
-+ (CGSize)sizeWithText:(NSString *)text font:(UIFont *)font width:(CGFloat)width multiline:(BOOL)multiline truncate:(BOOL)truncate;
++ (CGSize)sizeWithText:(NSString *)text font:(UIFont *)font width:(CGFloat)width truncate:(BOOL)truncate;
 
 + (CGSize)sizeWithText:(NSString *)text font:(UIFont *)font size:(CGSize)size;
-+ (CGSize)sizeWithText:(NSString *)text font:(UIFont *)font size:(CGSize)size multiline:(BOOL)multiline truncate:(BOOL)truncate;
++ (CGSize)sizeWithText:(NSString *)text font:(UIFont *)font size:(CGSize)size truncate:(BOOL)truncate;
 
-+ (void)drawText:(NSString *)text rect:(CGRect)rect font:(UIFont *)font color:(UIColor *)color alignment:(NSTextAlignment)alignment multiline:(BOOL)multiline truncate:(BOOL)truncate;
++ (NSInteger)fontSizeForText:(NSString *)text minFontSize:(NSInteger)minFontSize maxFontSize:(NSInteger)maxFontSize familyName:(NSString *)familyName size:(CGSize)size;
+
++ (void)drawText:(NSString *)text rect:(CGRect)rect font:(UIFont *)font color:(UIColor *)color alignment:(NSTextAlignment)alignment truncate:(BOOL)truncate;
 
 + (UIView *)subview:(UIView *)view forClass:(Class)class;
 

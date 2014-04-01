@@ -6,16 +6,15 @@
 //  Copyright (c) 2013 Gabriel Handford. All rights reserved.
 //
 
-#import "GHUIView.h"
+#import "GHUIContentView.h"
 #import "GHUIViewControllerAnimation.h"
 
 @interface GHUIViewController : UIViewController <GHUIViewNavigationDelegate>
 
 @property (readonly) GHUIViewControllerAnimation *animation;
 
-- (id)initWithView:(GHUIView *)view;
+- (id)initWithContentView:(GHUIContentView *)contentView;
 
-- (id)initWithView:(GHUIView *)view animation:(GHUIViewControllerAnimation *)animation;
-
+- (id)initWithContentView:(GHUIContentView *)contentView animation:(GHUIViewControllerAnimation *)animation;
 
 @end

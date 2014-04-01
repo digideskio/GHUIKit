@@ -20,6 +20,7 @@
 #import "GHUITableViewDetailCell.h"
 
 #import "GHUIView.h"
+#import "GHUIContentView.h"
 
 #import "GHUINavigationBar.h"
 
@@ -47,3 +48,4 @@
 #import "GHUITextField.h"
 
 #import "GHUIModalView.h"
+#import "GHUIPanel.h"

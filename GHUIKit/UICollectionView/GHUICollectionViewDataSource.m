@@ -13,6 +13,10 @@
 
 @implementation GHUICollectionViewDataSource
 
+- (void)registerCellClass:(Class)cellClass collectionView:(UICollectionView *)collectionView {
+  [collectionView registerClass:cellClass forCellWithReuseIdentifier:NSStringFromClass(cellClass)];
+}
+
 - (void)setCellClass:(Class)cellClass collectionView:(UICollectionView *)collectionView {
   [self setCellClass:cellClass collectionView:collectionView section:-1];
 }
@@ -32,26 +36,25 @@
   [_headerTexts setObject:headerText forKey:@(section)];
 }
 
-- (NSString *)headerTextForSection:(NSInteger)section {
-  return [_headerTexts objectForKey:@(section)];
-}
-
 #pragma mark UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-  return [self countForSection:section];
+  NSInteger count = [self countForSection:section];
+  //NSLog(@"numberOfItemsInSection:%d = %d", section, count);
+  return count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   Class cellClass = [self cellClassForIndexPath:indexPath];
   id cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(cellClass) forIndexPath:indexPath];
-  self.cellSetBlock(cell, [self objectAtIndexPath:indexPath], indexPath);
+  self.cellSetBlock(cell, [self objectAtIndexPath:indexPath], indexPath, collectionView);
   return cell;
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
   NSInteger sectionCount = [self sectionCount];
   if (sectionCount == 0) return 1; // Always need at least 1 section
+  //NSLog(@"sectionCount = %d", sectionCount);
   return sectionCount;
 }
 
@@ -107,6 +110,19 @@
 }
 
 #pragma mark UIScrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+  if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewWillBeginDragging:)]) {
+    [self.scrollViewDelegate scrollViewWillBeginDragging:scrollView];
+  }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+  if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidEndDragging:willDecelerate:)]) {
+    [self.scrollViewDelegate scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
+  }
+}
+
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidScroll:)]) {

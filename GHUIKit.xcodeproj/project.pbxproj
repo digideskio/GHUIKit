@@ -7,11 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0001646A18DA11C700E590EB /* GHUITableViewSwipeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0001646918DA11C700E590EB /* GHUITableViewSwipeCell.m */; };
+		0001646D18DA12F400E590EB /* GHUICellButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0001646C18DA12F400E590EB /* GHUICellButtonView.m */; };
+		0001647A18DA664000E590EB /* GHUILongPressGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0001647918DA664000E590EB /* GHUILongPressGestureRecognizer.m */; };
+		0001647D18DA66D600E590EB /* GHUITapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0001647C18DA66D600E590EB /* GHUITapGestureRecognizer.m */; };
 		001CF5DB18AC081500D830A2 /* GHUIViewControllerFall.m in Sources */ = {isa = PBXBuildFile; fileRef = 001CF5DA18AC081500D830A2 /* GHUIViewControllerFall.m */; };
 		001CF5DF18AC26D800D830A2 /* GHUIPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 001CF5DE18AC26D800D830A2 /* GHUIPanel.m */; };
 		001CF5F018AEE8C900D830A2 /* GHUIModalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 001CF5EF18AEE8C900D830A2 /* GHUIModalView.m */; };
 		002ECB041868E4C5005523A6 /* GHUIKeyboardHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 002ECB031868E4C5005523A6 /* GHUIKeyboardHandler.m */; };
 		00307A4F1863C6DD00FA5977 /* GHUITextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 00307A4E1863C6DD00FA5977 /* GHUITextField.m */; };
+		004A98F018EA0F2300280D82 /* GHUITableViewTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 004A98EF18EA0F2300280D82 /* GHUITableViewTitleCell.m */; };
+		004A98FF18EB3A4B00280D82 /* GHUIContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 004A98FE18EB3A4B00280D82 /* GHUIContentView.m */; };
 		004CB3C618909A2A00EFE8F7 /* GHUITableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 004CB3C518909A2A00EFE8F7 /* GHUITableView.m */; };
 		004CB3C918909A3A00EFE8F7 /* GHUITableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 004CB3C818909A3A00EFE8F7 /* GHUITableViewDataSource.m */; };
 		004CB3CC18909AED00EFE8F7 /* GHUICellDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 004CB3CB18909AED00EFE8F7 /* GHUICellDataSource.m */; };
@@ -63,6 +69,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0001646818DA11C700E590EB /* GHUITableViewSwipeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUITableViewSwipeCell.h; sourceTree = "<group>"; };
+		0001646918DA11C700E590EB /* GHUITableViewSwipeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUITableViewSwipeCell.m; sourceTree = "<group>"; };
+		0001646B18DA12F400E590EB /* GHUICellButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUICellButtonView.h; sourceTree = "<group>"; };
+		0001646C18DA12F400E590EB /* GHUICellButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUICellButtonView.m; sourceTree = "<group>"; };
+		0001647818DA664000E590EB /* GHUILongPressGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUILongPressGestureRecognizer.h; sourceTree = "<group>"; };
+		0001647918DA664000E590EB /* GHUILongPressGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUILongPressGestureRecognizer.m; sourceTree = "<group>"; };
+		0001647B18DA66D600E590EB /* GHUITapGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUITapGestureRecognizer.h; sourceTree = "<group>"; };
+		0001647C18DA66D600E590EB /* GHUITapGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUITapGestureRecognizer.m; sourceTree = "<group>"; };
 		001CF5D918AC081500D830A2 /* GHUIViewControllerFall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIViewControllerFall.h; sourceTree = "<group>"; };
 		001CF5DA18AC081500D830A2 /* GHUIViewControllerFall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIViewControllerFall.m; sourceTree = "<group>"; };
 		001CF5DD18AC26D800D830A2 /* GHUIPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIPanel.h; sourceTree = "<group>"; };
@@ -73,6 +87,10 @@
 		002ECB031868E4C5005523A6 /* GHUIKeyboardHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIKeyboardHandler.m; sourceTree = "<group>"; };
 		00307A4D1863C6DD00FA5977 /* GHUITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUITextField.h; sourceTree = "<group>"; };
 		00307A4E1863C6DD00FA5977 /* GHUITextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUITextField.m; sourceTree = "<group>"; };
+		004A98EE18EA0F2300280D82 /* GHUITableViewTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUITableViewTitleCell.h; sourceTree = "<group>"; };
+		004A98EF18EA0F2300280D82 /* GHUITableViewTitleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUITableViewTitleCell.m; sourceTree = "<group>"; };
+		004A98FD18EB3A4B00280D82 /* GHUIContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUIContentView.h; sourceTree = "<group>"; };
+		004A98FE18EB3A4B00280D82 /* GHUIContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUIContentView.m; sourceTree = "<group>"; };
 		004CB3C418909A2A00EFE8F7 /* GHUITableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUITableView.h; sourceTree = "<group>"; };
 		004CB3C518909A2A00EFE8F7 /* GHUITableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUITableView.m; sourceTree = "<group>"; };
 		004CB3C718909A3A00EFE8F7 /* GHUITableViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUITableViewDataSource.h; sourceTree = "<group>"; };
@@ -162,6 +180,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0001647718DA65FC00E590EB /* UIGestureRecognizer */ = {
+			isa = PBXGroup;
+			children = (
+				0001647818DA664000E590EB /* GHUILongPressGestureRecognizer.h */,
+				0001647918DA664000E590EB /* GHUILongPressGestureRecognizer.m */,
+				0001647B18DA66D600E590EB /* GHUITapGestureRecognizer.h */,
+				0001647C18DA66D600E590EB /* GHUITapGestureRecognizer.m */,
+			);
+			path = UIGestureRecognizer;
+			sourceTree = "<group>";
+		};
 		001CF5DC18AC26C300D830A2 /* UIMenu */ = {
 			isa = PBXGroup;
 			children = (
@@ -182,6 +211,15 @@
 			path = UITextField;
 			sourceTree = "<group>";
 		};
+		004A98ED18EA0F0600280D82 /* UITableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				004A98EE18EA0F2300280D82 /* GHUITableViewTitleCell.h */,
+				004A98EF18EA0F2300280D82 /* GHUITableViewTitleCell.m */,
+			);
+			path = UITableViewCell;
+			sourceTree = "<group>";
+		};
 		004CB3C318909A1100EFE8F7 /* UITableView */ = {
 			isa = PBXGroup;
 			children = (
@@ -193,6 +231,10 @@
 				00F238941890A58F00EE58D9 /* GHUITableViewCell.m */,
 				00AFEFAB18A5B6F90072632C /* GHUITableViewDetailCell.h */,
 				00AFEFAC18A5B6F90072632C /* GHUITableViewDetailCell.m */,
+				0001646818DA11C700E590EB /* GHUITableViewSwipeCell.h */,
+				0001646918DA11C700E590EB /* GHUITableViewSwipeCell.m */,
+				0001646B18DA12F400E590EB /* GHUICellButtonView.h */,
+				0001646C18DA12F400E590EB /* GHUICellButtonView.m */,
 			);
 			path = UITableView;
 			sourceTree = "<group>";
@@ -237,6 +279,7 @@
 				00A411C01829A16000C5A20F /* GHUIUtils.m */,
 				0099327F18187BFE00556ECC /* UICollectionView */,
 				004CB3C318909A1100EFE8F7 /* UITableView */,
+				004A98ED18EA0F0600280D82 /* UITableViewCell */,
 				0099329E18204D8600556ECC /* UIView */,
 				001CF5DC18AC26C300D830A2 /* UIMenu */,
 				009932B21820570F00556ECC /* UINavigationBar */,
@@ -249,6 +292,7 @@
 				00C1D5E4182D95BC0080E2CF /* UILabel */,
 				00993259181879BD00556ECC /* Supporting Files */,
 				00C1D5E8183171160080E2CF /* UINavigationController */,
+				0001647718DA65FC00E590EB /* UIGestureRecognizer */,
 				00307A4C1863C6CD00FA5977 /* UITextField */,
 			);
 			path = GHUIKit;
@@ -284,6 +328,8 @@
 			children = (
 				0099329F18204D9100556ECC /* GHUIView.h */,
 				009932A018204D9100556ECC /* GHUIView.m */,
+				004A98FD18EB3A4B00280D82 /* GHUIContentView.h */,
+				004A98FE18EB3A4B00280D82 /* GHUIContentView.m */,
 				009932AC1820537000556ECC /* GHLayout.h */,
 				009932AD1820537000556ECC /* GHLayout.m */,
 				002ECB021868E4C5005523A6 /* GHUIKeyboardHandler.h */,
@@ -486,6 +532,8 @@
 				009932AE1820537000556ECC /* GHLayout.m in Sources */,
 				00C1D5E7182D95CA0080E2CF /* GHUILabel.m in Sources */,
 				0099328218187BFE00556ECC /* GHUICollectionView.m in Sources */,
+				0001647A18DA664000E590EB /* GHUILongPressGestureRecognizer.m in Sources */,
+				004A98F018EA0F2300280D82 /* GHUITableViewTitleCell.m in Sources */,
 				004CB3CC18909AED00EFE8F7 /* GHUICellDataSource.m in Sources */,
 				009932A818204F4B00556ECC /* GHUIButton.m in Sources */,
 				001CF5F018AEE8C900D830A2 /* GHUIModalView.m in Sources */,
@@ -502,11 +550,14 @@
 				00EE07DF18A98B5A0061915F /* GHUIViewControllerDrop.m in Sources */,
 				002ECB041868E4C5005523A6 /* GHUIKeyboardHandler.m in Sources */,
 				00A411C11829A16000C5A20F /* GHUIUtils.m in Sources */,
+				0001647D18DA66D600E590EB /* GHUITapGestureRecognizer.m in Sources */,
 				009932BA18206DFF00556ECC /* GHUISwitchButton.m in Sources */,
+				0001646A18DA11C700E590EB /* GHUITableViewSwipeCell.m in Sources */,
 				004CB3C618909A2A00EFE8F7 /* GHUITableView.m in Sources */,
 				00EE07DC18A97D4E0061915F /* GHUIViewTransitioning.m in Sources */,
 				00A411BB182457CE00C5A20F /* GHUICollectionViewDataSource.m in Sources */,
 				00A412021829D9CD00C5A20F /* GHUIListView.m in Sources */,
+				0001646D18DA12F400E590EB /* GHUICellButtonView.m in Sources */,
 				00AFEFAD18A5B6F90072632C /* GHUITableViewDetailCell.m in Sources */,
 				0099328F181ADDEB00556ECC /* GHUICollectionViewCell.m in Sources */,
 				00EF3D621835C52E00C6B5C0 /* GHUICollectionViewLabel.m in Sources */,
@@ -514,6 +565,7 @@
 				00EE07E818A9B9940061915F /* GHUIViewControllerReveal.m in Sources */,
 				00AFEFA318A5A93A0072632C /* GHUIViewControllerAnimation.m in Sources */,
 				00E2B5FD18BBEFB200441C28 /* GHUIErrorView.m in Sources */,
+				004A98FF18EB3A4B00280D82 /* GHUIContentView.m in Sources */,
 				00A411B8182445E200C5A20F /* GHUIImageView.m in Sources */,
 				00C0950E1821C64200E37D61 /* GHUIActivityView.m in Sources */,
 				00E1A6BC18230DD300BBDFBD /* GHUIAlertView.m in Sources */,

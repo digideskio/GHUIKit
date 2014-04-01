@@ -92,11 +92,10 @@
   if (self.refreshBlock) self.refreshBlock(self);
 }
 
-- (void)scrollToBottom:(BOOL)animated {
-  CGSize contentSize = self.contentSize;
-  if (contentSize.height > self.frame.size.height) {
-    CGRect frame = CGRectMake(0, contentSize.height - self.frame.size.height, contentSize.width, self.frame.size.height);
-    [self scrollRectToVisible:frame animated:animated];
+- (void)scrollToBottom:(BOOL)animated topOffset:(CGFloat)topOffset {  
+  CGFloat bottomOffset = CGPointMake(0, self.contentSize.height - self.frame.size.height).y;
+  if (bottomOffset + topOffset > 0) {
+    [self setContentOffset:CGPointMake(0, bottomOffset) animated:animated];
   }
 }
 
@@ -104,10 +103,10 @@
   [self registerClass:cellClass forCellWithReuseIdentifier:NSStringFromClass(cellClass)];
 }
 
-- (void)scrollToBottomAfterReload:(BOOL)animated {
+- (void)scrollToBottomAfterReload:(BOOL)animated topOffset:(CGFloat)topOffset {
   // If you call reloadData right before this method, contentSize isn't updated, so lets do this in a completion block
   [self performBatchUpdates:^() {} completion:^(BOOL finished) {
-    [self scrollToBottom:animated];
+    [self scrollToBottom:animated topOffset:topOffset];
   }];
 }
 

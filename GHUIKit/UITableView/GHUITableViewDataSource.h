@@ -16,4 +16,6 @@ typedef void (^GHUICellDeleteBlock)(id sender, NSIndexPath *indexPath, id object
 
 - (void)setCellClass:(Class)cellClass tableView:(UITableView *)tableView section:(NSInteger)section;
 
+- (void)setHeaderText:(NSString *)headerText section:(NSInteger)section;
+
 @end

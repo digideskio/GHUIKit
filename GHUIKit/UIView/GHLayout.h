@@ -19,7 +19,7 @@ typedef enum {
   // Whether sizeToFit is constrained to the width specified.
   // For example UILabel sizeToFit may return a larger width than was specified,
   // and this will constrain it.
-  GHLayoutOptionsSizeToFitConstraintWidth = 1 << 8,
+  GHLayoutOptionsSizeToFitConstrainWidth = 1 << 8,
   
   // Whether the size specified is the default. Using this option will
   // use the specified width and/or height (if not 0) when the sizeToFit

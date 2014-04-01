@@ -13,11 +13,11 @@
 #import "GHUIViewTransitioning.h"
 
 @interface GHUIViewController ()
-@property GHUIView *contentView;
+@property GHUIContentView *contentView;
 @property GHUIViewTransitioning *transitioning;
 @end
 
-// These need to match "protected" methods in GHUIView
+// These need to match "protected" methods in GHUIContentView
 @interface GHUIView (ViewCallbacks)
 - (void)_viewWillAppear:(BOOL)animated;
 - (void)_viewDidAppear:(BOOL)animated;
@@ -30,13 +30,13 @@
 
 @implementation GHUIViewController
 
-- (id)initWithView:(GHUIView *)view {
-  return [self initWithView:view animation:nil];
+- (id)initWithContentView:(GHUIContentView *)contentView {
+  return [self initWithContentView:contentView animation:nil];
 }
 
-- (id)initWithView:(GHUIView *)view animation:(GHUIViewControllerAnimation *)animation {
+- (id)initWithContentView:(GHUIContentView *)contentView animation:(GHUIViewControllerAnimation *)animation {
   if ((self = [super init])) {
-    _contentView = view;
+    _contentView = contentView;
     _contentView.navigationDelegate = self;
     _animation = animation;
     
@@ -103,32 +103,35 @@
   return self;
 }
 
-- (void)pushView:(GHUIView *)view animated:(BOOL)animated {
-  GHUIViewController *viewController = [[GHUIViewController alloc] initWithView:view];
+- (void)pushView:(GHUIContentView *)contentView animated:(BOOL)animated {
+  GHUIViewController *viewController = [[GHUIViewController alloc] initWithContentView:contentView];
   [self.navigationController pushViewController:viewController animated:animated];
 }
 
-- (void)pushView:(GHUIView *)view animation:(id<UIViewControllerAnimatedTransitioning>)animation {
-  GHUIViewController *viewController = [[GHUIViewController alloc] initWithView:view animation:animation];
+- (void)pushView:(GHUIContentView *)contentView animation:(id<UIViewControllerAnimatedTransitioning>)animation {
+  GHUIViewController *viewController = [[GHUIViewController alloc] initWithContentView:contentView animation:animation];
   self.navigationController.delegate = [GHUIViewTransitioning sharedTransitioning];
   [self.navigationController pushViewController:viewController animated:YES];
 }
 
-- (void)presentView:(GHUIView *)view animation:(id<UIViewControllerAnimatedTransitioning>)animation completion:(void (^)(void))completion {
-  UIViewController *presentController;
-//  if (navigation) {
-//    GHUIViewController *viewController = [[GHUIViewController alloc] initWithView:view];
-//    viewController.modalPresentationStyle = UIModalPresentationCustom;
-//    presentController = [[UINavigationController alloc] initWithRootViewController:viewController];
-//    self.transitioning = [[GHUIViewTransitioning alloc] initWithAnimation:animation];
-//    presentController.transitioningDelegate = self.transitioning;
-//  } else {
-  GHUIViewController *viewController = [[GHUIViewController alloc] initWithView:view animation:animation];
+- (void)presentView:(GHUIContentView *)contentView animation:(id<UIViewControllerAnimatedTransitioning>)animation completion:(void (^)(void))completion {
+  GHUIViewController *viewController = [[GHUIViewController alloc] initWithContentView:contentView animation:animation];
   viewController.transitioningDelegate = [GHUIViewTransitioning sharedTransitioning];
   viewController.modalPresentationStyle = UIModalPresentationCustom;
-  presentController = viewController;
-  
-  [self presentViewController:presentController animated:(!!animation) completion:completion];
+  [self presentViewController:viewController animated:(!!animation) completion:completion];
+}
+
+- (id<GHUIViewNavigationDelegate>)presentNavigationView:(GHUIContentView *)contentView animated:(BOOL)animated completion:(void (^)(void))completion {
+  GHUIViewController *viewController = [[GHUIViewController alloc] initWithContentView:contentView];
+  UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+  [self presentViewController:navigationController animated:animated completion:completion];
+  return viewController;
+}
+
+- (void)presentView:(GHUIContentView *)contentView modalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle completion:(void (^)(void))completion {
+  GHUIViewController *viewController = [[GHUIViewController alloc] initWithContentView:contentView];
+  viewController.modalPresentationStyle = modalPresentationStyle;
+  [self presentViewController:viewController animated:YES completion:completion];
 }
 
 - (void)dismissViewAnimated:(BOOL)animated completion:(void (^)(void))completion {
@@ -143,18 +146,18 @@
   [self.navigationController popToRootViewControllerAnimated:animated];
 }
 
-- (void)swapView:(GHUIView *)view animated:(BOOL)animated {
+- (void)swapView:(GHUIContentView *)view animated:(BOOL)animated {
   NSMutableArray *viewControllers = [self.navigationController.viewControllers mutableCopy];
   [viewControllers removeLastObject];
-  GHUIViewController *viewController = [[GHUIViewController alloc] initWithView:view];
+  GHUIViewController *viewController = [[GHUIViewController alloc] initWithContentView:view];
   [viewControllers addObject:viewController];
   [self.navigationController setViewControllers:viewControllers animated:animated];
 }
 
 - (void)setViews:(NSArray *)views animated:(BOOL)animated {
   NSMutableArray *viewControllers = [[NSMutableArray alloc] init];
-  for (GHUIView *view in views) {
-    [viewControllers addObject:[[GHUIViewController alloc] initWithView:view]];
+  for (GHUIContentView *view in views) {
+    [viewControllers addObject:[[GHUIViewController alloc] initWithContentView:view]];
   }
   [self.navigationController setViewControllers:viewControllers animated:animated];
 }

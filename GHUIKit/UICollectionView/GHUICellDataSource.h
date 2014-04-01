@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Gabriel Handford. All rights reserved.
 //
 
-typedef void (^GHUICellSetBlock)(id cell, id object, NSIndexPath *indexPath);
+typedef void (^GHUICellSetBlock)(id cell, id object, NSIndexPath *indexPath, id containingView/*UITableView or UICollectionView*/);
 typedef void (^GHUICellSelectBlock)(id sender, NSIndexPath *indexPath, id object);
 typedef BOOL (^GHUICellShouldSelectBlock)(id sender, NSIndexPath *indexPath, id object);
 typedef Class (^GHUICellClassBlock)(id object, NSIndexPath *indexPath);
@@ -69,6 +69,8 @@ typedef Class (^GHUICellClassBlock)(id object, NSIndexPath *indexPath);
 
 - (Class)cellClassForIndexPath:(NSIndexPath *)indexPath;
 
-- (CGSize)sizeForCellAtIndexPath:(NSIndexPath *)indexPath view:(UIView *)view;
+- (CGSize)sizeForCellAtIndexPath:(NSIndexPath *)indexPath view:(UIView */*UITableView or UICollectionView*/)view;
+
+- (NSString *)headerTextForSection:(NSInteger)section;
 
 @end

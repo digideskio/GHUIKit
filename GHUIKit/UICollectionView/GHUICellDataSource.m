@@ -7,6 +7,7 @@
 //
 
 #import "GHUICellDataSource.h"
+#import "GHCGUtils.h"
 
 @implementation GHUICellDataSource
 
@@ -181,7 +182,9 @@
   return cellClass;
 }
 
-- (CGSize)sizeForCellAtIndexPath:(NSIndexPath *)indexPath view:(UIView *)view {
+- (CGSize)sizeForCellAtIndexPath:(NSIndexPath *)indexPath view:(UIView */*UITableView or UICollectionView*/)view {
+  if (GHCGSizeIsEqual(view.bounds.size, CGSizeZero)) return CGSizeZero;
+  
   id object = [self objectAtIndexPath:indexPath];
   
   NSValue *sizeCacheValue = [_sizeCache objectForKey:indexPath];
@@ -190,6 +193,7 @@
   // We can't dequeue because that will cause this method and will infinite recurse.
   
   Class cellClass = [self cellClassForIndexPath:indexPath];
+  NSAssert(cellClass, @"No cell class for indexPath: %@", indexPath);
   if (!_cellsForSizing) _cellsForSizing = [NSMutableDictionary dictionary];
   id cellForSizing = _cellsForSizing[NSStringFromClass(cellClass)];
   if (!cellForSizing) {
@@ -198,13 +202,22 @@
   }
   
   [cellForSizing setNeedsLayout];
-  self.cellSetBlock(cellForSizing, object, indexPath);
+  self.cellSetBlock(cellForSizing, object, indexPath, view);
+  
+  //NSAssert(!GHCGSizeIsEqual(view.bounds.size, CGSizeZero), @"View size is empty");
+  
   CGSize size = [cellForSizing sizeThatFits:view.bounds.size];
+  
+  //NSLog(@"(%@) %d.%d size: %@ in %@", [cellForSizing class], indexPath.section, indexPath.row, NSStringFromCGSize(size), NSStringFromCGSize(view.bounds.size));
   
   if (!_sizeCache) _sizeCache = [NSMutableDictionary dictionary];
   [_sizeCache setObject:[NSValue valueWithCGSize:size] forKey:indexPath];
   
   return size;
+}
+
+- (NSString *)headerTextForSection:(NSInteger)section {
+  return [_headerTexts objectForKey:@(section)];
 }
 
 @end

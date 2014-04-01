@@ -14,6 +14,18 @@
 
 @implementation GHUITableViewCell
 
+// This is only to trigger viewForContent creation
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+  if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) {
+    [self viewForContent];
+  }
+  return self;
+}
+
+- (void)setupContentView:(UIView *)contentView {
+  [self.contentView addSubview:_viewForContent];
+}
+
 - (void)layoutSubviews {
   [super layoutSubviews];
   self.viewForContent.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
@@ -33,7 +45,7 @@
     Class contentViewClass = [[self class] contentViewClass];
     NSAssert(contentViewClass, @"Not contentViewClass. You forgot to implement contentViewClass class method?");
     _viewForContent = [[contentViewClass alloc] init];
-    [self.contentView addSubview:_viewForContent];
+    [self setupContentView:_viewForContent];
   }
   return _viewForContent;
 }
