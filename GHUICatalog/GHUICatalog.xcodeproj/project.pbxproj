@@ -1,0 +1,421 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0001647018DA1E1F00E590EB /* GHUICatalogTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0001646F18DA1E1F00E590EB /* GHUICatalogTableView.m */; };
+		0001647318DA1E4A00E590EB /* GHUICatalogCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0001647218DA1E4900E590EB /* GHUICatalogCell.m */; };
+		0012C6261891F28000968ED7 /* unsplash1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0012C6251891F28000968ED7 /* unsplash1.jpg */; };
+		001CF5F918B55EFB00D830A2 /* GHUICatalogTemp.m in Sources */ = {isa = PBXBuildFile; fileRef = 001CF5F818B55EFB00D830A2 /* GHUICatalogTemp.m */; };
+		004A98F318EA173D00280D82 /* GHUICatalogSwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 004A98F218EA173D00280D82 /* GHUICatalogSwitchCell.m */; };
+		00A4121C1829DC5900C5A20F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00A4121B1829DC5900C5A20F /* Foundation.framework */; };
+		00A4121E1829DC5900C5A20F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00A4121D1829DC5900C5A20F /* CoreGraphics.framework */; };
+		00A412201829DC5900C5A20F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00A4121F1829DC5900C5A20F /* UIKit.framework */; };
+		00A412261829DC5900C5A20F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 00A412241829DC5900C5A20F /* InfoPlist.strings */; };
+		00A412281829DC5900C5A20F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A412271829DC5900C5A20F /* main.m */; };
+		00A4122C1829DC5900C5A20F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A4122B1829DC5900C5A20F /* AppDelegate.m */; };
+		00A4122E1829DC5900C5A20F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00A4122D1829DC5900C5A20F /* Images.xcassets */; };
+		00A4124D1829DD3C00C5A20F /* GHUICatalogButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A4124B1829DD3C00C5A20F /* GHUICatalogButtons.m */; };
+		00AFEFA918A5ABE70072632C /* GHUICatalogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00AFEFA818A5ABE70072632C /* GHUICatalogView.m */; };
+		00AFEFB318A5BB040072632C /* GHUICatalogAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 00AFEFB218A5BB040072632C /* GHUICatalogAnimations.m */; };
+		00AFEFB618A5BB2F0072632C /* GHUICatalogItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 00AFEFB518A5BB2F0072632C /* GHUICatalogItem.m */; };
+		00AFEFB918A5BC4F0072632C /* GHUICatalogMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00AFEFB818A5BC4F0072632C /* GHUICatalogMainView.m */; };
+		00E2B5FA18BBE80000441C28 /* GHUICatalogActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E2B5F918BBE80000441C28 /* GHUICatalogActivity.m */; };
+		2EE1EB4076EC4895AFED81BF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00FD4EE7D9954FFBADAD9715 /* libPods.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0001646E18DA1E1F00E590EB /* GHUICatalogTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUICatalogTableView.h; sourceTree = "<group>"; };
+		0001646F18DA1E1F00E590EB /* GHUICatalogTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUICatalogTableView.m; sourceTree = "<group>"; };
+		0001647118DA1E4900E590EB /* GHUICatalogCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUICatalogCell.h; sourceTree = "<group>"; };
+		0001647218DA1E4900E590EB /* GHUICatalogCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUICatalogCell.m; sourceTree = "<group>"; };
+		0012C6251891F28000968ED7 /* unsplash1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash1.jpg; sourceTree = "<group>"; };
+		001CF5F718B55EFB00D830A2 /* GHUICatalogTemp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUICatalogTemp.h; sourceTree = "<group>"; };
+		001CF5F818B55EFB00D830A2 /* GHUICatalogTemp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUICatalogTemp.m; sourceTree = "<group>"; };
+		004A98F118EA173D00280D82 /* GHUICatalogSwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUICatalogSwitchCell.h; sourceTree = "<group>"; };
+		004A98F218EA173D00280D82 /* GHUICatalogSwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUICatalogSwitchCell.m; sourceTree = "<group>"; };
+		00A412181829DC5900C5A20F /* GHUICatalog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GHUICatalog.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		00A4121B1829DC5900C5A20F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		00A4121D1829DC5900C5A20F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		00A4121F1829DC5900C5A20F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		00A412231829DC5900C5A20F /* GHUICatalog-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GHUICatalog-Info.plist"; sourceTree = "<group>"; };
+		00A412251829DC5900C5A20F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		00A412271829DC5900C5A20F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		00A412291829DC5900C5A20F /* GHUICatalog-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GHUICatalog-Prefix.pch"; sourceTree = "<group>"; };
+		00A4122A1829DC5900C5A20F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		00A4122B1829DC5900C5A20F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		00A4122D1829DC5900C5A20F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		00A412341829DC5900C5A20F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		00A4124A1829DC9300C5A20F /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		00A4124B1829DD3C00C5A20F /* GHUICatalogButtons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUICatalogButtons.m; sourceTree = "<group>"; };
+		00A4124C1829DD3C00C5A20F /* GHUICatalogButtons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUICatalogButtons.h; sourceTree = "<group>"; };
+		00AFEFA718A5ABE70072632C /* GHUICatalogView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUICatalogView.h; sourceTree = "<group>"; };
+		00AFEFA818A5ABE70072632C /* GHUICatalogView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUICatalogView.m; sourceTree = "<group>"; };
+		00AFEFB118A5BB040072632C /* GHUICatalogAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUICatalogAnimations.h; sourceTree = "<group>"; };
+		00AFEFB218A5BB040072632C /* GHUICatalogAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUICatalogAnimations.m; sourceTree = "<group>"; };
+		00AFEFB418A5BB2F0072632C /* GHUICatalogItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUICatalogItem.h; sourceTree = "<group>"; };
+		00AFEFB518A5BB2F0072632C /* GHUICatalogItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUICatalogItem.m; sourceTree = "<group>"; };
+		00AFEFB718A5BC4F0072632C /* GHUICatalogMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUICatalogMainView.h; sourceTree = "<group>"; };
+		00AFEFB818A5BC4F0072632C /* GHUICatalogMainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUICatalogMainView.m; sourceTree = "<group>"; };
+		00E2B5F818BBE80000441C28 /* GHUICatalogActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUICatalogActivity.h; sourceTree = "<group>"; };
+		00E2B5F918BBE80000441C28 /* GHUICatalogActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUICatalogActivity.m; sourceTree = "<group>"; };
+		00FD4EE7D9954FFBADAD9715 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		829BDE538F244CB7AD9005BC /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		00A412151829DC5900C5A20F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00A4121E1829DC5900C5A20F /* CoreGraphics.framework in Frameworks */,
+				00A412201829DC5900C5A20F /* UIKit.framework in Frameworks */,
+				00A4121C1829DC5900C5A20F /* Foundation.framework in Frameworks */,
+				2EE1EB4076EC4895AFED81BF /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		00A4120F1829DC5900C5A20F = {
+			isa = PBXGroup;
+			children = (
+				00A4124A1829DC9300C5A20F /* Podfile */,
+				00A412211829DC5900C5A20F /* GHUICatalog */,
+				00A4121A1829DC5900C5A20F /* Frameworks */,
+				00A412191829DC5900C5A20F /* Products */,
+				829BDE538F244CB7AD9005BC /* Pods.xcconfig */,
+			);
+			sourceTree = "<group>";
+		};
+		00A412191829DC5900C5A20F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				00A412181829DC5900C5A20F /* GHUICatalog.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		00A4121A1829DC5900C5A20F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				00A4121B1829DC5900C5A20F /* Foundation.framework */,
+				00A4121D1829DC5900C5A20F /* CoreGraphics.framework */,
+				00A4121F1829DC5900C5A20F /* UIKit.framework */,
+				00A412341829DC5900C5A20F /* XCTest.framework */,
+				00FD4EE7D9954FFBADAD9715 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		00A412211829DC5900C5A20F /* GHUICatalog */ = {
+			isa = PBXGroup;
+			children = (
+				00A4122A1829DC5900C5A20F /* AppDelegate.h */,
+				00A4122B1829DC5900C5A20F /* AppDelegate.m */,
+				00AFEFA718A5ABE70072632C /* GHUICatalogView.h */,
+				00AFEFA818A5ABE70072632C /* GHUICatalogView.m */,
+				00AFEFB718A5BC4F0072632C /* GHUICatalogMainView.h */,
+				00AFEFB818A5BC4F0072632C /* GHUICatalogMainView.m */,
+				00A4124C1829DD3C00C5A20F /* GHUICatalogButtons.h */,
+				00A4124B1829DD3C00C5A20F /* GHUICatalogButtons.m */,
+				00AFEFB118A5BB040072632C /* GHUICatalogAnimations.h */,
+				00AFEFB218A5BB040072632C /* GHUICatalogAnimations.m */,
+				00E2B5F818BBE80000441C28 /* GHUICatalogActivity.h */,
+				00E2B5F918BBE80000441C28 /* GHUICatalogActivity.m */,
+				001CF5F718B55EFB00D830A2 /* GHUICatalogTemp.h */,
+				001CF5F818B55EFB00D830A2 /* GHUICatalogTemp.m */,
+				00AFEFB418A5BB2F0072632C /* GHUICatalogItem.h */,
+				00AFEFB518A5BB2F0072632C /* GHUICatalogItem.m */,
+				0001646E18DA1E1F00E590EB /* GHUICatalogTableView.h */,
+				0001646F18DA1E1F00E590EB /* GHUICatalogTableView.m */,
+				0001647118DA1E4900E590EB /* GHUICatalogCell.h */,
+				0001647218DA1E4900E590EB /* GHUICatalogCell.m */,
+				004A98F118EA173D00280D82 /* GHUICatalogSwitchCell.h */,
+				004A98F218EA173D00280D82 /* GHUICatalogSwitchCell.m */,
+				00A4124E182AFBF000C5A20F /* Resources */,
+				00A4122D1829DC5900C5A20F /* Images.xcassets */,
+				00A412221829DC5900C5A20F /* Supporting Files */,
+			);
+			path = GHUICatalog;
+			sourceTree = "<group>";
+		};
+		00A412221829DC5900C5A20F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				00A412231829DC5900C5A20F /* GHUICatalog-Info.plist */,
+				00A412241829DC5900C5A20F /* InfoPlist.strings */,
+				00A412271829DC5900C5A20F /* main.m */,
+				00A412291829DC5900C5A20F /* GHUICatalog-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		00A4124E182AFBF000C5A20F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0012C6251891F28000968ED7 /* unsplash1.jpg */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		00A412171829DC5900C5A20F /* GHUICatalog */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 00A412441829DC5900C5A20F /* Build configuration list for PBXNativeTarget "GHUICatalog" */;
+			buildPhases = (
+				4F3CF91163664F539BCEEC39 /* Check Pods Manifest.lock */,
+				00A412141829DC5900C5A20F /* Sources */,
+				00A412151829DC5900C5A20F /* Frameworks */,
+				00A412161829DC5900C5A20F /* Resources */,
+				0782C5C3B4484821BEC21700 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GHUICatalog;
+			productName = GHUICatalog;
+			productReference = 00A412181829DC5900C5A20F /* GHUICatalog.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		00A412101829DC5900C5A20F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Gabriel Handford";
+			};
+			buildConfigurationList = 00A412131829DC5900C5A20F /* Build configuration list for PBXProject "GHUICatalog" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 00A4120F1829DC5900C5A20F;
+			productRefGroup = 00A412191829DC5900C5A20F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				00A412171829DC5900C5A20F /* GHUICatalog */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		00A412161829DC5900C5A20F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00A412261829DC5900C5A20F /* InfoPlist.strings in Resources */,
+				0012C6261891F28000968ED7 /* unsplash1.jpg in Resources */,
+				00A4122E1829DC5900C5A20F /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0782C5C3B4484821BEC21700 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4F3CF91163664F539BCEEC39 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		00A412141829DC5900C5A20F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0001647318DA1E4A00E590EB /* GHUICatalogCell.m in Sources */,
+				0001647018DA1E1F00E590EB /* GHUICatalogTableView.m in Sources */,
+				00A4122C1829DC5900C5A20F /* AppDelegate.m in Sources */,
+				00AFEFB318A5BB040072632C /* GHUICatalogAnimations.m in Sources */,
+				001CF5F918B55EFB00D830A2 /* GHUICatalogTemp.m in Sources */,
+				00E2B5FA18BBE80000441C28 /* GHUICatalogActivity.m in Sources */,
+				00AFEFB918A5BC4F0072632C /* GHUICatalogMainView.m in Sources */,
+				00A412281829DC5900C5A20F /* main.m in Sources */,
+				004A98F318EA173D00280D82 /* GHUICatalogSwitchCell.m in Sources */,
+				00A4124D1829DD3C00C5A20F /* GHUICatalogButtons.m in Sources */,
+				00AFEFA918A5ABE70072632C /* GHUICatalogView.m in Sources */,
+				00AFEFB618A5BB2F0072632C /* GHUICatalogItem.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		00A412241829DC5900C5A20F /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				00A412251829DC5900C5A20F /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		00A412421829DC5900C5A20F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		00A412431829DC5900C5A20F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		00A412451829DC5900C5A20F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 829BDE538F244CB7AD9005BC /* Pods.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GHUICatalog/GHUICatalog-Prefix.pch";
+				INFOPLIST_FILE = "GHUICatalog/GHUICatalog-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		00A412461829DC5900C5A20F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 829BDE538F244CB7AD9005BC /* Pods.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GHUICatalog/GHUICatalog-Prefix.pch";
+				INFOPLIST_FILE = "GHUICatalog/GHUICatalog-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		00A412131829DC5900C5A20F /* Build configuration list for PBXProject "GHUICatalog" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				00A412421829DC5900C5A20F /* Debug */,
+				00A412431829DC5900C5A20F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		00A412441829DC5900C5A20F /* Build configuration list for PBXNativeTarget "GHUICatalog" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				00A412451829DC5900C5A20F /* Debug */,
+				00A412461829DC5900C5A20F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 00A412101829DC5900C5A20F /* Project object */;
+}

@@ -8,6 +8,10 @@
 
 #import "GHUIControl.h"
 
+@interface GHUIControl ()
+@property UIColor *defaultBackgroundColor;
+@end
+
 @implementation GHUIControl
 
 + (void)removeAllTargets:(UIControl *)control {
@@ -71,6 +75,19 @@
 - (void)_didTouchUpInside {
   if (!_targetDisabled) {
     [self callTarget];
+  }
+}
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+  [super setBackgroundColor:backgroundColor];
+  _defaultBackgroundColor = backgroundColor;
+}
+
+- (void)setHighlighted:(BOOL)highlighted {
+  [super setHighlighted:highlighted];
+  if (_highlightColor) {
+    // This is a call to SUPER to avoid overriding defaultBackgroundColor
+    [super setBackgroundColor:(highlighted ? _highlightColor : _defaultBackgroundColor)];
   }
 }
 

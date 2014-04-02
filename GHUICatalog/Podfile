@@ -1,0 +1,4 @@
+platform :ios, '7.0'
+pod 'AFNetworking'
+pod 'GHKit', :path => "../../gh-kit/"
+pod 'GHUIKit', :path => "../../GHUIKit/"

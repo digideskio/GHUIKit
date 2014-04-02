@@ -32,6 +32,8 @@ typedef void (^GHUIControlTargetBlock)(id sender);
 @property (copy) GHUIControlTargetBlock targetBlock;
 @property (nonatomic) NSString *valueForCopy;
 
+@property UIColor *highlightColor UI_APPEARANCE_SELECTOR;
+
 /*!
  If YES, then touching the button will not callTarget.
  */

@@ -54,6 +54,7 @@
   CGFloat maxHeight = 0;
   CGFloat totalWidth = (size.width - ((_insets.left + _insets.right) * [_views count]));
   CGFloat width = floorf(totalWidth / [_views count]);
+  //NSAssert(width != 0, @"View width is 0, it won't be visible in horizontal layout; maybe the list view width is 0");
   for (UIView *view in _views) {
     x += _insets.left;
     CGRect viewRect = [layout setFrame:CGRectMake(x, y, width, view.frame.size.height) view:view sizeToFit:YES];

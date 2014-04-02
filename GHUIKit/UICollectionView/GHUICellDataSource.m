@@ -217,7 +217,7 @@
 }
 
 - (NSString *)headerTextForSection:(NSInteger)section {
-  return [_headerTexts objectForKey:@(section)];
+  return [[_headerTexts objectForKey:@(section)] uppercaseString];
 }
 
 @end

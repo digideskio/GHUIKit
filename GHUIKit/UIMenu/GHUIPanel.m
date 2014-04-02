@@ -10,7 +10,6 @@
 
 @interface GHUIPanel ()
 @property UIView *coverView;
-@property UIView *contentView;
 @property BOOL presenting;
 @property BOOL dismissing;
 @property BOOL contentVisible;
@@ -45,12 +44,10 @@
 
 - (id)initWithContentView:(UIView *)contentView {
   if ((self = [super init])) {
-    _contentView = contentView;
-    [self addSubview:_contentView];
-    [self bringSubviewToFront:_contentView];
-
     // Default transition
     [self setTransition:GHUIPanelTransitionTop];
+    
+    [self setContentView:contentView];
   }
   return self;
 }
@@ -58,6 +55,23 @@
 - (void)layoutSubviews {
   [super layoutSubviews];
   _coverView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+  
+  CGSize size = [_contentView sizeThatFits:self.frame.size];
+  _contentView.frame = CGRectMake(_contentView.frame.origin.x, _contentView.frame.origin.y, size.width, size.height);
+  
+  [self _updateTransition];
+}
+
+- (void)_updateTransition {
+  if (!_presenting && !_contentVisible) [self setTransition:self.transition];
+}
+
+- (void)setContentView:(UIView *)contentView {
+  _contentView = contentView;
+  [self addSubview:_contentView];
+  [self bringSubviewToFront:_contentView];
+  [self _updateTransition];
+  [self setNeedsLayout];
 }
 
 - (void)_dismiss {
@@ -65,6 +79,8 @@
 }
 
 - (CGRect)_startFrame {
+  //NSAssert(_contentView.frame.size.width != 0, @"Content view width is 0, it won't be visible");
+  //NSAssert(_contentView.frame.size.height != 0, @"Content view height is 0, it won't be visible");
   switch (self.transition) {
     case GHUIPanelTransitionTop:
       return CGRectMake(0, -_contentView.frame.size.height, _contentView.frame.size.width, _contentView.frame.size.height);

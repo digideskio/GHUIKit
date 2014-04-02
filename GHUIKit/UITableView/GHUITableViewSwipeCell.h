@@ -23,6 +23,7 @@ typedef NS_ENUM (NSUInteger, GHUITableViewSwipeState) {
 
 @protocol GHUITableViewSwipeCellDelegate <NSObject>
 @optional
+- (void)tableViewSwipeCell:(GHUITableViewSwipeCell *)cell didTriggerRightButtonWithIndex:(NSInteger)index;
 //- (void)tableViewSwipeCell:(GHUITableViewSwipeCell *)cell scrollingToState:(GHUITableViewSwipeState)state;
 @end
 
@@ -36,7 +37,7 @@ typedef NS_ENUM (NSUInteger, GHUITableViewSwipeState) {
 
 @property (weak) id<GHUITableViewSwipeCellDelegate> delegate;
 
-+ (UIButton *)buttonWithColor:(UIColor *)color title:(NSString *)title target:(id)target action:(SEL)action;
+- (UIButton *)rightButtonWithColor:(UIColor *)color title:(NSString *)title index:(NSInteger)index;
 
 - (void)setAppearanceWithBlock:(void (^)())appearanceBlock tableView:(UITableView *)tableView force:(BOOL)force;
 

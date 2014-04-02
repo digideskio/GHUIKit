@@ -91,12 +91,18 @@
   [self setNeedsLayout];
 }
 
-+ (UIButton *)buttonWithColor:(UIColor *)color title:(NSString *)title target:(id)target action:(SEL)action {
+- (void)rightButtonHandler:(id)sender {
+  NSInteger index = [(GHUITapGestureRecognizer *)sender index];
+  [self.delegate tableViewSwipeCell:self didTriggerRightButtonWithIndex:index];
+}
+
+- (UIButton *)rightButtonWithColor:(UIColor *)color title:(NSString *)title index:(NSInteger)index {
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   button.backgroundColor = color;
   [button setTitle:title forState:UIControlStateNormal];
   [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-  UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:target action:action];
+  GHUITapGestureRecognizer *tapGestureRecognizer = [[GHUITapGestureRecognizer alloc] initWithTarget:self action:@selector(rightButtonHandler:)];
+  tapGestureRecognizer.index = index;
   [button addGestureRecognizer:tapGestureRecognizer];
   return button;
 }

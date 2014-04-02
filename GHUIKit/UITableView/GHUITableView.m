@@ -20,6 +20,9 @@
   _defaultDataSource = [[GHUITableViewDataSource alloc] init];
   self.dataSource = _defaultDataSource;
   self.delegate = _defaultDataSource;
+  
+  self.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:241.0/255.0 alpha:1.0];
+  self.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (id)initWithFrame:(CGRect)frame {
@@ -48,6 +51,18 @@
   if (animated) {
     [self deleteRowsAtIndexPaths:indexPathsToRemove withRowAnimation:UITableViewRowAnimationAutomatic];
     [self insertRowsAtIndexPaths:indexPathsToAdd withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self endUpdates];
+  } else {
+    [self reloadData];
+  }
+}
+
+- (void)addObjects:(NSArray *)objects section:(NSInteger)section animated:(BOOL)animated {
+  NSMutableArray *indexPaths = [NSMutableArray array];
+  if (animated) [self beginUpdates];
+  [self.dataSource addObjects:objects section:section indexPaths:&indexPaths];
+  if (animated) {
+    [self insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
     [self endUpdates];
   } else {
     [self reloadData];

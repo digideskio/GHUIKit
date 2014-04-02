@@ -10,6 +10,6 @@
 
 @interface GHUITapGestureRecognizer : UITapGestureRecognizer
 
-@property NSUInteger buttonIndex;
+@property NSUInteger index;
 
 @end

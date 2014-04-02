@@ -7,6 +7,7 @@
 //
 
 #import "GHUITableViewDataSource.h"
+#import "GHUILabel.h"
 
 @implementation GHUITableViewDataSource
 
@@ -56,8 +57,25 @@
   }
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-  return [_headerTexts objectForKey:@(section)];
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+//  return [self headerTextForSection:section];
+//}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+  if ([self headerTextForSection:section]) {
+    return 50;
+  }
+  return 0;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+  GHUILabel *label = [[GHUILabel alloc] init];
+  label.insets = UIEdgeInsetsMake(30, 15, 0, 0);
+  label.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:241.0/255.0 alpha:1.0];
+  label.text = [self headerTextForSection:section];
+  label.font = [UIFont systemFontOfSize:14];
+  label.textColor = [UIColor colorWithWhite:0.5 alpha:1.0];
+  return label;
 }
 
 #pragma mark UICollectionViewDelegate

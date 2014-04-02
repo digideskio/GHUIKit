@@ -33,7 +33,7 @@
   self.borderColor = [UIColor grayColor];
   self.textAlignment = NSTextAlignmentCenter;
   self.highlightedShadingType = GHUIShadingTypeUnknown;
-  self.highlightedFillColor = GHUIColorFromRGB(0xCCCCCC);
+  self.highlightedFillColor = GHUIColorFromRGB(0xFAFAFA);
   self.disabledShadingType = GHUIShadingTypeUnknown;
   self.textColor = [UIColor colorWithRed:0 green:122.0/255.0 blue:1.0f alpha:1.0f];
   self.font = [UIFont systemFontOfSize:20.0f];
