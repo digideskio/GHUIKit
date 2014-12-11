@@ -87,11 +87,11 @@ destructiveButtonTitle:(NSString *)destructiveButtonTitle destructiveTarget:(GHU
 }
 
 - (void)dismissWithClickedButtonIndex:(NSInteger)buttonIndex animated:(BOOL)animated {
-  [[self actionSheet] dismissWithClickedButtonIndex:buttonIndex animated:animated];
+  [_actionSheet dismissWithClickedButtonIndex:buttonIndex animated:animated];
 }
 
 - (void)cancel {
-  [self dismissWithClickedButtonIndex:[_actionSheet cancelButtonIndex] animated:YES];
+  [_actionSheet dismissWithClickedButtonIndex:[_actionSheet cancelButtonIndex] animated:YES];
 }
 
 #pragma mark UIActionSheetDelegate

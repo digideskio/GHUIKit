@@ -24,9 +24,12 @@
   self.textColor = [UIColor blackColor];
   self.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
   self.secondaryTextColor = [UIColor colorWithWhite:60.0/255.0 alpha:1.0];
-  self.secondaryTextFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+  self.secondaryFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+  
+  self.accessoryTextColor = [UIColor grayColor];
+  //self.accessoryTextFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
 
-  [self setAttributesNeedUpdate:@[@"text", @"textInsets", @"textFont", @"textAlignment", @"text", @"textFont", @"textAlignment", @"cornerRadius", @"cornerRadiusRatio", @"accessoryText", @"borderStyle", @"secondaryText", @"secondaryTextFont", @"secondaryTextColor"]];
+  [self setAttributesNeedUpdate:@[@"text", @"textInsets", @"textFont", @"textAlignment", @"text", @"textFont", @"textAlignment", @"cornerRadius", @"cornerRadiusRatio", @"accessoryText", @"borderStyle", @"secondaryText", @"secondaryFont", @"secondaryTextColor"]];
 }
 
 - (void)dealloc {
@@ -61,7 +64,7 @@
   }
   
   if (_secondaryText) {
-    UIFont *font = (_secondaryTextFont ? _secondaryTextFont : _font);
+    UIFont *font = (_secondaryFont ? _secondaryFont : _font);
     _secondaryTextSize = [GHUIUtils sizeWithText:_secondaryText font:font size:constrainedToSize truncate:YES];
     if (_secondaryTextSize.width > sizeText.width) sizeText.width = _secondaryTextSize.width;
     sizeText.height += _secondaryTextSize.height;
@@ -112,8 +115,7 @@
   y += _insets.bottom;
   
   if (_activityIndicatorView) {
-    [layout setOrigin:GHCGPointToCenter(_activityIndicatorView.frame.size, CGSizeMake(size.width, y - _insets.top - _insets.bottom))
-                 view:_activityIndicatorView];
+    [layout setOrigin:GHCGPointToCenter(_activityIndicatorView.frame.size, size) view:_activityIndicatorView];
   }
   
   return CGSizeMake(size.width, y);
@@ -142,6 +144,8 @@
   sizeForHeight.width += _textInsets.left + _textInsets.right;
   sizeForHeight.height += _textInsets.top + _textInsets.bottom;
   if (self.accessoryImage) sizeForHeight.width += self.accessoryImage.size.width;
+  
+  if (self.accessoryText) sizeForHeight.width += [GHUIUtils sizeWithText:_accessoryText font:(_accessoryTextFont ? _accessoryTextFont : _font) size:size truncate:NO].width;
   
   CGSize imageSize = [self _backgroundImageSize];
   if (sizeForHeight.width < imageSize.width) sizeForHeight.width = imageSize.width;
@@ -211,7 +215,7 @@
   self.cornerRadius = cornerRadius;
 }
 
-- (UIColor *)textColorForState {
+- (UIColor *)textColorForState:(UIColor *)textColor {
   
   BOOL isSelected = self.isSelected;
   BOOL isHighlighted = self.isHighlighted;
@@ -224,7 +228,7 @@
   } else if (_disabledTextColor && isDisabled) {
     return _disabledTextColor;
   } else if (_textColor) {
-    return _textColor;
+    return textColor;
   } else {
     return [UIColor blackColor];
   }
@@ -322,7 +326,7 @@
     CGContextFillRect(context, bounds);
   }
   
-  UIColor *textColor = [self textColorForState];
+  UIColor *textColor = [self textColorForState:_textColor];
   
   UIFont *font = _font;
   
@@ -381,10 +385,12 @@
       x += _textSize.width + _textInsets.right;      
       y += roundf(_textSize.height/2.0f - _accessoryTextSize.height/2.0f);
       
-      [GHUIUtils drawText:self.accessoryText rect:CGRectMake(x, y, _accessoryTextSize.width, _accessoryTextSize.height) font:font color:textColor alignment:NSTextAlignmentLeft truncate:NO];
+      [GHUIUtils drawText:self.accessoryText rect:CGRectMake(x, y, _accessoryTextSize.width, _accessoryTextSize.height) font:font color:textColor alignment:NSTextAlignmentLeft truncate:YES];
     } else if (self.accessoryTextAlignment == NSTextAlignmentRight) {
       x += _textSize.width;
-      [GHUIUtils drawText:self.accessoryText rect:CGRectMake(x, y, size.width - x - self.insets.right - _textInsets.right, size.height) font:font color:textColor alignment:NSTextAlignmentRight truncate:YES];
+      CGFloat width = size.width - x - self.insets.right - _textInsets.right;
+      if (accessoryImage) width -= (accessoryImage.size.width + 10);
+      [GHUIUtils drawText:self.accessoryText rect:CGRectMake(x, y, width, size.height) font:font color:textColor alignment:NSTextAlignmentRight truncate:YES];
     } else {
       NSAssert(NO, @"Unsupported accessory text alignment");
     }
@@ -397,8 +403,8 @@
   y += _textSize.height + _textInsets.bottom;
   
   if (_secondaryText && [self shouldDrawText]) {
-    if (_secondaryTextColor) textColor = _secondaryTextColor;
-    if (_secondaryTextFont) font = _secondaryTextFont;
+    if (_secondaryTextColor) textColor = [self textColorForState:_secondaryTextColor];
+    if (_secondaryFont) font = _secondaryFont;
     
     if (_secondaryTextAlignment == NSTextAlignmentCenter) {
       CGFloat width = size.width - self.insets.left - self.insets.right;

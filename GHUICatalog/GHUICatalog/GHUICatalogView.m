@@ -28,7 +28,7 @@
   
   _dataSource = [[GHUITableViewDataSource alloc] init];
   [_dataSource setCellClass:[GHUITableViewDetailCell class] tableView:_tableView section:0];
-  _dataSource.cellSetBlock = ^(GHUITableViewDetailCell *cell, GHUICatalogItem *item, NSIndexPath *indexPath, UITableView *tableView) {
+  _dataSource.cellSetBlock = ^(GHUITableViewDetailCell *cell, GHUICatalogItem *item, NSIndexPath *indexPath, UITableView *tableView, BOOL dequeued) {
     cell.textLabel.text = item.title;
     cell.detailTextLabel.text = item.detail;
   };
@@ -36,8 +36,8 @@
     [blockSelf selectItem:item];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
   };
-  _dataSource.deleteBlock = ^(UITableView *tableView, NSIndexPath *indexPath, GHUICatalogItem *item) {
-    [blockSelf removeItem:item];
+  _dataSource.deleteBlock = ^(UITableView *tableView, NSIndexPath *indexPath, id object, GHUICellDeleteConfirmBlock completion) {
+    completion(YES);
   };
   
   _tableView.dataSource = _dataSource;
@@ -51,10 +51,6 @@
 
 - (void)selectItem:(GHUICatalogItem *)item {
   NSAssert(NO, @"Abstract");
-}
-
-- (void)removeItem:(GHUICatalogItem *)item {
-  GHDebug(@"Removed item: %@", item);
 }
 
 - (GHUIContentView *)testView:(NSString *)description {

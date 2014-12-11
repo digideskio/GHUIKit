@@ -47,16 +47,16 @@
 
 - (void)selectItem:(GHUICatalogItem *)item {
   if ([item.title isEqualToString:@"Activity View"]) {
-    [_activityView presentViewInViewController:self.navigationDelegate.viewController keyboardRect:[[GHUIKeyboardHandler keyboardHandler] keyboardRect] animated:YES];
+    [_activityView presentInView:self.navigationDelegate.viewController.navigationController.view keyboardRect:[[GHUIKeyboardHandler keyboardHandler] keyboardRect] animated:YES];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
       [_activityView dismissView:YES];
     });
   } else if ([item.title isEqualToString:@"Error View"]) {
     [_errorView setText:@"Oops!" detailText:@"Mustache Bushwick vinyl magna PBR&B gluten-free Vice"];
-    [_errorView presentViewInViewController:self.navigationDelegate.viewController.navigationController keyboardRect:[[GHUIKeyboardHandler keyboardHandler] keyboardRect] dismissAfter:2.0];
+    [_errorView presentInView:self.navigationDelegate.viewController.navigationController.view keyboardRect:[[GHUIKeyboardHandler keyboardHandler] keyboardRect] dismissAfter:2.0];
   } else if ([item.title isEqualToString:@"Error View (Long)"]) {
     [_errorView setText:@"Oops!" detailText:@"Mustache Bushwick vinyl magna PBR&B gluten-free Vice tofu, ethnic McSweeney's sustainable shabby chic. Eiusmod selfies proident nisi, letterpress nostrud commodo. Cornhole artisan four loko odio letterpress tousled, officia do banjo American Apparel delectus ennui umami."];
-    [_errorView presentViewInViewController:self.navigationDelegate.viewController.navigationController keyboardRect:[[GHUIKeyboardHandler keyboardHandler] keyboardRect] dismissAfter:2.0];
+    [_errorView presentInView:self.navigationDelegate.viewController.navigationController.view keyboardRect:[[GHUIKeyboardHandler keyboardHandler] keyboardRect] dismissAfter:2.0];
   } else if ([item.title isEqualToString:@"Toggle Keyboard"]) {
     if (!_textField.isFirstResponder) {
       [_textField becomeFirstResponder];

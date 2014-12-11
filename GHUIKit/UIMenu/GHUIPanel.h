@@ -18,6 +18,7 @@ typedef NS_ENUM (NSUInteger, GHUIPanelTransition) {
 @property (getter=isVisible) BOOL visible;
 @property (nonatomic) GHUIPanelTransition transition;
 @property (nonatomic) UIView *contentView;
+@property (nonatomic) BOOL coverEnabled;
 
 - (id)initWithContentView:(UIView *)contentView;
 
@@ -28,5 +29,7 @@ typedef NS_ENUM (NSUInteger, GHUIPanelTransition) {
 - (void)dismissViewAfterDelay:(NSTimeInterval)delay;
 
 - (void)toggleView;
+
+
 
 @end

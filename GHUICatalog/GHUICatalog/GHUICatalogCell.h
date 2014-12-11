@@ -7,14 +7,13 @@
 //
 
 #import <GHUIKit/GHUIView.h>
-//#import <GHUIKit/GHUITableViewCell.h>
-#import <GHUIKit/GHUITableViewSwipeCell.h>
+#import <GHUIKit/GHUITableViewCell.h>
 
 @interface GHUICatalogCellView : GHUIView
 - (void)setName:(NSString *)name description:(NSString *)description image:(UIImage *)image;
 @end
 
-@interface GHUICatalogCell : GHUITableViewSwipeCell
+@interface GHUICatalogCell : GHUITableViewCell
 - (void)setName:(NSString *)name description:(NSString *)description image:(UIImage *)image;
 @end
 

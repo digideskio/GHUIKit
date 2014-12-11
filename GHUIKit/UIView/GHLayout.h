@@ -40,6 +40,7 @@ typedef enum {
   // Whether width specified will be set as the height. Using this option will
   // use the specified width regardless of the height returned by sizeThatFits.
   GHLayoutOptionsFixedHeight = 1 << 12,
+  
 } GHLayoutOptions;
 
 @protocol GHLayoutView;
@@ -130,33 +131,23 @@ typedef enum {
 
 /*!
  Set the (sub)view frame.
- Calls sizeThatFits on the view and then centers it horizontally inRect.
+ Calls sizeThatFits on the view and then centers it. If inRect.height == 0, we only center horizontally.
  @param inRect The containing rectangle.
  @param view View
  */
 - (CGRect)setFrameInRect:(CGRect)inRect view:(id)view;
 
 /*!
- Set origin for the (sub)view (for views with fixed sizes).
- If we are calculating sizeThatFits, this doesn't actually set the views frame.
- Use this value instead of view.frame since the views frame might not have been set.
- 
- @param origin Origin
- @param frame Frame
- @param view View should conform to GHLView informal protocol.
- @result The view frame.
- */
-- (CGRect)setOrigin:(CGPoint)origin frame:(CGRect)frame view:(id)view;
-
-/*!
- @deprecated Use setOrigin:frame:view:
+ Set origin.
  */
 - (CGRect)setOrigin:(CGPoint)origin view:(id)view;
+- (CGRect)setOrigin:(CGPoint)origin view:(id)view sizeToFit:(BOOL)sizeToFit;
 
 /*!
  Set size.
  */
 - (CGRect)setSize:(CGSize)size view:(id)view;
+- (CGRect)setSize:(CGSize)size view:(id)view sizeToFit:(BOOL)sizeToFit;
 
 /*!
  Set origin, x position.

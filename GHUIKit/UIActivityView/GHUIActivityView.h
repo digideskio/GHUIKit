@@ -13,12 +13,12 @@
  */
 @interface GHUIActivityView : GHUIView
 
-@property (assign, nonatomic) UIActivityIndicatorViewStyle activityStyle;
+@property UIActivityIndicatorView *activityIndicator;
 
 - (void)setAnimating:(BOOL)animating;
 - (BOOL)isAnimating;
 
-- (void)presentViewInViewController:(UIViewController *)viewController keyboardRect:(CGRect)keyboardRect animated:(BOOL)animated;
+- (void)presentInView:(UIView *)view keyboardRect:(CGRect)keyboardRect animated:(BOOL)animated;
 - (void)dismissView:(BOOL)animated;
 
 @end

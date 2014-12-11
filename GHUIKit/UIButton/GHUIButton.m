@@ -35,6 +35,7 @@
   self.highlightedShadingType = GHUIShadingTypeUnknown;
   self.highlightedFillColor = GHUIColorFromRGB(0xFAFAFA);
   self.disabledShadingType = GHUIShadingTypeUnknown;
+  self.disabledBorderColor = [UIColor lightGrayColor];
   self.textColor = [UIColor colorWithRed:0 green:122.0/255.0 blue:1.0f alpha:1.0f];
   self.font = [UIFont systemFontOfSize:20.0f];
   self.style.disabledAlpha = 0.5;
@@ -46,7 +47,7 @@
 }
 
 - (id)initWithText:(NSString *)text targetBlock:(GHUIControlTargetBlock)targetBlock {
-  if ((self = [super init])) {
+  if ((self = [self init])) {
     self.text = text;
     self.targetBlock = targetBlock;
   }
@@ -121,12 +122,12 @@
   self.label.secondaryText = secondaryText;
 }
 
-- (UIFont *)secondaryTextFont {
-  return self.label.secondaryTextFont;
+- (UIFont *)secondaryFont {
+  return self.label.secondaryFont;
 }
 
-- (void)setSecondaryTextFont:(UIFont *)secondaryTextFont {
-  self.label.secondaryTextFont = secondaryTextFont;
+- (void)setSecondaryFont:(UIFont *)secondaryFont {
+  self.label.secondaryFont = secondaryFont;
 }
 
 - (UIColor *)secondaryTextColor {
@@ -199,6 +200,22 @@
 
 - (UIColor *)borderColor {
   return self.label.borderColor;
+}
+
+- (void)setDisabledBorderColor:(UIColor *)disabledBorderColor {
+  self.label.disabledBorderColor = disabledBorderColor;
+}
+
+- (UIColor *)disabledBorderColor {
+  return self.label.disabledBorderColor;
+}
+
+- (void)setDisabledTextColor:(UIColor *)disabledTextColor {
+  self.label.disabledTextColor = disabledTextColor;
+}
+
+- (UIColor *)disabledTextColor {
+  return self.label.disabledTextColor;
 }
 
 - (void)setBorderWidth:(CGFloat)borderWidth {
@@ -391,6 +408,7 @@
 
 - (void)setActivityIndicatorAnimating:(BOOL)animating {
   [self.label setActivityIndicatorAnimating:animating];
+  [self setEnabled:!animating];
   self.userInteractionEnabled = !animating;
   [self setNeedsLayout];
 }

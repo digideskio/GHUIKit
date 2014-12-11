@@ -15,6 +15,8 @@
 
 @interface GHUICatalogTableView ()
 @property GHUITableView *tableView;
+@property BOOL pauseUpdate;
+//@property NSMutableSet *indexPathsSwiping;
 @end
 
 @implementation GHUICatalogTableView
@@ -22,7 +24,9 @@
 - (void)sharedInit {
   [super sharedInit];
   self.layout = [GHLayout layoutForView:self];
-  GHWeakSelf blockSelf = self;
+  
+  //_indexPathsSwiping = [NSMutableSet set];
+  
   _tableView = [[GHUITableView alloc] init];
   [self addSubview:_tableView];
     //
@@ -38,20 +42,19 @@
     return [GHUICatalogCell class];
   };
   
-  _tableView.dataSource.cellSetBlock = ^(id cell, NSDictionary *dict, NSIndexPath *indexPath, UITableView *tableView) {
-    
+  _tableView.dataSource.cellSetBlock = ^(id cell, NSDictionary *dict, NSIndexPath *indexPath, UITableView *tableView, BOOL dequeued) {
     // If we are a swipe cell set that up
-    if ([cell respondsToSelector:@selector(setAppearanceWithBlock:tableView:force:)]) {
-      __weak GHUICatalogCell *weakCell = cell;
-      [cell setAppearanceWithBlock:^{
-        NSMutableArray *rightButtons = [NSMutableArray array];
-        [rightButtons addObject:[weakCell rightButtonWithColor:[UIColor colorWithRed:0.78f green:0.78f blue:0.8f alpha:1.0] title:@"More" index:1]];
-        [rightButtons addObject:[weakCell rightButtonWithColor:[UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:1.0f] title:@"Delete" index:2]];
-        [weakCell setRightButtons:rightButtons];
-      } tableView:tableView force:NO];
-      
-      weakCell.delegate = blockSelf;
-    }
+//    if ([cell respondsToSelector:@selector(setAppearanceWithBlock:tableView:force:)]) {
+//      __weak GHUICatalogCell *weakCell = cell;
+//      [cell setAppearanceWithBlock:^{
+//        NSMutableArray *rightButtons = [NSMutableArray array];
+//        [rightButtons addObject:[weakCell rightButtonWithColor:[UIColor colorWithRed:0.78f green:0.78f blue:0.8f alpha:1.0] title:@"More" index:1]];
+//        [rightButtons addObject:[weakCell rightButtonWithColor:[UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:1.0f] title:@"Delete" index:2]];
+//        [weakCell setRightButtons:rightButtons];
+//      } tableView:tableView force:NO];
+//      
+//      weakCell.delegate = blockSelf;
+//    }
     
     if ([cell isKindOfClass:[GHUICatalogSwitchCell class]]) {
       [cell setTitle:dict[@"title"] description:dict[@"description"] on:[dict[@"on"] boolValue]];
@@ -94,6 +97,10 @@
        @"description": @"Actually trust fund hashtag, distillery put a bird on it",
        @"on": @(NO)}
      ] section:2 animated:NO];
+  
+  
+  // Timer to change data so we can test queued reloads when in swipe mode
+  [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(_updateCells) userInfo:nil repeats:YES];
 }
 
 - (CGSize)layout:(id<GHLayout>)layout size:(CGSize)size {
@@ -101,14 +108,40 @@
   return size;
 }
 
-- (void)tableViewSwipeCell:(GHUITableViewSwipeCell *)cell didTriggerRightButtonWithIndex:(NSInteger)index {
-  if (index == 1) {
-    NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
-    NSLog(@"More: %@", cellIndexPath);
-  } else if (index == 2) {
-    NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
-    NSLog(@"Delete: %@", cellIndexPath);
-  }
+// Called to update cells on a time to test what happens on cell updates when in swipable mode
+- (void)_updateCells {
+  static NSInteger gCount = 2;
+  NSDictionary *obj = @{@"name": @"Name1", @"description": [NSString stringWithFormat:@"This is a description #%d", (int)gCount++], @"imageName": @"Preview2"};
+  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+  [_tableView.dataSource replaceObjectAtIndexPath:indexPath withObject:obj];
+  [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
-
+//
+//- (void)tableViewSwipeCell:(GHUITableViewSwipeCell *)cell scrollingToState:(GHUITableViewSwipeState)state {
+//  BOOL pauseUpdate = (state != GHUITableViewSwipeStateDefault);
+//  NSIndexPath *indexPath = [_tableView indexPathForCell:cell];
+//  if (!indexPath) return;
+//  if (pauseUpdate) {
+//    [_tableView queueReloadForIndexPath:indexPath];
+//  }
+//}
+//
+//- (void)tableViewSwipeCell:(GHUITableViewSwipeCell *)cell didScrollToState:(GHUITableViewSwipeState)state {
+//  BOOL pauseUpdate = (state != GHUITableViewSwipeStateDefault);
+//  if (!pauseUpdate) {
+//    NSIndexPath *indexPath = [_tableView indexPathForCell:cell];
+//    [_tableView flushReloadForIndexPath:indexPath withRowAnimation:UITableViewRowAnimationFade];
+//  }
+//}
+//
+//- (void)tableViewSwipeCell:(GHUITableViewSwipeCell *)cell didTriggerRightButtonWithIndex:(NSInteger)index {
+//  if (index == 1) {
+//    NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
+//    NSLog(@"More: %@", cellIndexPath);
+//  } else if (index == 2) {
+//    NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
+//    NSLog(@"Delete: %@", cellIndexPath);
+//  }
+//}
+//
 @end

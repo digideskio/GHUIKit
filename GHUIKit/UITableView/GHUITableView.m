@@ -17,16 +17,13 @@
 @implementation GHUITableView
 
 - (void)sharedInit {
-  _defaultDataSource = [[GHUITableViewDataSource alloc] init];
-  self.dataSource = _defaultDataSource;
-  self.delegate = _defaultDataSource;
+  [self resetDataSource];
   
-  self.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:241.0/255.0 alpha:1.0];
-  self.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+  self.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
 }
 
-- (id)initWithFrame:(CGRect)frame {
-  if ((self = [super initWithFrame:frame])) {
+- (id)initWithFrame:(CGRect)frame style:(UITableViewStyle)style {
+  if ((self = [super initWithFrame:frame style:style])) {
     [self sharedInit];
   }
   return self;
@@ -37,6 +34,21 @@
     [self sharedInit];
   }
   return self;
+}
+
++ (instancetype)tableView {
+  return [[self.class alloc] init];
+}
+
++ (instancetype)groupedTableView {
+  return [[self.class alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+}
+
+- (void)resetDataSource {
+  _defaultDataSource = [[GHUITableViewDataSource alloc] init];
+  self.dataSource = _defaultDataSource;
+  self.delegate = _defaultDataSource;
+  [self reloadData];
 }
 
 - (void)setObjects:(NSArray *)objects animated:(BOOL)animated {
@@ -57,6 +69,19 @@
   }
 }
 
+- (void)insertObjects:(NSArray *)objects section:(NSInteger)section position:(NSInteger)position animated:(BOOL)animated {
+  if (position < 0) position = 0;
+  NSMutableArray *indexPaths = [NSMutableArray array];
+  if (animated) [self beginUpdates];
+  [self.dataSource insertObjects:objects section:section position:position indexPaths:&indexPaths];
+  if (animated) {
+    [self insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self endUpdates];
+  } else {
+    [self reloadData];
+  }
+}
+
 - (void)addObjects:(NSArray *)objects section:(NSInteger)section animated:(BOOL)animated {
   NSMutableArray *indexPaths = [NSMutableArray array];
   if (animated) [self beginUpdates];
@@ -69,14 +94,66 @@
   }
 }
 
+- (void)addOrUpdateObjects:(NSArray *)objects section:(NSInteger)section animated:(BOOL)animated {
+  NSMutableArray *indexPathsToAdd = [NSMutableArray array];
+  NSMutableArray *indexPathsToUpdate = [NSMutableArray array];
+  if (animated) [self beginUpdates];
+  [self.dataSource addOrUpdateObjects:objects section:section indexPathsToAdd:&indexPathsToAdd indexPathsToUpdate:&indexPathsToUpdate];
+  if (animated) {
+    if ([indexPathsToUpdate count] > 0) [self reloadRowsAtIndexPaths:indexPathsToUpdate withRowAnimation:(animated ? UITableViewRowAnimationAutomatic : UITableViewRowAnimationNone)];
+    if ([indexPathsToAdd count] > 0) [self insertRowsAtIndexPaths:indexPathsToAdd withRowAnimation:(animated ? UITableViewRowAnimationAutomatic : UITableViewRowAnimationNone)];
+    [self endUpdates];
+  } else {
+    [self reloadData];
+  }
+}
+
 - (void)replaceObjects:(NSArray *)replaceObjects withObjects:(NSArray *)objects section:(NSInteger)section animated:(BOOL)animated {
   NSMutableArray *indexPathsToAdd = [NSMutableArray array];
-  NSMutableArray *indexPathsToReload = [NSMutableArray array];
+  NSMutableArray *indexPathsToUpdate = [NSMutableArray array];
   if (animated) [self beginUpdates];
-  [self.dataSource replaceObjects:replaceObjects withObjects:objects section:section indexPathsToAdd:&indexPathsToAdd indexPathsToReload:&indexPathsToReload];
+  [self.dataSource replaceObjects:replaceObjects withObjects:objects section:section indexPathsToAdd:&indexPathsToAdd indexPathsToUpdate:&indexPathsToUpdate];
   if (animated) {
-    if ([indexPathsToReload count] > 0) [self reloadRowsAtIndexPaths:indexPathsToReload withRowAnimation:(animated ? UITableViewRowAnimationAutomatic : UITableViewRowAnimationNone)];
+    if ([indexPathsToUpdate count] > 0) [self reloadRowsAtIndexPaths:indexPathsToUpdate withRowAnimation:(animated ? UITableViewRowAnimationAutomatic : UITableViewRowAnimationNone)];
     if ([indexPathsToAdd count] > 0) [self insertRowsAtIndexPaths:indexPathsToAdd withRowAnimation:(animated ? UITableViewRowAnimationAutomatic : UITableViewRowAnimationNone)];
+    [self endUpdates];
+  } else {
+    [self reloadData];
+  }
+}
+
+- (void)moveObject:(id)object indexPath:(NSIndexPath *)indexPath section:(NSInteger)section animated:(BOOL)animated {
+  NSIndexPath *fromIndexPath = [self.dataSource indexPathOfObject:object section:section];
+  
+  if (animated) [self beginUpdates];
+  
+  [self.dataSource removeObjectAtIndexPath:fromIndexPath];
+  [self.dataSource insertObject:object indexPath:indexPath];
+  
+  if (animated) {
+    [self moveRowAtIndexPath:fromIndexPath toIndexPath:indexPath];
+    [self endUpdates];
+  } else {
+    [self reloadData];
+  }
+}
+
+- (NSIndexPath *)reloadObject:(id)object section:(NSInteger)section withRowAnimation:(UITableViewRowAnimation)rowAnimation {
+  NSIndexPath *indexPath = [self.dataSource indexPathOfObject:object section:section];
+  
+  //NSAssert(indexPath, @"Missing object");
+  if (indexPath) {
+    [self reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:rowAnimation];
+  }
+  return indexPath;
+}
+
+- (void)removeObjects:(NSArray *)objects section:(NSInteger)section animated:(BOOL)animated {
+  NSMutableArray *indexPaths = [NSMutableArray array];
+  if (animated) [self beginUpdates];
+  [self.dataSource removeObjects:objects section:section indexPaths:&indexPaths];
+  if (animated) {
+    [self deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
     [self endUpdates];
   } else {
     [self reloadData];
@@ -86,6 +163,21 @@
 - (void)registerClasses:(NSArray */*of Class*/)classes {
   for (Class clazz in classes) {
     [self registerClass:clazz forCellReuseIdentifier:NSStringFromClass(clazz)];
+  }
+}
+
+- (NSIndexPath *)lastIndexPath {
+  for (NSInteger i = [self.dataSource sectionCount] - 1; i >= 0; i--) {
+    NSInteger count = [self.dataSource countForSection:i];
+    if (count > 0) return [NSIndexPath indexPathForRow:count-1 inSection:i];
+  }
+  return nil;
+}
+
+- (void)scrollToLastIndexPathAtScrollPosition:(UITableViewScrollPosition)scrollPosition animated:(BOOL)animated {
+  NSIndexPath *indexPath = [self lastIndexPath];
+  if (indexPath) {
+    [self scrollToRowAtIndexPath:indexPath atScrollPosition:scrollPosition animated:animated];
   }
 }
 

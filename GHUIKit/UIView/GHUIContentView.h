@@ -8,6 +8,12 @@
 
 #import "GHUIView.h"
 
+typedef NS_ENUM (NSUInteger, GHUIContentViewPresentationMode) {
+  GHUIContentViewPresentationModeDefault = 0,
+  GHUIContentViewPresentationModeModal = 1 << 0,
+  GHUIContentViewPresentationModeModalSplash = 1 << 1,
+};
+
 @class GHUIContentView;
 
 @protocol GHUIViewNavigationDelegate
@@ -19,6 +25,7 @@
 - (UINavigationItem *)navigationItem;
 - (UIInterfaceOrientation)interfaceOrientation;
 - (UIViewController *)viewController;
+- (GHUIContentView *)contentView;
 
 - (void)pushView:(GHUIContentView *)view animation:(id<UIViewControllerAnimatedTransitioning>)animation;
 
@@ -30,12 +37,8 @@
 - (void)dismissViewAnimated:(BOOL)animated completion:(void (^)(void))completion;
 @end
 
-typedef id<GHUIViewNavigationDelegate> (^GHUIViewNavigationDelegateBlock)();
 
-
-@interface GHUIContentView : GHUIView {
-  BOOL _visible;
-}
+@interface GHUIContentView : GHUIView
 
 @property (weak) id<GHUIViewNavigationDelegate> navigationDelegate;
 
@@ -54,6 +57,15 @@ typedef id<GHUIViewNavigationDelegate> (^GHUIViewNavigationDelegateBlock)();
 
 + (GHUIContentView *)contentViewForView:(UIView *)view;
 
+#pragma mark -
+
+@property GHUIContentViewPresentationMode presentationMode;
+
+/*!
+ Dismisses view if it was presented.
+ */
+- (void)dismiss;
+
 #pragma mark View Callbacks
 
 - (void)viewWillAppear:(BOOL)animated;
@@ -64,9 +76,21 @@ typedef id<GHUIViewNavigationDelegate> (^GHUIViewNavigationDelegateBlock)();
 
 - (void)viewDidDisappear:(BOOL)animated;
 
-- (void)viewDidLayoutSubviews;
+- (void)viewDidBecomeActive;
+- (void)viewWillResign;
 
-#pragma mark 
+- (void)viewDidLayoutSubviews;
+- (void)viewDidLoad;
+- (void)viewDidLoadWithLayout;
+
+- (void)viewWillAppearAfterLoad:(BOOL)animated;
+- (void)viewDidAppearAfterLoad:(BOOL)animated;
+
+#pragma mark -
+
+- (void)enableActivity;
+- (void)disableActivity;
+- (void)setError:(NSError *)error;
 
 - (void)setNeedsRefresh;
 

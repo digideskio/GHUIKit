@@ -7,8 +7,7 @@
 //
 
 #import <GHUIKit/GHUIContentView.h>
-#import <GHUIKit/GHUITableViewSwipeCell.h>
 
-@interface GHUICatalogTableView : GHUIContentView <GHUITableViewSwipeCellDelegate>
+@interface GHUICatalogTableView : GHUIContentView
 
 @end

@@ -29,7 +29,7 @@
 }
 
 - (CGSize)layout:(id<GHLayout>)layout size:(CGSize)size {
-  CGFloat x = 10;
+  CGFloat x = 15;
   CGFloat y = 10;
   
   if (!_imageView.hidden) {
@@ -47,7 +47,7 @@
   
   if (y < 70) y = 70;
   
-  return CGSizeMake(size.width, y);
+  return CGSizeMake(size.width, y + 1);
 }
 
 - (void)setName:(NSString *)name description:(NSString *)description imageName:(NSString *)imageName {

@@ -8,8 +8,6 @@
 
 #import "GHLayout.h"
 
-typedef void (^GHUIViewSubviewNeedsLayoutBlock)(UIView *view, BOOL animated);
-
 /*!
  View with custom, programatic layout (via GHLayout).
  
@@ -33,7 +31,6 @@ typedef void (^GHUIViewSubviewNeedsLayoutBlock)(UIView *view, BOOL animated);
 @interface GHUIView : UIView <GHLayoutView> { }
 
 @property GHLayout *layout;
-@property (copy) GHUIViewSubviewNeedsLayoutBlock needsLayoutBlock;
 
 /*!
  Subclasses can override this method to perform initialization tasks that occur during both initWithFrame: and initWithCoder:

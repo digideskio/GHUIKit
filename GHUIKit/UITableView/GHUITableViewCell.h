@@ -12,4 +12,6 @@
 
 - (id)viewForContent;
 
++ (GHUITableViewCell *)tableViewCellForContentView:(UIView *)contentView;
+
 @end

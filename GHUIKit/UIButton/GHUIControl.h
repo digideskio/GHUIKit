@@ -31,6 +31,7 @@ typedef void (^GHUIControlTargetBlock)(id sender);
 @property id<GHLayout> layout;
 @property (copy) GHUIControlTargetBlock targetBlock;
 @property (nonatomic) NSString *valueForCopy;
+@property (readonly) UIView *contentView;
 
 @property UIColor *highlightColor UI_APPEARANCE_SELECTOR;
 
@@ -45,6 +46,11 @@ typedef void (^GHUIControlTargetBlock)(id sender);
  of sharedInit
  */
 - (void)sharedInit;
+
+/*!
+ Create control with underlying view.
+ */
+- (id)initWithContentView:(UIView *)contentView;
 
 /*!
  Removes all targets.

@@ -23,4 +23,6 @@
 
 + (UIView *)subview:(UIView *)view forClass:(Class)class;
 
++ (NSMutableAttributedString *)joinAttributedStrings:(NSArray *)strings delimeter:(NSAttributedString *)delimeter;
+
 @end

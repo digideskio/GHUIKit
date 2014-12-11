@@ -27,11 +27,9 @@
   NSAssert(!_buttonViews, @"Only set once");
     
   _buttonViews = buttonViews;
-  NSInteger index = 0;
   CGFloat x = 0;
   for (UIView *buttonView in _buttonViews) {
     x += 90;
-    buttonView.tag = index++;
     [self addSubview:buttonView];
   }
   [self setNeedsDisplay];

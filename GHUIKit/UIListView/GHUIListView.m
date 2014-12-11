@@ -31,38 +31,40 @@
 - (CGSize)layoutVertical:(id<GHLayout>)layout size:(CGSize)size {
   if ([_views count] == 0) return CGSizeMake(size.width, 0);
   
-  CGFloat x = _insets.left;
+  CGFloat x = _viewInsets.left + _insets.left;
   CGFloat y = _insets.top;
   for (UIView *view in _views) {
+    y += _viewInsets.top;
     CGRect viewRect = CGRectZero;
     if (self.viewType == GHUIListViewTypeVerticalFill) {
-      viewRect = [layout setFrame:CGRectMake(x, y, size.width - x - _insets.right, view.frame.size.height) view:view sizeToFit:YES];
+      viewRect = [layout setFrame:CGRectMake(x, y, size.width - x - _viewInsets.right - _insets.right, view.frame.size.height) view:view sizeToFit:YES];
     } else {
       NSAssert(view.frame.size.width != 0, @"View width is 0, it won't be visible in a vertical (non-fill) layout");
       viewRect = [layout setFrame:CGRectMake(x, y, view.frame.size.width, view.frame.size.height) view:view];
     }
-    y += viewRect.size.height + _insets.bottom;
+    y += viewRect.size.height + _viewInsets.bottom;
   }
+  y += _insets.bottom;
   return CGSizeMake(size.width, y);
 }
 
 - (CGSize)layoutHorizontal:(id<GHLayout>)layout size:(CGSize)size {
   if ([_views count] == 0) return CGSizeMake(size.width, 0);
   
-  CGFloat x = 0;
-  CGFloat y = _insets.top;
+  CGFloat x = _insets.left;
+  CGFloat y = _viewInsets.top + _insets.top;
   CGFloat maxHeight = 0;
-  CGFloat totalWidth = (size.width - ((_insets.left + _insets.right) * [_views count]));
+  CGFloat totalWidth = (size.width - ((_viewInsets.left + _viewInsets.right) * [_views count])) - _insets.left - _insets.right;
   CGFloat width = floorf(totalWidth / [_views count]);
   //NSAssert(width != 0, @"View width is 0, it won't be visible in horizontal layout; maybe the list view width is 0");
   for (UIView *view in _views) {
-    x += _insets.left;
+    x += _viewInsets.left;
     CGRect viewRect = [layout setFrame:CGRectMake(x, y, width, view.frame.size.height) view:view sizeToFit:YES];
     NSAssert(viewRect.size.height != 0, @"View height is 0, it won't be visible in a horizontal layout");
-    x += width + _insets.right;
+    x += width + _viewInsets.right;
     if (maxHeight < viewRect.size.height) maxHeight = viewRect.size.height;
   }
-  y += maxHeight + _insets.bottom;
+  y += maxHeight + _viewInsets.bottom + _insets.bottom;
   return CGSizeMake(size.width, y);
 }
 
@@ -70,9 +72,9 @@
   return _views;
 }
 
-- (void)addView:(UIView *)view {
+- (void)addSubview:(UIView *)view {
   [_views addObject:view];
-  [self addSubview:view];
+  [super addSubview:view];
   [self setNeedsLayout];
   [self setNeedsDisplay];
 }

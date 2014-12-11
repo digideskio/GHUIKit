@@ -17,4 +17,6 @@
 
 - (id)initWithContentView:(GHUIContentView *)contentView animation:(GHUIViewControllerAnimation *)animation;
 
++ (instancetype)contentView:(GHUIContentView *)contentView preload:(BOOL)preload;
+
 @end

@@ -47,7 +47,12 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   Class cellClass = [self cellClassForIndexPath:indexPath];
   id cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(cellClass) forIndexPath:indexPath];
-  self.cellSetBlock(cell, [self objectAtIndexPath:indexPath], indexPath, collectionView);
+  BOOL dequeued = YES;
+  if (!cell) {
+    dequeued = NO;
+    cell = [[cellClass alloc] init];
+  }
+  self.cellSetBlock(cell, [self objectAtIndexPath:indexPath], indexPath, collectionView, dequeued);
   return cell;
 }
 
@@ -58,17 +63,17 @@
   return sectionCount;
 }
 
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-  GHUICollectionViewLabel *view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"Header" forIndexPath:indexPath];
-  NSString *text = [self headerTextForSection:indexPath.section];
-  view.label.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.75];
-  view.label.textColor = [UIColor colorWithRed:255.0f/255.0f green:125.0f/255.0f blue:0.0f/255.0f alpha:1.0];
-  view.label.font = [UIFont systemFontOfSize:18];
-  view.label.insets = UIEdgeInsetsMake(0, 10, 0, 10);
-  [view.label setBorderStyle:GHUIBorderStyleTopBottom color:[UIColor colorWithWhite:230.0f/255.0f alpha:1.0] width:1.0 cornerRadius:0];
-  view.label.text = text;
-  return view;
-}
+//- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+//  GHUICollectionViewLabel *view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"Header" forIndexPath:indexPath];
+//  NSString *text = [self headerTextForSection:indexPath.section];
+//  view.label.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.75];
+//  view.label.textColor = [UIColor colorWithRed:255.0f/255.0f green:125.0f/255.0f blue:0.0f/255.0f alpha:1.0];
+//  view.label.font = [UIFont systemFontOfSize:18];
+//  view.label.insets = UIEdgeInsetsMake(0, 10, 0, 10);
+//  [view.label setBorderStyle:GHUIBorderStyleTopBottom color:[UIColor colorWithWhite:230.0f/255.0f alpha:1.0] width:1.0 cornerRadius:0];
+//  view.label.text = text;
+//  return view;
+//}
 
 #pragma mark UICollectionViewDelegate
 
@@ -102,50 +107,11 @@
   return (self.selectBlock != NULL);
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-  if ([self countForSection:section] == 0) return CGSizeZero;
-  NSString *text = [self headerTextForSection:section];
-  if (text) return CGSizeMake(320, 38); // TODO: Configurable size
-  return CGSizeZero;
-}
-
-#pragma mark UIScrollViewDelegate
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-  if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewWillBeginDragging:)]) {
-    [self.scrollViewDelegate scrollViewWillBeginDragging:scrollView];
-  }
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-  if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidEndDragging:willDecelerate:)]) {
-    [self.scrollViewDelegate scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
-  }
-}
-
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidScroll:)]) {
-    [self.scrollViewDelegate scrollViewDidScroll:scrollView];
-  }
-}
-
-- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
-  if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewWillBeginDecelerating:)]) {
-    [self.scrollViewDelegate scrollViewWillBeginDecelerating:scrollView];
-  }
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-  if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidEndDecelerating:)]) {
-    [self.scrollViewDelegate scrollViewDidEndDecelerating:scrollView];
-  }
-}
-
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-  if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidEndScrollingAnimation:)]) {
-    [self.scrollViewDelegate scrollViewDidEndScrollingAnimation:scrollView];
-  }
-}
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+//  if ([self countForSection:section] == 0) return CGSizeZero;
+//  NSString *text = [self headerTextForSection:section];
+//  if (text) return CGSizeMake(320, 38); // TODO: Configurable size
+//  return CGSizeZero;
+//}
 
 @end

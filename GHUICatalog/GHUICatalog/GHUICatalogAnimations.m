@@ -15,6 +15,7 @@
 #import <GHUIKit/GHUIViewControllerDrop.h>
 #import <GHUIKit/GHUIViewControllerDropUp.h>
 #import <GHUIKit/GHUIViewControllerReveal.h>
+#import <GHUIKit/GHUIViewControllerFade.h>
 #import <GHUIKit/GHUILabel.h>
 #import <GHUIKit/GHUIModalView.h>
 
@@ -26,6 +27,7 @@
   
   NSMutableArray *items = [NSMutableArray array];
   [items addObject:[GHUICatalogItem itemForTitle:@"Reveal" detail:nil]];
+  [items addObject:[GHUICatalogItem itemForTitle:@"Fade" detail:nil]];
   [items addObject:[GHUICatalogItem itemForTitle:@"Drop Down" detail:nil]];
   [items addObject:[GHUICatalogItem itemForTitle:@"Drop Up" detail:nil]];
   [items addObject:[GHUICatalogItem itemForTitle:@"Modal (Bottom)" detail:nil]];
@@ -52,7 +54,10 @@
 }
 
 - (void)selectItem:(GHUICatalogItem *)item {
-  if ([item.title isEqualToString:@"Reveal"]) {
+  if ([item.title isEqualToString:@"Fade"]) {
+    GHUIViewControllerFade *animation = [[GHUIViewControllerFade alloc] init];
+    [self.navigationDelegate pushView:[self testView:item.title] animation:animation];
+  } else if ([item.title isEqualToString:@"Reveal"]) {
     GHUIViewControllerReveal *animation = [[GHUIViewControllerReveal alloc] init];
     [self.navigationDelegate pushView:[self testView:item.title] animation:animation];
   } else if ([item.title isEqualToString:@"Drop Down"]) {

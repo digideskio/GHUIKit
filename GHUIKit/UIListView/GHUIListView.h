@@ -19,16 +19,9 @@ typedef NS_ENUM (NSInteger, GHUIListViewType) {
 }
 
 @property UIEdgeInsets insets;
-@property UIColor *borderColor;
+@property UIEdgeInsets viewInsets;
 @property GHUIListViewType viewType;
 
 - (NSArray *)views;
-
-/*!
- Add view.
- @param view
- */
-- (void)addView:(UIView *)view;
-
 
 @end

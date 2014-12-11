@@ -48,4 +48,6 @@
 #import "GHUITextField.h"
 
 #import "GHUIModalView.h"
+#import "GHUIViewControllerModal.h"
 #import "GHUIPanel.h"
+#import "GHUIBorderView.h"

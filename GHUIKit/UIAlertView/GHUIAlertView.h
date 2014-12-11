@@ -6,26 +6,20 @@
 //  Copyright (c) 2013 Gabriel Handford. All rights reserved.
 //
 
-typedef void (^GHUIAlertViewBlock)(NSInteger index);
-
 /*!
  Utility methods for UIAlertView.
  */
-@interface GHUIAlertView : NSObject <UIAlertViewDelegate> {
-  GHUIAlertViewBlock _block;
-}
+@interface GHUIAlertView : NSObject <UIAlertViewDelegate>
 
 /*!
  Show alert with block callback.
- @param block GHUIAlertViewBlock that is called when the user presses a button
  @param title
  @param message
  @param cancelButtonTitle
- @param otherButtonTitle
+ @param otherButtonTitles
+ @param target
  */
-+ (void)showAlertWithBlock:(GHUIAlertViewBlock)block title:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitle, ... NS_REQUIRES_NIL_TERMINATION;
-
-+ (void)showAlertWithBlock:(GHUIAlertViewBlock)block title:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitle:(NSString *)otherButtonTitle args:(va_list)args;
++ (void)showAlertWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSArray *)otherButtonTitles target:(void (^)(NSInteger index))target;
 
 /*!
  Show OK alert.

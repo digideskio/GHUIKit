@@ -1,4 +1,9 @@
-platform :ios, '7.0'
-pod 'AFNetworking'
-pod 'GHKit', :path => "../../gh-kit/"
-pod 'GHUIKit', :path => "../../GHUIKit/"
+platform :ios, "7.0"
+
+pod "GHKit"
+
+pod "GHUIKit", :path => "../../GHUIKit/"
+
+pod "AFNetworking"
+pod "YapDatabase"
+pod "ObjectiveSugar"

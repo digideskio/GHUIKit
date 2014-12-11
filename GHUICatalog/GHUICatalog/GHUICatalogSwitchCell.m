@@ -16,9 +16,9 @@
   self.backgroundColor = [UIColor clearColor];
   
   _label = [[GHUILabel alloc] init];
-  _label.insets = UIEdgeInsetsMake(10, 10, 10, 10);
+  _label.insets = UIEdgeInsetsMake(10, 15, 10, 15);
   _label.font = [UIFont systemFontOfSize:16];
-  _label.secondaryTextFont = [UIFont systemFontOfSize:14];
+  _label.secondaryFont = [UIFont systemFontOfSize:14];
   [self addSubview:_label];
   
   _switchView = [[UISwitch alloc] init];

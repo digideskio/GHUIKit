@@ -15,8 +15,6 @@
 @property UIColor *overlayColor UI_APPEARANCE_SELECTOR;
 @property UIColor *shadowColor UI_APPEARANCE_SELECTOR;
 @property CGFloat shadowBlur UI_APPEARANCE_SELECTOR;
-@property UIColor *strokeColor UI_APPEARANCE_SELECTOR;
-@property CGFloat strokeWidth UI_APPEARANCE_SELECTOR;
 @property UIColor *fillColor UI_APPEARANCE_SELECTOR;
 
 @property (readonly) UIImageView *imageView;

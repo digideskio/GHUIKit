@@ -25,6 +25,7 @@
 
 - (void)_sharedInit {
   self.delayActionEnabled = YES;
+  self.highlightColor = [UIColor colorWithWhite:255.0/255.0 alpha:0.5];
   [self addTarget:self action:@selector(_didTouchUpInside) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -42,6 +43,14 @@
   if ((self = [super initWithFrame:frame])) {
     [self _sharedInit];
     [self sharedInit];
+  }
+  return self;
+}
+
+- (id)initWithContentView:(UIView *)contentView {
+  if ((self = [self initWithFrame:CGRectZero])) {
+    _contentView = contentView;
+    [self addSubview:_contentView];
   }
   return self;
 }
@@ -103,6 +112,7 @@
   if (_layout) {
     [_layout layoutSubviews:self.frame.size];
   }
+  _contentView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
@@ -111,6 +121,11 @@
   if (_layout) {
     return [_layout sizeThatFits:size];
   }
+  
+  if (_contentView) {
+    return [_contentView sizeThatFits:size];
+  }
+  
   return [super sizeThatFits:size];
 }
 

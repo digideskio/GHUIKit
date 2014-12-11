@@ -13,6 +13,8 @@
 #import "GHUICatalogActivity.h"
 #import "GHUICatalogTemp.h"
 #import "GHUICatalogTableView.h"
+#import "GHUICatalogStaticTableView.h"
+#import "GHUICatalogOtherView.h"
 #import <GHUIKit/GHUIPanel.h>
 
 @interface GHUICatalogMainView ()
@@ -30,24 +32,28 @@
   [items addObject:[GHUICatalogItem itemForTitle:@"Buttons" detail:@"Buttons and labels used by GHUIButton and GHUILabel"]];
   [items addObject:[GHUICatalogItem itemForTitle:@"Animations" detail:@"Animations for view controllers"]];
   [items addObject:[GHUICatalogItem itemForTitle:@"Activity" detail:@"Activity and error views"]];
-  //[items addObject:[GHUICatalogItem itemForTitle:@"Temp" detail:@"Temp space"]];
   [items addObject:[GHUICatalogItem itemForTitle:@"Table" detail:@"Table view"]];
+  [items addObject:[GHUICatalogItem itemForTitle:@"Table (Static)" detail:@"Table view (static)"]];
+  [items addObject:[GHUICatalogItem itemForTitle:@"Other" detail:@"Other"]];
   [self.dataSource addObjects:items];
 
   GHUIListView *buttonGroup = [[GHUIListView alloc] init];
   buttonGroup.viewType = GHUIListViewTypeHorizontal;
-  buttonGroup.backgroundColor = [UIColor greenColor]; // Should not be visible since it will all size to fit
-  [buttonGroup addView:[[GHUIButton alloc] initWithText:@"Button #1" targetBlock:^(id sender) {}]];
-  [buttonGroup addView:[[GHUIButton alloc] initWithText:@"Button #2" targetBlock:^(id sender) {}]];
-  _panelTop = [[GHUIPanel alloc] initWithContentView:buttonGroup];
+  buttonGroup.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+  buttonGroup.insets = UIEdgeInsetsMake(0, 0, 1, 0);
+  [buttonGroup addSubview:[[GHUIButton alloc] initWithText:@"Button #1" targetBlock:^(id sender) { [GHUIAlertView showAlertWithMessage:@"" title:@"Button1" cancelButtonTitle:@"OK"]; }]];
+  [buttonGroup addSubview:[[GHUIButton alloc] initWithText:@"Button #2" targetBlock:^(id sender) {}]];
+  _panelTop = [[GHUIPanel alloc] init];
+  _panelTop.coverEnabled = NO;
+  _panelTop.contentView = buttonGroup;
   [self addSubview:_panelTop];
   
   GHUIListView *buttonGroupLeft = [[GHUIListView alloc] init];
   buttonGroupLeft.insets = UIEdgeInsetsMake(10, 10, 10, 10);
   buttonGroupLeft.backgroundColor = [UIColor colorWithWhite:0.94 alpha:0.8];
-  [buttonGroupLeft addView:[[GHUIButton alloc] initWithText:@"Button #1" targetBlock:^(id sender) {}]];
-  [buttonGroupLeft addView:[[GHUIButton alloc] initWithText:@"Button #2" targetBlock:^(id sender) {}]];
-  [buttonGroupLeft addView:[[GHUIButton alloc] initWithText:@"Button #3" targetBlock:^(id sender) {}]];
+  [buttonGroupLeft addSubview:[[GHUIButton alloc] initWithText:@"Button #1" targetBlock:^(id sender) {}]];
+  [buttonGroupLeft addSubview:[[GHUIButton alloc] initWithText:@"Button #2" targetBlock:^(id sender) {}]];
+  [buttonGroupLeft addSubview:[[GHUIButton alloc] initWithText:@"Button #3" targetBlock:^(id sender) {}]];
   [buttonGroupLeft sizeToFit];
   _panelLeft = [[GHUIPanel alloc] initWithContentView:buttonGroupLeft];
   _panelLeft.transition = GHUIPanelTransitionLeft;
@@ -85,6 +91,12 @@
     [self.navigationDelegate pushView:view animated:YES];
   } else if ([item.title isEqualToString:@"Table"]) {
     GHUICatalogTableView *view = [[GHUICatalogTableView alloc] init];
+    [self.navigationDelegate pushView:view animated:YES];
+  } else if ([item.title isEqualToString:@"Table (Static)"]) {
+    GHUICatalogStaticTableView *view = [[GHUICatalogStaticTableView alloc] init];
+    [self.navigationDelegate pushView:view animated:YES];
+  } else if ([item.title isEqualToString:@"Other"]) {
+    GHUICatalogOtherView *view = [[GHUICatalogOtherView alloc] init];
     [self.navigationDelegate pushView:view animated:YES];
   }
 }

@@ -32,7 +32,7 @@
   primaryButton.fillColor = GHUIColorFromRGB(0x428bca);
   primaryButton.borderColor = GHUIColorFromRGB(0x357ebd);
   primaryButton.highlightedFillColor = [UIColor colorWithRed:0.0f/255.0f green:60.0f/255.0f blue:180.0f/255.0f alpha:1.0];
-  [_listView addView:primaryButton];
+  [_listView addSubview:primaryButton];
 
   
   _scrollView = [[UIScrollView alloc] init];

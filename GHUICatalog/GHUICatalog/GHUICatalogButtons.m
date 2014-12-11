@@ -10,6 +10,7 @@
 
 #import <GHUIKit/GHUILabel.h>
 #import <GHUIKit/GHUIButton.h>
+#import <GHUIKit/GHUIAlertView.h>
 
 @implementation GHUICatalogButtons
 
@@ -19,20 +20,45 @@
   self.navigationTitle = @"Buttons";
   
   _listView = [[GHUIListView alloc] init];
-  _listView.insets = UIEdgeInsetsMake(10, 10, 10, 10);
+  _listView.viewInsets = UIEdgeInsetsMake(10, 10, 10, 10);
   _listView.backgroundColor = [UIColor colorWithWhite:0.94 alpha:1.0];
   _listView.viewType = GHUIListViewTypeVertical;
   
   GHUIButton *button = [[GHUIButton alloc] initWithFrame:CGRectMake(0, 0, 300, 44)];
   button.text = @"Text";
-  [_listView addView:button];
+  [_listView addSubview:button];
+  
+  GHUIButton *accessoryButton = [[GHUIButton alloc] initWithFrame:CGRectMake(0, 0, 300, 44)];
+  accessoryButton.text = @"Text";
+  accessoryButton.textAlignment = NSTextAlignmentLeft;
+  accessoryButton.textInsets = UIEdgeInsetsMake(0, 0, 0, 10);
+  accessoryButton.accessoryText = @"McSweeney's vegan readymade roof party salvia irony selfies Williamsburg";
+  [_listView addSubview:accessoryButton];
+  
+  GHUIButton *accessoryButton2 = [[GHUIButton alloc] initWithFrame:CGRectMake(0, 0, 300, 44)];
+  accessoryButton2.text = @"Text";
+  accessoryButton2.accessoryText = @"Wayfarers";
+  accessoryButton2.textAlignment = NSTextAlignmentLeft;
+  accessoryButton2.font = [UIFont systemFontOfSize:17];
+  accessoryButton2.accessoryTextFont = [UIFont systemFontOfSize:17];
+  accessoryButton2.insets = UIEdgeInsetsMake(10, 15, 10, 10);
+  accessoryButton2.accessoryTextAlignment = NSTextAlignmentRight;
+  accessoryButton2.accessoryImage = [UIImage imageNamed:@"ArrowCustom-25"];
+
+  [_listView addSubview:accessoryButton2];
+  
+  GHUIButton *accessoryButton3 = [[GHUIButton alloc] initWithFrame:CGRectMake(0, 0, 300, 44)];
+  accessoryButton3.text = @"Text";
+  accessoryButton3.textAlignment = NSTextAlignmentLeft;
+  accessoryButton3.textInsets = UIEdgeInsetsMake(0, 0, 0, 10);
+  accessoryButton3.accessoryText = @"Truffaut Neutra Helvetica Brooklyn selvage Portland readymade flexitarian";
+  accessoryButton3.accessoryTextFont = [UIFont systemFontOfSize:14];
+  [_listView addSubview:accessoryButton3];
   
   GHUIButton *buttonDisabled = [[GHUIButton alloc] initWithFrame:CGRectMake(0, 0, 300, 44)];
   buttonDisabled.enabled = NO;
   buttonDisabled.text = @"Text (Disabled)";
-  [_listView addView:buttonDisabled];
-  
-  __weak typeof(self) blockSelf = self;
+  [_listView addSubview:buttonDisabled];
   
   //
   // Roughly in the style of bootstrap 2.x buttons
@@ -44,14 +70,7 @@
   defaultButton.textColor = GHUIColorFromRGB(0x333333);
   defaultButton.borderColor = GHUIColorFromRGB(0xcccccc);
   defaultButton.highlightedFillColor = [UIColor colorWithWhite:203.0f/255.0f alpha:1.0];
-  [_listView addView:defaultButton];
-  defaultButton.targetBlock = ^(id sender) {
-    GHUILabel *label = [self label];
-    label.backgroundColor = [UIColor whiteColor];
-    label.text = @"Default";
-    label.textAlignment = NSTextAlignmentCenter;
-    [blockSelf.navigationDelegate pushView:[GHUIContentView contentViewForView:label] animated:YES];
-  };
+  [_listView addSubview:defaultButton];
   
   GHUIButton *primaryButton = [self button];
   primaryButton.text = @"Primary";
@@ -59,7 +78,7 @@
   primaryButton.fillColor = GHUIColorFromRGB(0x428bca);
   primaryButton.borderColor = GHUIColorFromRGB(0x357ebd);
   primaryButton.highlightedFillColor = [UIColor colorWithRed:0.0f/255.0f green:60.0f/255.0f blue:180.0f/255.0f alpha:1.0];
-  [_listView addView:primaryButton];
+  [_listView addSubview:primaryButton];
   
   GHUIButton *primaryDisabledButton = [self button];
   primaryDisabledButton.text = @"Primary (Disabled)";
@@ -70,7 +89,7 @@
   primaryDisabledButton.highlightedFillColor = [UIColor colorWithRed:0.0f/255.0f green:60.0f/255.0f blue:180.0f/255.0f alpha:1.0];
   primaryDisabledButton.highlightedFillColor2 = [UIColor colorWithRed:0.0f/255.0f green:68.0f/255.0f blue:204.0f/255.0f alpha:1.0];
   primaryDisabledButton.enabled = NO;
-  [_listView addView:primaryDisabledButton];
+  [_listView addSubview:primaryDisabledButton];
   
   GHUIButton *infoButton = [self button];
   infoButton.text = @"Info";
@@ -78,7 +97,7 @@
   infoButton.fillColor = GHUIColorFromRGB(0x5bc0de);
   infoButton.borderColor = GHUIColorFromRGB(0x46b8da);
   infoButton.highlightedFillColor = [UIColor colorWithRed:41.0f/255.0f green:132.0f/255.0f blue:158.0f/255.0f alpha:1.0];
-  [_listView addView:infoButton];
+  [_listView addSubview:infoButton];
   
   GHUIButton *successButton = [self button];
   successButton.text = @"Success";
@@ -86,7 +105,7 @@
   successButton.fillColor = GHUIColorFromRGB(0x5cb85c);
   successButton.borderColor = GHUIColorFromRGB(0x4cae4c);
   successButton.highlightedFillColor = [UIColor colorWithRed:71.0f/255.0f green:143.0f/255.0f blue:71.0f/255.0f alpha:1.0];
-  [_listView addView:successButton];
+  [_listView addSubview:successButton];
   
   GHUIButton *warningButton = [self button];
   warningButton.text = @"Warning";
@@ -94,7 +113,7 @@
   warningButton.fillColor = GHUIColorFromRGB(0xf0ad4e);
   warningButton.borderColor = GHUIColorFromRGB(0xeea236);
   warningButton.highlightedFillColor = [UIColor colorWithRed:218.0f/255.0f green:130.0f/255.0f blue:5.0f/255.0f alpha:1.0];
-  [_listView addView:warningButton];
+  [_listView addSubview:warningButton];
   
   GHUIButton *dangerButton = [self button];
   dangerButton.text = @"Danger";
@@ -102,7 +121,7 @@
   dangerButton.fillColor = GHUIColorFromRGB(0xd9534f);
   dangerButton.borderColor = GHUIColorFromRGB(0xd43f3a);
   dangerButton.highlightedFillColor = [UIColor colorWithRed:166.0f/255.0f green:47.0f/255.0f blue:41.0f/255.0f alpha:1.0];
-  [_listView addView:dangerButton];
+  [_listView addSubview:dangerButton];
   
   GHUIButton *inverseButton = [self button];
   inverseButton.text = @"Inverse";
@@ -112,12 +131,12 @@
   inverseButton.borderColor = [UIColor colorWithWhite:48.0f/255.0f alpha:1.0];
   inverseButton.highlightedFillColor = [UIColor colorWithWhite:30.0f/255.0f alpha:1.0];
   inverseButton.highlightedFillColor2 = [UIColor colorWithWhite:34.0f/255.0f alpha:1.0];
-  [_listView addView:inverseButton];
+  [_listView addSubview:inverseButton];
   
   GHUIButton *disabledButton = [self button];
   disabledButton.text = @"Disabled";
   disabledButton.enabled = NO;
-  [_listView addView:disabledButton];
+  [_listView addSubview:disabledButton];
   
   //
   // Other examples with icons, accessoryImages, borders
@@ -127,37 +146,36 @@
   button1.text = @"text (accessoryImage)";
   button1.textAlignment = NSTextAlignmentCenter;
   button1.textInsets = UIEdgeInsetsMake(0, 10, 0, 0);
-  button1.accessoryImage = [UIImage imageNamed:@"ButtonAccessory"];
-  button1.style.highlightedAccessoryImage = [UIImage imageNamed:@"ButtonAccessoryHighlighted"];
-  [_listView addView:button1];
+  button1.accessoryImage = [UIImage imageNamed:@"Arrow68-24"];
+  [_listView addSubview:button1];
   
   GHUIButton *button2 = [self button];
   button2.text = @"text (Rounded top)";
   button2.borderStyle = GHUIBorderStyleRoundedTop;
   button2.cornerRadius = 6.0f;
   button2.borderWidth = 1.0f;
-  [_listView addView:button2];
+  [_listView addSubview:button2];
   
   GHUIButton *button3 = [self button];
   button3.text = @"text (Top left right)";
   button3.borderStyle = GHUIBorderStyleTopLeftRight;
   button3.cornerRadius = 6.0f;
   button3.borderWidth = 1.0f;
-  [_listView addView:button3];
+  [_listView addSubview:button3];
   
   GHUIButton *button4 = [self button];
   button4.text = @"text (Rounded bottom)";
   button4.borderStyle = GHUIBorderStyleRoundedBottom;
   button4.cornerRadius = 6.0f;
   button4.borderWidth = 1.0f;
-  [_listView addView:button4];
+  [_listView addSubview:button4];
   
   GHUIButton *button6 = [self button];
   button6.accessoryText = @"Accessory text";
   button6.textInsets = UIEdgeInsetsMake(0, 0, 0, 10);
   button6.accessoryTextFont = [UIFont systemFontOfSize:12];
   button6.accessoryTextColor = [UIColor blueColor];
-  [_listView addView:button6];
+  [_listView addSubview:button6];
   
   GHUIButton *button8 = [self button];
   button8.textAlignment = NSTextAlignmentLeft;
@@ -166,21 +184,21 @@
   button8.accessoryTextAlignment = NSTextAlignmentRight;
   button8.accessoryTextFont = [UIFont systemFontOfSize:15];
   button8.accessoryTextColor = [UIColor grayColor];
-  [_listView addView:button8];
+  [_listView addSubview:button8];
   
   GHUIButton *button9a = [self button];
   button9a.text = @"Swag food truck excepteur";
   button9a.textAlignment = NSTextAlignmentLeft;
   button9a.secondaryText = @"Marfa lomo fixie salvia ethical";
-  button9a.secondaryTextFont = [UIFont systemFontOfSize:14];
-  [_listView addView:button9a];
+  button9a.secondaryFont = [UIFont systemFontOfSize:14];
+  [_listView addSubview:button9a];
   
   GHUIButton *button9b = [self button];
   button9b.text = @"Swag food truck excepteur freegan, tousled tofu post-ironic distillery";
   button9b.textAlignment = NSTextAlignmentLeft;
   button9b.secondaryText = @"Marfa lomo fixie salvia ethical culpa selvage. Art party whatever ennui banh mi Echo Park. Aesthetic Godard church-key mixtape pop-up";
-  button9b.secondaryTextFont = [UIFont systemFontOfSize:14];
-  [_listView addView:button9b];
+  button9b.secondaryFont = [UIFont systemFontOfSize:14];
+  [_listView addSubview:button9b];
   
   GHUILabel *errorView = [self label];
   errorView.text = @"Oops!";
@@ -191,26 +209,26 @@
   errorView.textInsets = UIEdgeInsetsMake(0, 0, 20.0f, 0);
   errorView.secondaryText = @"Marfa lomo fixie salvia ethical culpa selvage. Art party whatever ennui banh mi Echo Park. Aesthetic Godard church-key mixtape pop-up";
   errorView.secondaryTextColor = [UIColor whiteColor];
-  errorView.secondaryTextFont = [UIFont systemFontOfSize:14.0f];
+  errorView.secondaryFont = [UIFont systemFontOfSize:14.0f];
   errorView.secondaryTextAlignment = NSTextAlignmentCenter;
   errorView.fillColor = [UIColor colorWithWhite:0.0f alpha:0.85f];
   errorView.cornerRadius = 10.0f;
-  [_listView addView:errorView];
+  [_listView addSubview:errorView];
   
   GHUILabel *label = [self label];
   label.fillColor = [UIColor colorWithWhite:0.96 alpha:1.0];
   label.insets = UIEdgeInsetsMake(10, 10, 10, 10);
   label.text = @"The text";
   label.secondaryText = @"Marfa lomo fixie salvia ethical culpa selvage";
-  [_listView addView:label];
+  [_listView addSubview:label];
   
   GHUILabel *label2 = [self label];
   label2.text = @"The text";
   label2.textAlignment = NSTextAlignmentCenter;
   label2.secondaryText = @"Marfa lomo fixie salvia ethical culpa selvage (no backgroundColor or fillColor)";
   label2.secondaryTextAlignment = NSTextAlignmentCenter;
-  label2.secondaryTextFont = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
-  [_listView addView:label2];
+  label2.secondaryFont = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+  [_listView addSubview:label2];
   
   GHUILabel *label3 = [self label];
   label3.backgroundColor = [UIColor whiteColor];
@@ -218,27 +236,27 @@
   label3.text = @"The text";
   label3.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
   label3.secondaryText = @"This is a description";
-  label3.secondaryTextFont = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+  label3.secondaryFont = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
   label3.imageView.image = [UIImage imageNamed:@"Preview2"];
   label3.imageView.contentMode = UIViewContentModeTopLeft;
   label3.insets = UIEdgeInsetsMake(10, 10, 10, 10);
   label3.textInsets = UIEdgeInsetsMake(0, 10, 0, 0);
-  [_listView addView:label3];
+  [_listView addSubview:label3];
   
   GHUIButton *buttonSecret = [[GHUIButton alloc] initWithFrame:CGRectMake(0, 0, 300, 44)];
   buttonSecret.text = @"Secret";
   buttonSecret.textColor = GHUIColorFromRGB(0x333333);
   buttonSecret.font = [UIFont systemFontOfSize:16];
   buttonSecret.secondaryText = @"This is a secret room. A user just needs to know the name of the room in order to join.";
-  buttonSecret.secondaryTextFont = [UIFont systemFontOfSize:14];
+  buttonSecret.secondaryFont = [UIFont systemFontOfSize:14];
   buttonSecret.imageView.image = [UIImage imageNamed:@"Preview2"];
   buttonSecret.imageView.highlightedImage = [UIImage imageNamed:@"Preview2-Filled"];
   buttonSecret.imageView.contentMode = UIViewContentModeLeft;
   buttonSecret.insets = UIEdgeInsetsMake(10, 10, 10, 10);
   buttonSecret.textInsets = UIEdgeInsetsMake(0, 10, 0, 0);
-  [_listView addView:buttonSecret];
+  [buttonSecret sizeToFit];
+  [_listView addSubview:buttonSecret];
   
-  // TODO: This is broken
   GHUILabel *statusLabel = [self label];
   statusLabel.backgroundColor = [UIColor whiteColor];
   statusLabel.insets = UIEdgeInsetsMake(10, 10, 10, 10);
@@ -248,7 +266,7 @@
   statusLabel.textColor = [UIColor blackColor];
   statusLabel.activityIndicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
   [statusLabel setActivityIndicatorAnimating:YES];
-  [_listView addView:statusLabel];
+  [_listView addSubview:statusLabel];
   
   GHUIButton *imageButton = [self button];
   imageButton.frame = CGRectMake(20, 20, 100, 100);
@@ -260,7 +278,7 @@
   imageButton.backgroundImageView.image = [UIImage imageNamed:@"unsplash1.jpg"];
   imageButton.backgroundImageSize = imageButton.frame.size;
   imageButton.textColor = [UIColor whiteColor];
-  [_listView addView:imageButton];
+  [_listView addSubview:imageButton];
   
   GHUIButton *imageButton2 = [self button];
   imageButton2.frame = CGRectMake(20, 20, 100, 100);
@@ -270,7 +288,7 @@
   imageButton2.borderWidth = 0;
   imageButton2.activityIndicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
   [imageButton2 setActivityIndicatorAnimating:YES];
-  [_listView addView:imageButton2];
+  [_listView addSubview:imageButton2];
   
   GHUIButton *imageButton3 = [self button];
   imageButton3.frame = CGRectMake(20, 20, 80, 80);
@@ -280,7 +298,7 @@
   imageButton3.cornerRadiusRatio = 1.0;
   imageButton3.borderColor = [UIColor grayColor];
   imageButton3.textColor = [UIColor blueColor];
-  [_listView addView:imageButton3];
+  [_listView addSubview:imageButton3];
   
   _scrollView = [[UIScrollView alloc] init];
   _scrollView.backgroundColor = [UIColor whiteColor];
@@ -295,6 +313,7 @@
 
 - (GHUIButton *)button {
   GHUIButton *button = [[GHUIButton alloc] initWithFrame:CGRectMake(0, 0, 300, 44)];
+  button.targetBlock = ^(id sender) { [GHUIAlertView showAlertWithMessage:@"" title:@"Button" cancelButtonTitle:@"OK"]; };
   button.backgroundColor = [UIColor clearColor];
   button.text = @"Text";
   button.textColor = GHUIColorFromRGB(0x333333);

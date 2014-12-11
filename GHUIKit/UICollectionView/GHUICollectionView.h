@@ -6,11 +6,15 @@
 //  Copyright (c) 2013 Gabriel Handford. All rights reserved.
 //
 
+#import "GHUICollectionViewDataSource.h"
+
 @class GHUICollectionView;
 
 typedef void (^GHUICollectionViewRefreshBlock)(GHUICollectionView *collectionView);
 
 @interface GHUICollectionView : UICollectionView <UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+
+@property (nonatomic, assign) GHUICollectionViewDataSource *dataSource;
 
 @property (readonly) UIRefreshControl *refreshControl;
 @property (copy) GHUICollectionViewRefreshBlock refreshBlock;
@@ -20,6 +24,10 @@ typedef void (^GHUICollectionViewRefreshBlock)(GHUICollectionView *collectionVie
  Shared init.
  */
 - (void)sharedInit;
+
+
+- (void)addObjects:(NSArray *)objects section:(NSInteger)section completion:(void (^)(BOOL finished))completion;
+- (void)removeObjects:(NSArray *)objects section:(NSInteger)section completion:(void (^)(BOOL finished))completion;
 
 /*!
  Set refreshing indicator.

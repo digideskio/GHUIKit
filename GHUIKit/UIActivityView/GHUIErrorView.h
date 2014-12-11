@@ -12,7 +12,7 @@
 
 - (void)setText:(NSString *)text detailText:(NSString *)detailText;
 
-- (void)presentViewInViewController:(UIViewController *)viewController keyboardRect:(CGRect)keyboardRect dismissAfter:(NSTimeInterval)dismissAfter;
+- (void)presentInView:(UIView *)view keyboardRect:(CGRect)keyboardRect dismissAfter:(NSTimeInterval)dismissAfter;
 
 - (void)dismissView;
 

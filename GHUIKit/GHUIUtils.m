@@ -83,4 +83,18 @@
   return nil;
 }
 
++ (NSMutableAttributedString *)joinAttributedStrings:(NSArray *)strings delimeter:(NSAttributedString *)delimeter {
+  NSMutableAttributedString *text = [[NSMutableAttributedString alloc] init];
+  for (NSInteger index = 0; index < strings.count; index++) {
+    NSAttributedString *as = strings[index];
+    if (as.length > 0) {
+      [text appendAttributedString:as];
+      if (delimeter && index < strings.count - 1) {
+        [text appendAttributedString:delimeter];
+      }
+    }
+  }
+  return text;
+}
+
 @end

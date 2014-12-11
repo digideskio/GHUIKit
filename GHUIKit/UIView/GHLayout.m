@@ -85,11 +85,14 @@
 
 - (CGRect)setFrameInRect:(CGRect)inRect view:(id)view {
   CGSize sizeThatFits = [view sizeThatFits:CGSizeMake(inRect.size.width, inRect.size.height)];
-  inRect.size.height = sizeThatFits.height;
+  if (inRect.size.height == 0) inRect.size.height = sizeThatFits.height;
   return [self setFrame:CGRectMake(0, 0, sizeThatFits.width, sizeThatFits.height) inRect:inRect view:view options:GHLayoutOptionsCenter];
 }
 
 - (CGRect)setFrame:(CGRect)frame inRect:(CGRect)inRect view:(id)view options:(GHLayoutOptions)options {
+  
+  if ([view isHidden]) return CGRectZero;
+
   CGRect originalFrame = frame;
   BOOL sizeToFit = ((options & GHLayoutOptionsSizeToFit) == GHLayoutOptionsSizeToFit)
   || ((options & GHLayoutOptionsVariableWidth) == GHLayoutOptionsVariableWidth)
@@ -184,18 +187,20 @@
   return [self setFrame:frame view:view needsLayout:NO];
 }
 
-- (CGRect)setOrigin:(CGPoint)origin frame:(CGRect)frame view:(id)view {
-  frame.origin = origin;
-  if (GHCGRectIsEqual(frame, [view frame])) return frame;
-  return [self setFrame:frame view:view needsLayout:NO];
+- (CGRect)setOrigin:(CGPoint)origin view:(id)view {
+  return [self setFrame:CGRectMake(origin.x, origin.y, [view frame].size.width, [view frame].size.height) view:view];
 }
 
-- (CGRect)setOrigin:(CGPoint)origin view:(id)view {
-  return [self setOrigin:origin frame:(view ? [view frame] : CGRectZero) view:view];
+- (CGRect)setOrigin:(CGPoint)origin view:(id)view sizeToFit:(BOOL)sizeToFit {
+  return [self setFrame:CGRectMake(origin.x, origin.y, [view frame].size.width, [view frame].size.height) view:view sizeToFit:sizeToFit];
 }
 
 - (CGRect)setSize:(CGSize)size view:(id)view {
   return [self setFrame:CGRectMake([view frame].origin.x, [view frame].origin.y, size.width, size.height) view:view];
+}
+
+- (CGRect)setSize:(CGSize)size view:(id)view sizeToFit:(BOOL)sizeToFit {
+  return [self setFrame:CGRectMake([view frame].origin.x, [view frame].origin.y, size.width, size.height) view:view sizeToFit:sizeToFit];
 }
 
 - (CGRect)setY:(CGFloat)y view:(id)view {

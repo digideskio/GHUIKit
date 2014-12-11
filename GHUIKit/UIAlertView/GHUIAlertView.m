@@ -8,6 +8,12 @@
 
 #import "GHUIAlertView.h"
 
+typedef void (^GHUIAlertViewTarget)(NSInteger index);
+
+@interface GHUIAlertView ()
+@property (copy) GHUIAlertViewTarget target;
+@end
+
 @implementation GHUIAlertView
 
 + (id)delegates {
@@ -19,39 +25,32 @@
   return gDelegates;
 }
 
-- (id)initWithBlock:(GHUIAlertViewBlock)block {
+- (id)initWithTarget:(GHUIAlertViewTarget)target {
   if ((self = [super init])) {
-    _block = block;
+    self.target = target;
   }
   return self;
 }
 
-+ (void)showAlertWithBlock:(GHUIAlertViewBlock)block title:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitle, ... {
-  va_list args;
-  va_start(args, otherButtonTitle);
-  [self showAlertWithBlock:block title:title message:message cancelButtonTitle:cancelButtonTitle otherButtonTitle:otherButtonTitle args:args];
-  va_end(args);
-}
-
-+ (void)showAlertWithBlock:(GHUIAlertViewBlock)block title:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitle:(NSString *)otherButtonTitle args:(va_list)args {
++ (void)showAlertWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSArray *)otherButtonTitles target:(void (^)(NSInteger index))target {
   
-  GHUIAlertView *delegate = [[GHUIAlertView alloc] initWithBlock:block]; // Released in alertView:clickedButtonAtIndex: ([self autorelease])
+  GHUIAlertView *delegate = [[GHUIAlertView alloc] initWithTarget:target]; // Released in alertView:clickedButtonAtIndex: ([self autorelease])
   [[GHUIAlertView delegates] addObject:delegate];
   
   UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:delegate cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil];
-  
-  while(otherButtonTitle) {
+
+  for (NSString *otherButtonTitle in otherButtonTitles) {
     [alertView addButtonWithTitle:otherButtonTitle];
-    otherButtonTitle = va_arg(args, id);
   }
   
   [alertView show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-  if (!_block) return;
-  _block(buttonIndex);
-  _block = NULL;
+  if (self.target) {
+    self.target(buttonIndex);
+    self.target = NULL;
+  }
   [[GHUIAlertView delegates] removeObject:self];
 }
 

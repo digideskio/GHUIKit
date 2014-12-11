@@ -1,3 +1,6 @@
-platform :ios, '7.0'
+platform :ios, "7.0"
 
-pod 'GHKit', :path => "../gh-kit/"
+pod "GHKit"
+pod "YapDatabase"
+pod "SDWebImage"
+pod "ObjectiveSugar"

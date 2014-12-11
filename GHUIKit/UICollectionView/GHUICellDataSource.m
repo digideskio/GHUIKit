@@ -9,6 +9,8 @@
 #import "GHUICellDataSource.h"
 #import "GHCGUtils.h"
 
+#import <ObjectiveSugar/ObjectiveSugar.h>
+
 @implementation GHUICellDataSource
 
 - (NSMutableArray *)objectsForSection:(NSInteger)section create:(BOOL)create {
@@ -19,10 +21,15 @@
   NSMutableArray *objectsForSection = [_sections objectForKey:@(section)];
   if (create && !objectsForSection) {
     objectsForSection = [NSMutableArray array];
-    [_sections setObject:objectsForSection forKey:[NSNumber numberWithInteger:section]];
-    if ((section + 1) > _sectionCount) _sectionCount = (section + 1);
+    [_sections setObject:objectsForSection forKey:@(section)];
   }
   return objectsForSection;
+}
+
+- (NSInteger)sectionCount {
+  NSInteger sectionCount = [_sections count];
+  if (sectionCount < _minSectionCount) return _minSectionCount;
+  return sectionCount;
 }
 
 - (NSMutableArray *)objectsForSection:(NSInteger)section {
@@ -53,7 +60,57 @@
   }
 }
 
-- (void)replaceObjects:(NSArray *)replaceObjects withObjects:(NSArray *)objects section:(NSInteger)section indexPathsToAdd:(NSMutableArray **)indexPathsToAdd indexPathsToReload:(NSMutableArray **)indexPathsToReload {
+- (void)insertObject:(id)obj indexPath:(NSIndexPath *)indexPath {
+  NSMutableArray *objectsForSection = [self objectsForSection:indexPath.section create:YES];
+  [objectsForSection insertObject:obj atIndex:indexPath.row];
+}
+
+- (void)insertObjects:(NSArray *)objects section:(NSInteger)section position:(NSInteger)position indexPaths:(NSMutableArray **)indexPaths {
+  NSMutableArray *objectsForSection = [self objectsForSection:section create:YES];
+  
+  for (NSInteger i = 0; i < [objects count]; i++) {
+    [objectsForSection insertObject:objects[i] atIndex:position + i];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:position + i inSection:section];
+    [self invalidate:indexPath];
+    if (indexPaths) [*indexPaths addObject:indexPath];
+  }
+}
+
+- (void)addOrUpdateObjects:(NSArray *)objects section:(NSInteger)section indexPathsToAdd:(NSMutableArray **)indexPathsToAdd indexPathsToUpdate:(NSMutableArray **)indexPathsToUpdate {
+  NSMutableArray *objectsToAdd = [NSMutableArray array];
+  for (id object in objects) {
+    NSIndexPath *indexPath = [self indexPathOfObject:object section:section];
+    if (indexPath) {
+      [self replaceObjectAtIndexPath:indexPath withObject:object];
+      if (indexPathsToUpdate) [*indexPathsToUpdate addObject:indexPath];
+    } else {
+      [objectsToAdd addObject:object];
+    }
+  }
+  [self addObjects:objectsToAdd section:section indexPaths:indexPathsToAdd];
+}
+
+- (void)updateObjects:(NSArray *)objects section:(NSInteger)section position:(NSInteger)position indexPathsToAdd:(NSMutableArray **)indexPathsToAdd indexPathsToUpdate:(NSMutableArray **)indexPathsToUpdate indexPathsToRemove:(NSMutableArray **)indexPathsToRemove {
+  
+  NSArray *addObjects = [objects relativeComplement:[self objectsForSection:section]];
+  NSArray *updateObjects = [[self objectsForSection:section] intersectionWithArray:objects];
+  NSArray *removeObjects = [[self objectsForSection:section] relativeComplement:objects];
+  
+  [self insertObjects:addObjects section:section position:position indexPaths:indexPathsToAdd];
+  [self replaceObjects:updateObjects section:section indexPaths:indexPathsToUpdate];
+  [self removeObjects:removeObjects section:section indexPaths:indexPathsToRemove];
+}
+
+- (void)replaceObjects:(NSArray *)objects section:(NSInteger)section indexPaths:(NSMutableArray **)indexPaths {
+  for (id object in objects) {
+    NSIndexPath *indexPath = [self indexPathOfObject:object section:section];
+    NSAssert(indexPath, @"Object doesn't exist, can't replace it");
+    [self replaceObjectAtIndexPath:indexPath withObject:object];
+    if (indexPaths) [*indexPaths addObject:indexPath];
+  }
+}
+
+- (void)replaceObjects:(NSArray *)replaceObjects withObjects:(NSArray *)objects section:(NSInteger)section indexPathsToAdd:(NSMutableArray **)indexPathsToAdd indexPathsToUpdate:(NSMutableArray **)indexPathsToUpdate {
   
   NSAssert([replaceObjects count] == [objects count], @"Objects length mismatch");
   
@@ -63,12 +120,11 @@
     NSIndexPath *indexPath = [self indexPathOfObject:replaceObject section:section];
     if (indexPath) {
       [self replaceObjectAtIndexPath:indexPath withObject:object];
-      if (indexPathsToReload) [*indexPathsToReload addObject:indexPath];
+      if (indexPathsToUpdate) [*indexPathsToUpdate addObject:indexPath];
     } else {
       [self addObjects:@[object] section:section indexPaths:indexPathsToAdd];
     }
   }
-  
 }
 
 - (void)replaceObjectAtIndexPath:(NSIndexPath *)indexPath withObject:(id)object {
@@ -162,6 +218,15 @@
   return nil;
 }
 
+- (NSArray *)indexPathsOfObjects:(NSArray *)objects section:(NSInteger)section {
+  NSMutableArray *indexPaths = [NSMutableArray array];
+  for (id object in objects) {
+    NSIndexPath *indexPath = [self indexPathOfObject:object section:section];
+    if (indexPath) [indexPaths addObject:indexPath];
+  }
+  return indexPaths;
+}
+
 - (NSIndexPath *)replaceObject:(id)object section:(NSInteger)section {
   NSIndexPath *indexPath = [self indexPathOfObject:object section:0];
   if (indexPath) {
@@ -171,53 +236,42 @@
   return indexPath;
 }
 
-- (Class)cellClassForIndexPath:(NSIndexPath *)indexPath {
-  if (self.classBlock) {
-    id object = [self objectAtIndexPath:indexPath];
-    return self.classBlock(object, indexPath);
+#pragma mark UIScrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+  if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewWillBeginDragging:)]) {
+    [self.scrollViewDelegate scrollViewWillBeginDragging:scrollView];
   }
-  
-  Class cellClass = [_cellClasses objectForKey:@(indexPath.section)];
-  if (!cellClass) cellClass = [_cellClasses objectForKey:@(-1)];
-  return cellClass;
 }
 
-- (CGSize)sizeForCellAtIndexPath:(NSIndexPath *)indexPath view:(UIView */*UITableView or UICollectionView*/)view {
-  if (GHCGSizeIsEqual(view.bounds.size, CGSizeZero)) return CGSizeZero;
-  
-  id object = [self objectAtIndexPath:indexPath];
-  
-  NSValue *sizeCacheValue = [_sizeCache objectForKey:indexPath];
-  if (sizeCacheValue) return [sizeCacheValue CGSizeValue];
-  
-  // We can't dequeue because that will cause this method and will infinite recurse.
-  
-  Class cellClass = [self cellClassForIndexPath:indexPath];
-  NSAssert(cellClass, @"No cell class for indexPath: %@", indexPath);
-  if (!_cellsForSizing) _cellsForSizing = [NSMutableDictionary dictionary];
-  id cellForSizing = _cellsForSizing[NSStringFromClass(cellClass)];
-  if (!cellForSizing) {
-    cellForSizing = [[cellClass alloc] init];
-    _cellsForSizing[NSStringFromClass(cellClass)] = cellForSizing;
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+  if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidEndDragging:willDecelerate:)]) {
+    [self.scrollViewDelegate scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
   }
-  
-  [cellForSizing setNeedsLayout];
-  self.cellSetBlock(cellForSizing, object, indexPath, view);
-  
-  //NSAssert(!GHCGSizeIsEqual(view.bounds.size, CGSizeZero), @"View size is empty");
-  
-  CGSize size = [cellForSizing sizeThatFits:view.bounds.size];
-  
-  //NSLog(@"(%@) %d.%d size: %@ in %@", [cellForSizing class], indexPath.section, indexPath.row, NSStringFromCGSize(size), NSStringFromCGSize(view.bounds.size));
-  
-  if (!_sizeCache) _sizeCache = [NSMutableDictionary dictionary];
-  [_sizeCache setObject:[NSValue valueWithCGSize:size] forKey:indexPath];
-  
-  return size;
 }
 
-- (NSString *)headerTextForSection:(NSInteger)section {
-  return [[_headerTexts objectForKey:@(section)] uppercaseString];
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidScroll:)]) {
+    [self.scrollViewDelegate scrollViewDidScroll:scrollView];
+  }
+}
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+  if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewWillBeginDecelerating:)]) {
+    [self.scrollViewDelegate scrollViewWillBeginDecelerating:scrollView];
+  }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+  if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidEndDecelerating:)]) {
+    [self.scrollViewDelegate scrollViewDidEndDecelerating:scrollView];
+  }
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+  if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidEndScrollingAnimation:)]) {
+    [self.scrollViewDelegate scrollViewDidEndScrollingAnimation:scrollView];
+  }
 }
 
 @end

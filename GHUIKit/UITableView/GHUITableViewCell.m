@@ -22,7 +22,19 @@
   return self;
 }
 
+- (id)initWithContentView:(UIView *)contentView {
+  if ((self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([contentView class])])) {
+    [self setupContentView:contentView];
+  }
+  return self;
+}
+
++ (GHUITableViewCell *)tableViewCellForContentView:(UIView *)contentView {
+  return [[GHUITableViewCell alloc] initWithContentView:contentView];
+}
+
 - (void)setupContentView:(UIView *)contentView {
+  _viewForContent = contentView;
   [self.contentView addSubview:_viewForContent];
 }
 

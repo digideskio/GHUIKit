@@ -8,6 +8,10 @@
 
 #import "GHUICollectionView.h"
 
+@interface GHUICollectionView ()
+@property GHUICollectionViewDataSource *defaultDataSource; // Default dataSource/delegate used in init
+@end
+
 @protocol GHUICollectionViewInvalidate
 - (void)invalidateAll;
 @end
@@ -16,7 +20,10 @@
 @implementation GHUICollectionView
 
 - (void)sharedInit {
-  self.alwaysBounceVertical = YES;
+  _defaultDataSource = [[GHUICollectionViewDataSource alloc] init];
+  self.dataSource = _defaultDataSource;
+  self.delegate = _defaultDataSource;
+  
   [self setMinimumLineSpacing:1];
 }
 
@@ -49,6 +56,24 @@
     return ((UICollectionViewFlowLayout *)self.collectionViewLayout).minimumLineSpacing;
   }
   return 0;
+}
+
+- (void)addObjects:(NSArray *)objects section:(NSInteger)section completion:(void (^)(BOOL finished))completion {
+  __typeof__(self) __weak blockSelf = self;
+  [self performBatchUpdates:^(){
+    NSMutableArray *indexPaths = [NSMutableArray array];
+    [blockSelf.dataSource removeObjects:objects section:section indexPaths:&indexPaths];
+    [blockSelf deleteItemsAtIndexPaths:indexPaths];
+  } completion:completion];
+}
+
+- (void)removeObjects:(NSArray *)objects section:(NSInteger)section completion:(void (^)(BOOL finished))completion {
+  __typeof__(self) __weak blockSelf = self;
+  [self performBatchUpdates:^(){
+    NSMutableArray *indexPaths = [NSMutableArray array];
+    [blockSelf.dataSource removeObjects:objects section:section indexPaths:&indexPaths];
+    [blockSelf deleteItemsAtIndexPaths:indexPaths];
+  } completion:completion];
 }
 
 // Forces reloadData to invalidate a cache in the datasource if present
@@ -93,7 +118,7 @@
 }
 
 - (void)scrollToBottom:(BOOL)animated topOffset:(CGFloat)topOffset {  
-  CGFloat bottomOffset = CGPointMake(0, self.contentSize.height - self.frame.size.height).y;
+  CGFloat bottomOffset = CGPointMake(0, self.contentSize.height - self.frame.size.height + self.contentInset.bottom).y;
   if (bottomOffset + topOffset > 0) {
     [self setContentOffset:CGPointMake(0, bottomOffset) animated:animated];
   }

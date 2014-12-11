@@ -245,7 +245,7 @@
 /*!
  Secondary text (appears under text) font. Defaults to textFont.
  */
-@property (nonatomic) UIFont *secondaryTextFont;
+@property (nonatomic) UIFont *secondaryFont;
 
 /*!
  Secondary text (appears under text) alignment.

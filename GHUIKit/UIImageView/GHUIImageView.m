@@ -8,6 +8,7 @@
 
 #import "GHUIImageView.h"
 #import <GHKit/GHCGUtils.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @implementation GHUIImageView
 
@@ -30,7 +31,7 @@
 }
 
 - (void)setImageWithURL:(NSURL *)URL {
-  [_imageView setImageWithURL:URL];
+  [_imageView sd_setImageWithURL:URL placeholderImage:nil options:SDWebImageRefreshCached];
 }
 
 - (void)drawRect:(CGRect)rect {
@@ -42,13 +43,13 @@
   }
   
   if (_fillColor) {
-    GHCGContextDrawRoundedRect(context, rect, _fillColor.CGColor, NULL, _strokeWidth, cornerRadius);
+    GHCGContextDrawRoundedRect(context, rect, _fillColor.CGColor, NULL, 0, cornerRadius);
   }
 
-  GHCGContextDrawRoundedRectImageWithShadowAndTransform(context, _imageView.image.CGImage, _imageView.image.size, self.bounds, _strokeColor.CGColor, _strokeWidth, cornerRadius, self.contentMode, self.backgroundColor.CGColor, _shadowColor.CGColor, _shadowBlur, self.transform);
+  GHCGContextDrawRoundedRectImageWithShadowAndTransform(context, _imageView.image.CGImage, _imageView.image.size, self.bounds, NULL, 0, cornerRadius, self.contentMode, self.backgroundColor.CGColor, _shadowColor.CGColor, _shadowBlur, self.transform);
   
   if (_overlayColor) {
-    GHCGContextDrawRoundedRect(context, rect, _overlayColor.CGColor, NULL, _strokeWidth, cornerRadius);
+    GHCGContextDrawRoundedRect(context, rect, _overlayColor.CGColor, NULL, 0, cornerRadius);
   }
 }
 

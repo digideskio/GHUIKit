@@ -89,8 +89,7 @@
 }
 
 - (void)notifyNeedsLayout:(BOOL)animated {
-  if (_needsLayoutBlock != NULL) _needsLayoutBlock(self, animated);
-  else [self setNeedsLayout];
+  [self setNeedsLayout];
 }
 
 #pragma mark Refersh

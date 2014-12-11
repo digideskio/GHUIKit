@@ -10,7 +10,6 @@
 #import <GHKit/GHCGUtils.h>
 
 @interface GHUIActivityView ()
-@property UIActivityIndicatorView *activityIndicator;
 @property BOOL activityEnabled;
 @end
 
@@ -19,6 +18,10 @@
 - (void)sharedInit {
   [super sharedInit];
   self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+  
+  _activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+  _activityIndicator.hidesWhenStopped = YES;
+  [self addSubview:_activityIndicator];
 }
 
 - (void)layoutSubviews {
@@ -31,19 +34,10 @@
   if (!_activityEnabled) {
     [_activityIndicator stopAnimating];
   } else {
-    if (!_activityIndicator) {
-      _activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:_activityStyle];
-      _activityIndicator.hidesWhenStopped = YES;
-      [self addSubview:_activityIndicator];
-    }
     [_activityIndicator startAnimating];
   }
   [self setNeedsLayout];
-}
-
-- (void)setActivityStyle:(UIActivityIndicatorViewStyle)activityStyle {
-  _activityStyle = activityStyle;
-  if (_activityIndicator) _activityIndicator.activityIndicatorViewStyle = activityStyle;
+  [self setNeedsDisplay];
 }
 
 - (BOOL)isAnimating {
@@ -54,8 +48,9 @@
   [self _setActivityEnabled:animating];
 }
 
-- (void)presentViewInViewController:(UIViewController *)viewController keyboardRect:(CGRect)keyboardRect animated:(BOOL)animated {
-  UIView *view = viewController.view;
+- (void)presentInView:(UIView *)view keyboardRect:(CGRect)keyboardRect animated:(BOOL)animated {
+  //NSAssert(view.frame.size.width > 0, @"Activity view has no width");
+  
   self.frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height - keyboardRect.size.height);
   [self setAnimating:YES];
   [view addSubview:self];
@@ -63,7 +58,8 @@
  
   if (animated) {
     self.alpha = 0.0;
-    [UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+    //delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState
+    [UIView animateWithDuration:0.25 animations:^{
       self.alpha = 1.0;
     } completion:^(BOOL finished) {
       
@@ -73,7 +69,8 @@
 
 - (void)dismissView:(BOOL)animated {
   if (animated) {
-    [UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+    //delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState
+    [UIView animateWithDuration:0.25 animations:^{
       self.alpha = 0.0;
     } completion:^(BOOL finished) {
       [self removeFromSuperview];

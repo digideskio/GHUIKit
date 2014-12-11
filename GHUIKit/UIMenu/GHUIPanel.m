@@ -27,18 +27,17 @@
 
 - (void)sharedInit {
   [super sharedInit];
+  self.layout = [GHLayout layoutForView:self];
   self.backgroundColor = [UIColor clearColor];
   self.userInteractionEnabled = NO;
   
-  if (!_coverView) {
-    _coverView = [[UIView alloc] init];
-    _coverView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.6];
-    _coverView.alpha = 0.0;
-    
-    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_dismiss)];
-    tapRecognizer.cancelsTouchesInView = NO;
-    [_coverView addGestureRecognizer:tapRecognizer];
-  }
+  _coverView = [[UIView alloc] init];
+  _coverView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.6];
+  _coverView.alpha = 0.0;
+  
+  UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_dismiss)];
+  tapRecognizer.cancelsTouchesInView = NO;
+  [_coverView addGestureRecognizer:tapRecognizer];
   [self addSubview:_coverView];
 }
 
@@ -52,14 +51,29 @@
   return self;
 }
 
-- (void)layoutSubviews {
-  [super layoutSubviews];
-  _coverView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+- (CGSize)layout:(id<GHLayout>)layout size:(CGSize)size {
+  if (!_coverView.hidden) {
+    [layout setFrame:CGRectMake(0, 0, size.width, size.height) view:_coverView];
+  }
   
-  CGSize size = [_contentView sizeThatFits:self.frame.size];
-  _contentView.frame = CGRectMake(_contentView.frame.origin.x, _contentView.frame.origin.y, size.width, size.height);
+  CGSize contentSize = [_contentView sizeThatFits:size];
+  [layout setFrame:CGRectMake(_contentView.frame.origin.x, _contentView.frame.origin.y, contentSize.width, contentSize.height) view:_contentView];
   
-  [self _updateTransition];
+  if (![layout isSizing]) {
+    [self _updateTransition];
+  }
+  
+  if (_coverView.hidden) {
+    return CGSizeMake(size.width, contentSize.height);
+  } else {
+    return size;
+  }
+}
+
+- (void)setCoverEnabled:(BOOL)coverEnabled {
+  _coverEnabled = coverEnabled;
+  _coverView.hidden = !_coverEnabled;
+  [self setNeedsLayout];
 }
 
 - (void)_updateTransition {
@@ -92,9 +106,9 @@
 - (CGRect)_endFrame {
   switch (self.transition) {
     case GHUIPanelTransitionTop:
-      return CGRectMake(0, 64, _contentView.frame.size.width, _contentView.frame.size.height);
+      return CGRectMake(0, 0, _contentView.frame.size.width, _contentView.frame.size.height);
     case GHUIPanelTransitionLeft:
-      return CGRectMake(0, 64, _contentView.frame.size.width, _contentView.frame.size.height);
+      return CGRectMake(0, 0, _contentView.frame.size.width, _contentView.frame.size.height);
   }
 }
 
@@ -110,11 +124,11 @@
   CGRect endFrame = [self _endFrame];
   
   _contentVisible = YES;
-  self.userInteractionEnabled = YES;
+  if (_coverEnabled) self.userInteractionEnabled = YES;
   if ([_contentView respondsToSelector:@selector(viewWillAppear:)]) {
     [(id<GHUIPanelAppear>)_contentView viewWillAppear:YES];
   }
-  [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:1.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+  [UIView animateWithDuration:1.0 delay:0.0 usingSpringWithDamping:1.0 initialSpringVelocity:1.0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionAllowUserInteraction animations:^{
     _contentView.frame = endFrame;
     _coverView.alpha = 1.0;
     if ([_contentView respondsToSelector:@selector(viewDidAppear:)]) {

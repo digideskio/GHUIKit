@@ -10,6 +10,8 @@
 
 @interface GHUICollectionViewCell : UICollectionViewCell
 
+- (void)sharedInit;
+
 + (Class)contentViewClass;
 
 - (id)viewForContent;

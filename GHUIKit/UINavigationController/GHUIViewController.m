@@ -19,12 +19,9 @@
 
 // These need to match "protected" methods in GHUIContentView
 @interface GHUIView (ViewCallbacks)
-- (void)_viewWillAppear:(BOOL)animated;
-- (void)_viewDidAppear:(BOOL)animated;
-- (void)_viewWillDisappear:(BOOL)animated;
-- (void)_viewDidDisappear:(BOOL)animated;
 - (void)_viewDidLayoutSubviews;
-- (void)_willBecomeActive;
+- (void)_viewDidLoad;
+- (void)_didBecomeActive;
 - (void)_willResignActive;
 @end
 
@@ -34,13 +31,24 @@
   return [self initWithContentView:contentView animation:nil];
 }
 
++ (instancetype)contentView:(GHUIContentView *)contentView preload:(BOOL)preload {
+  GHUIViewController *viewController = [[GHUIViewController alloc] initWithContentView:contentView];
+  if (preload) {
+    [viewController view];
+    [[viewController view] layoutIfNeeded];
+  }
+  return viewController;
+}
+
 - (id)initWithContentView:(GHUIContentView *)contentView animation:(GHUIViewControllerAnimation *)animation {
   if ((self = [super init])) {
+    contentView.navigationDelegate.viewController.view = nil;
+    
     _contentView = contentView;
     _contentView.navigationDelegate = self;
     _animation = animation;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_willBecomeActive:) name:UIApplicationWillResignActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_didBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_willResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
   }
   return self;
@@ -59,8 +67,8 @@
   [_contentView _viewDidLayoutSubviews];
 }
 
-- (void)_willBecomeActive:(NSNotification *)notification {
-  [_contentView _willBecomeActive];
+- (void)_didBecomeActive:(NSNotification *)notification {
+  [_contentView _didBecomeActive];
 }
 
 - (void)_willResignActive:(NSNotification *)notification {
@@ -69,22 +77,28 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  [_contentView _viewWillAppear:animated];
+  [_contentView viewWillAppear:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
-  [_contentView _viewDidAppear:animated];
+  [_contentView viewDidAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
-  [_contentView _viewWillDisappear:animated];
+  [_contentView viewWillDisappear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
   [super viewDidDisappear:animated];
-  [_contentView _viewDidDisappear:animated];
+  [_contentView viewDidDisappear:animated];
+}
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  NSAssert([NSThread isMainThread], @"Not on main thread");
+  [_contentView _viewDidLoad];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
@@ -122,6 +136,9 @@
 }
 
 - (id<GHUIViewNavigationDelegate>)presentNavigationView:(GHUIContentView *)contentView animated:(BOOL)animated completion:(void (^)(void))completion {
+  if (contentView.presentationMode != GHUIContentViewPresentationModeModalSplash) {
+    contentView.presentationMode = GHUIContentViewPresentationModeModal;
+  }
   GHUIViewController *viewController = [[GHUIViewController alloc] initWithContentView:contentView];
   UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
   [self presentViewController:navigationController animated:animated completion:completion];
@@ -159,6 +176,7 @@
   for (GHUIContentView *view in views) {
     [viewControllers addObject:[[GHUIViewController alloc] initWithContentView:view]];
   }
+  
   [self.navigationController setViewControllers:viewControllers animated:animated];
 }
 

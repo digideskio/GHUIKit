@@ -32,7 +32,7 @@
   _errorLabel.fillColor = [UIColor colorWithWhite:0.0f alpha:0.85f];
   _errorLabel.cornerRadius = 10.0f;
   _errorLabel.secondaryTextColor = [UIColor whiteColor];
-  _errorLabel.secondaryTextFont = [UIFont systemFontOfSize:14.0f];
+  _errorLabel.secondaryFont = [UIFont systemFontOfSize:14.0f];
   _errorLabel.secondaryTextAlignment = NSTextAlignmentCenter;
   [self addSubview:_errorLabel];
 }
@@ -47,8 +47,7 @@
   _errorLabel.frame = GHCGRectCenterInSize(errorLabelSize, self.frame.size);
 }
 
-- (void)presentViewInViewController:(UIViewController *)viewController keyboardRect:(CGRect)keyboardRect dismissAfter:(NSTimeInterval)dismissAfter {
-  UIView *view = viewController.view;
+- (void)presentInView:(UIView *)view keyboardRect:(CGRect)keyboardRect dismissAfter:(NSTimeInterval)dismissAfter {
   self.frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height - keyboardRect.size.height);
   [self _updateLabelFrame];
   [view addSubview:self];

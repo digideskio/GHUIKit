@@ -7,10 +7,10 @@
 //
 
 #import "GHUIView.h"
-#import "GHUITableViewSwipeCell.h"
 
 #import "GHUIImageView.h"
 #import "GHUILabel.h"
+#import "GHUITableViewCell.h"
 
 @interface GHUITableViewTitleView : GHUIView
 
@@ -21,7 +21,7 @@
 - (void)setName:(NSString *)name description:(NSString *)description imageName:(NSString *)imageName;
 @end
 
-@interface GHUITableViewTitleCell : GHUITableViewSwipeCell
-- (void)setName:(NSString *)name description:(NSString *)description imageName:(UIImage *)imageName;
+@interface GHUITableViewTitleCell : GHUITableViewCell
+- (void)setName:(NSString *)name description:(NSString *)description imageName:(NSString *)imageName;
 @end
 
