@@ -142,7 +142,7 @@
     }
     
     if (frame.size.width > 0 && (options & GHLayoutOptionsVariableWidth) != GHLayoutOptionsVariableWidth) {
-      NSAssert(sizeThatFits.width > 0, @"sizeThatFits: on view returned 0 width; Make sure that layout:size: doesn't return a zero width size");
+      //NSAssert(sizeThatFits.width > 0, @"sizeThatFits: on view returned 0 width; Make sure that layout:size: doesn't return a zero width size");
     }
     
     frame.size = sizeThatFits;

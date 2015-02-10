@@ -67,6 +67,10 @@
   return [self.label sizeForVariableWidth:size];
 }
 
+- (void)setBorderStyle:(GHUIBorderStyle)borderStyle color:(UIColor *)color width:(CGFloat)width cornerRadius:(CGFloat)cornerRadius {
+  [self.label setBorderStyle:borderStyle color:color width:width cornerRadius:cornerRadius];
+}
+
 - (void)setEnabled:(BOOL)enabled {
   [super setEnabled:enabled];
   [self.label setDisabled:!enabled];

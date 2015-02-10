@@ -38,6 +38,8 @@
 - (void)resetDataSource;
 
 - (NSIndexPath *)lastIndexPath;
+- (NSIndexPath *)lastIndexPathForSection:(NSInteger)section;
 - (void)scrollToLastIndexPathAtScrollPosition:(UITableViewScrollPosition)scrollPosition animated:(BOOL)animated;
+- (void)scrollToLastIndexPathForSection:(NSInteger)section scrollPosition:(UITableViewScrollPosition)scrollPosition animated:(BOOL)animated;
 
 @end

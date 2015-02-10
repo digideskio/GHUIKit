@@ -66,5 +66,7 @@
 // For additional styles
 - (GHUILabel *)style;
 
+- (void)setBorderStyle:(GHUIBorderStyle)borderStyle color:(UIColor *)color width:(CGFloat)width cornerRadius:(CGFloat)cornerRadius;
+
 @end
 

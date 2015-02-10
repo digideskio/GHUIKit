@@ -167,11 +167,22 @@
 }
 
 - (NSIndexPath *)lastIndexPath {
-  for (NSInteger i = [self.dataSource sectionCount] - 1; i >= 0; i--) {
+  return [self lastIndexPathForSection:self.dataSource.sectionCount - 1];
+}
+
+- (NSIndexPath *)lastIndexPathForSection:(NSInteger)section {
+  for (NSInteger i = section; i >= 0; i--) {
     NSInteger count = [self.dataSource countForSection:i];
     if (count > 0) return [NSIndexPath indexPathForRow:count-1 inSection:i];
   }
   return nil;
+}
+
+- (void)scrollToLastIndexPathForSection:(NSInteger)section scrollPosition:(UITableViewScrollPosition)scrollPosition animated:(BOOL)animated {
+  NSIndexPath *indexPath = [self lastIndexPathForSection:section];
+  if (indexPath) {
+    [self scrollToRowAtIndexPath:indexPath atScrollPosition:scrollPosition animated:animated];
+  }
 }
 
 - (void)scrollToLastIndexPathAtScrollPosition:(UITableViewScrollPosition)scrollPosition animated:(BOOL)animated {
