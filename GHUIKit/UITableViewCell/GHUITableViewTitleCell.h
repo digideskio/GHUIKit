@@ -10,7 +10,7 @@
 
 #import "GHUIImageView.h"
 #import "GHUILabel.h"
-#import "GHUITableViewCell.h"
+#import <GHUITable/GHUITableViewCell.h>
 
 @interface GHUITableViewTitleView : GHUIView
 

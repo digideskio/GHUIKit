@@ -41,6 +41,7 @@
 @property (nonatomic) UIColor *disabledBorderColor UI_APPEARANCE_SELECTOR;
 @property (nonatomic) UIColor *selectedFillColor UI_APPEARANCE_SELECTOR;
 @property (nonatomic) UIColor *selectedTextColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic) UIColor *selectedAccessoryTextColor UI_APPEARANCE_SELECTOR;
 @property (nonatomic) UIColor *highlightedFillColor UI_APPEARANCE_SELECTOR;
 @property (nonatomic) UIColor *highlightedFillColor2 UI_APPEARANCE_SELECTOR;
 @property (nonatomic) UIColor *highlightedTextColor UI_APPEARANCE_SELECTOR;

@@ -6,6 +6,10 @@
 //  Copyright (c) 2013 Gabriel Handford. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import <CoreGraphics/CoreGraphics.h>
+
 typedef enum {
   GHLayoutOptionsSizeToFit = 1 << 0, // Size to fit the view
   GHLayoutOptionsVariableWidth = 1 << 1,

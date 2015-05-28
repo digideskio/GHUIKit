@@ -6,6 +6,9 @@
 //  Copyright (c) 2013 Gabriel Handford. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
 typedef void (^GHUIActionSheetTargetBlock)();
 
 /*!

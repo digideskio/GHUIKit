@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Gabriel Handford. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import <UIKit/UIGestureRecognizerSubclass.h>
 
 @interface GHUILongPressGestureRecognizer : UILongPressGestureRecognizer

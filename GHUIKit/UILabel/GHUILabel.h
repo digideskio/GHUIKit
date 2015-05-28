@@ -159,7 +159,7 @@
 @property (nonatomic) UIImage *highlightedAccessoryImage;
 
 /*!
- Text color for text (selected).
+ Text color (selected).
  */
 @property (nonatomic) UIColor *selectedTextColor;
 
@@ -174,6 +174,11 @@
  Not all shading types use color2.
  */
 @property (nonatomic) UIColor *selectedFillColor2;
+
+/*!
+ Accessory text color (selected).
+ */
+@property (nonatomic) UIColor *selectedAccessoryTextColor;
 
 /*!
  Shading type for background (selected).

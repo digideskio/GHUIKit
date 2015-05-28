@@ -262,6 +262,14 @@
   self.label.selectedTextColor = selectedTextColor;
 }
 
+- (void)setSelectedAccessoryTextColor:(UIColor *)selectedAccessoryTextColor {
+  self.label.selectedAccessoryTextColor = selectedAccessoryTextColor;
+}
+
+- (UIColor *)selectedAccessoryTextColor {
+  return self.label.selectedAccessoryTextColor;
+}
+
 - (UIColor *)highlightedTextColor {
   return self.label.highlightedTextColor;
 }

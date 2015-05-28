@@ -284,6 +284,7 @@
   }
   
   UIImage *accessoryImage = self.accessoryImage;
+  UIColor *accessoryTextColor = nil;
   
   if (isDisabled) {
     if (self.disabledShadingType != GHUIShadingTypeUnknown) shadingType = self.disabledShadingType;
@@ -305,6 +306,7 @@
     if (self.selectedFillColor2) fillColor2 = self.selectedFillColor2;
     else if (self.highlightedFillColor2) fillColor2 = self.highlightedFillColor2;
     if (self.highlightedBorderColor) borderColor = self.highlightedBorderColor;
+    if (self.selectedAccessoryTextColor) accessoryTextColor = self.selectedAccessoryTextColor;
   }
   
   CGFloat borderWidth = self.borderWidth;
@@ -379,7 +381,7 @@
   }
   
   if (self.accessoryText && [self shouldDrawText]) {
-    if (self.accessoryTextColor) textColor = self.accessoryTextColor;
+    if (accessoryTextColor) textColor = accessoryTextColor;
     if (self.accessoryTextFont) font = self.accessoryTextFont;
     if (self.accessoryTextAlignment == NSTextAlignmentLeft) {
       x += _textSize.width + _textInsets.right;      

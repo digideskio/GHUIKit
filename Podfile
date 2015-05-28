@@ -1,6 +1,9 @@
 platform :ios, "7.0"
 
-pod "GHKit"
-pod "YapDatabase"
-pod "SDWebImage"
-pod "ObjectiveSugar"
+target "GHUIKit" do
+  pod "GHKit"
+  pod "YapDatabase"
+  pod "SDWebImage"
+  pod "ObjectiveSugar"
+  pod "GHUITable"
+end
