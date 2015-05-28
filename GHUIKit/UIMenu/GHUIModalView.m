@@ -16,6 +16,8 @@
 
 @implementation GHUIModalView
 
+@dynamic navigationDelegate;
+
 - (id)initWithTitle:(NSString *)title navigationDelegate:(id<GHUIViewNavigationDelegate>)navigationDelegate contentView:(GHUIContentView *)contentView {
   if ((self = [super init])) {
     self.layout = [GHLayout layoutForView:self];

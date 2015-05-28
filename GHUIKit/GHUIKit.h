@@ -8,46 +8,54 @@
 
 #import <Foundation/Foundation.h>
 
-#import "GHUIDefines.h"
+//! Project version number for GHUIKit.
+FOUNDATION_EXPORT double GHUIKitVersionNumber;
 
-#import "GHUICollectionView.h"
-#import "GHUICollectionViewCell.h"
-#import "GHUICollectionViewDataSource.h"
+//! Project version string for GHUIKit.
+FOUNDATION_EXPORT const unsigned char GHUIKitVersionString[];
 
-#import "GHUITableView.h"
-#import "GHUITableViewCell.h"
-#import "GHUITableViewDataSource.h"
-#import "GHUITableViewDetailCell.h"
+// In this header, you should import all the public headers of your framework using statements like #import <GHUIKit/PublicHeader.h>
 
-#import "GHUIView.h"
-#import "GHUIContentView.h"
+#import <GHUIKit/GHUIDefines.h>
 
-#import "GHUINavigationBar.h"
+#import <GHUIKit/GHUICollectionView.h>
+#import <GHUIKit/GHUICollectionViewCell.h>
+#import <GHUIKit/GHUICollectionViewDataSource.h>
 
-#import "GHUIControl.h"
-#import "GHUIButton.h"
-#import "GHUISwitchButton.h"
+#import <GHUIKit/GHUITableView.h>
+#import <GHUIKit/GHUITableViewCell.h>
+#import <GHUIKit/GHUITableViewDataSource.h>
+#import <GHUIKit/GHUITableViewDetailCell.h>
 
-#import "GHUIActivityView.h"
-#import "GHUIErrorView.h"
+#import <GHUIKit/GHUIView.h>
+#import <GHUIKit/GHUIContentView.h>
 
-#import "GHUIActionSheet.h"
+#import <GHUIKit/GHUINavigationBar.h>
 
-#import "GHUIAlertView.h"
+#import <GHUIKit/GHUIControl.h>
+#import <GHUIKit/GHUIButton.h>
+#import <GHUIKit/GHUISwitchButton.h>
 
-#import "GHUIImageView.h"
+#import <GHUIKit/GHUIActivityView.h>
+#import <GHUIKit/GHUIErrorView.h>
 
-#import "GHUIUtils.h"
+#import <GHUIKit/GHUIActionSheet.h>
 
-#import "GHUIListView.h"
+#import <GHUIKit/GHUIAlertView.h>
 
-#import "GHUILabel.h"
+#import <GHUIKit/GHUIImageView.h>
 
-#import "GHUIViewController.h"
+#import <GHUIKit/GHUIUtils.h>
 
-#import "GHUITextField.h"
+#import <GHUIKit/GHUIListView.h>
 
-#import "GHUIModalView.h"
-#import "GHUIViewControllerModal.h"
-#import "GHUIPanel.h"
-#import "GHUIBorderView.h"
+#import <GHUIKit/GHUILabel.h>
+
+#import <GHUIKit/GHUIViewController.h>
+
+#import <GHUIKit/GHUITextField.h>
+
+#import <GHUIKit/GHUIModalView.h>
+#import <GHUIKit/GHUIViewControllerModal.h>
+#import <GHUIKit/GHUIPanel.h>
+#import <GHUIKit/GHUIBorderView.h>
