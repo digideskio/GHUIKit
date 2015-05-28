@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Gabriel Handford. All rights reserved.
 //
 
-#import <GHUIKit/GHUIView.h>
-#import <GHUIKit/GHUITableViewCell.h>
+#import <GHUITable/GHUITable.h>
+#import <YOLayout/YOLayout.h>
 
-@interface GHUICatalogCellView : GHUIView
+@interface GHUICatalogCellView : YOView
 - (void)setName:(NSString *)name description:(NSString *)description image:(UIImage *)image;
 @end
 

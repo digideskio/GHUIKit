@@ -10,7 +10,7 @@
 
 #import "GHUICatalogItem.h"
 #import <GHUIKit/GHUILabel.h>
-
+#import <GHUIKit/GHUITableViewTitleCell.h>
 
 @interface GHUICatalogView ()
 @property GHUITableView *tableView;
@@ -27,8 +27,8 @@
   [self addSubview:_tableView];
   
   _dataSource = [[GHUITableViewDataSource alloc] init];
-  [_dataSource setCellClass:[GHUITableViewDetailCell class] tableView:_tableView section:0];
-  _dataSource.cellSetBlock = ^(GHUITableViewDetailCell *cell, GHUICatalogItem *item, NSIndexPath *indexPath, UITableView *tableView, BOOL dequeued) {
+  [_dataSource setCellClass:[GHUITableViewTitleCell class] tableView:_tableView section:0];
+  _dataSource.cellSetBlock = ^(GHUITableViewTitleCell *cell, GHUICatalogItem *item, NSIndexPath *indexPath, UITableView *tableView, BOOL dequeued) {
     cell.textLabel.text = item.title;
     cell.detailTextLabel.text = item.detail;
   };

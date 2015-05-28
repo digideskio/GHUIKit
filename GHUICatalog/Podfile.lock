@@ -1,23 +1,23 @@
 PODS:
-  - AFNetworking (2.5.0):
-    - AFNetworking/NSURLConnection (= 2.5.0)
-    - AFNetworking/NSURLSession (= 2.5.0)
-    - AFNetworking/Reachability (= 2.5.0)
-    - AFNetworking/Security (= 2.5.0)
-    - AFNetworking/Serialization (= 2.5.0)
-    - AFNetworking/UIKit (= 2.5.0)
-  - AFNetworking/NSURLConnection (2.5.0):
+  - AFNetworking (2.5.4):
+    - AFNetworking/NSURLConnection (= 2.5.4)
+    - AFNetworking/NSURLSession (= 2.5.4)
+    - AFNetworking/Reachability (= 2.5.4)
+    - AFNetworking/Security (= 2.5.4)
+    - AFNetworking/Serialization (= 2.5.4)
+    - AFNetworking/UIKit (= 2.5.4)
+  - AFNetworking/NSURLConnection (2.5.4):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.5.0):
+  - AFNetworking/NSURLSession (2.5.4):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.5.0)
-  - AFNetworking/Security (2.5.0)
-  - AFNetworking/Serialization (2.5.0)
-  - AFNetworking/UIKit (2.5.0):
+  - AFNetworking/Reachability (2.5.4)
+  - AFNetworking/Security (2.5.4)
+  - AFNetworking/Serialization (2.5.4)
+  - AFNetworking/UIKit (2.5.4):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - CocoaLumberjack (1.9.2):
@@ -25,22 +25,30 @@ PODS:
   - CocoaLumberjack/Core (1.9.2)
   - CocoaLumberjack/Extensions (1.9.2):
     - CocoaLumberjack/Core
-  - GHKit (1.0.12)
-  - GHUIKit (0.0.1):
+  - GHKit (2.0.0)
+  - GHUIKit (0.0.2):
     - GHKit
+    - GHUITable
     - ObjectiveSugar
     - SDWebImage
     - YapDatabase
+  - GHUITable (0.1.5):
+    - GHKit
+    - GHUITable/Yap (= 0.1.5)
+    - ObjectiveSugar
+  - GHUITable/Yap (0.1.5):
+    - GHKit
+    - ObjectiveSugar
+    - YapDatabase
   - ObjectiveSugar (1.1.0)
-  - SDWebImage (3.7.1):
-    - SDWebImage/Core (= 3.7.1)
-  - SDWebImage/Core (3.7.1)
-  - YapDatabase (2.5.4):
-    - YapDatabase/standard (= 2.5.4)
-  - YapDatabase/common (2.5.4):
+  - SDWebImage (3.7.2):
+    - SDWebImage/Core (= 3.7.2)
+  - SDWebImage/Core (3.7.2)
+  - YapDatabase (2.6.4):
+    - YapDatabase/standard (= 2.6.4)
+  - YapDatabase/standard (2.6.4):
     - CocoaLumberjack (~> 1)
-  - YapDatabase/standard (2.5.4):
-    - YapDatabase/common
+  - YOLayout (0.1.17)
 
 DEPENDENCIES:
   - AFNetworking
@@ -48,18 +56,21 @@ DEPENDENCIES:
   - GHUIKit (from `../../GHUIKit/`)
   - ObjectiveSugar
   - YapDatabase
+  - YOLayout
 
 EXTERNAL SOURCES:
   GHUIKit:
-    :path: ../../GHUIKit/
+    :path: "../../GHUIKit/"
 
 SPEC CHECKSUMS:
-  AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
-  CocoaLumberjack: 205769c032b5fef85b92472046bcc8b7e7c8a817
-  GHKit: c6b41dfdbcf0218fdeb7e0a5941d2204eeda7b86
-  GHUIKit: a1fb1e4360759b2fab38acf49077515f710f3e66
-  ObjectiveSugar: f48793f5902c77cfc02a4ce46d2e8ecddcad4dc2
-  SDWebImage: 116e88633b5b416ea0ca4b334a4ac59cf72dd38d
-  YapDatabase: c1d6912df1b4a160f7373ee7657d360e29bb00fd
+  AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
+  CocoaLumberjack: 628fca2e88ef06f7cf6817309aa405f325d9a6fa
+  GHKit: 29e5361c9d8a33343ae5ed4698057d1533ee590b
+  GHUIKit: f0fba73b04956b52cd0bb4a753dcc3b425be26b8
+  GHUITable: f92874fdc5c3064f04898e912b0a5a8a62346b75
+  ObjectiveSugar: a6a25f23d657c19df0a0b972466d5b5ca9f5295c
+  SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
+  YapDatabase: f9051e178a38f48d0f3a78562423a5bc969f1ca3
+  YOLayout: 71d403f99c77c24345803ad90a2f7ea735585bfd
 
-COCOAPODS: 0.35.0
+COCOAPODS: 0.37.2

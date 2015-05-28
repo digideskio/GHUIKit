@@ -7,9 +7,7 @@
 //
 
 #import <GHUIKit/GHUIContentView.h>
-#import <GHUIKit/GHUITableView.h>
-#import <GHUIKIt/GHUITableViewDataSource.h>
-#import <GHUIKit/GHUITableViewDetailCell.h>
+#import <GHUITable/GHUITable.h>
 
 @interface GHUICatalogView : GHUIContentView
 @property (readonly) GHUITableView *tableView;

@@ -8,7 +8,7 @@
 
 #import "GHUICatalogStaticTableView.h"
 
-#import <GHUIKit/GHUITableView.h>
+#import <GHUITable/GHUITable.h>
 #import <GHUIKit/GHUITableViewTitleCell.h>
 
 #import "GHUICatalogSwitchCell.h"

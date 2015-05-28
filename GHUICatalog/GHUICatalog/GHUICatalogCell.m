@@ -17,9 +17,8 @@
 
 @implementation GHUICatalogCellView
 
-- (void)sharedInit {
-  [super sharedInit];
-  self.layout = [GHLayout layoutForView:self];
+- (void)viewInit {
+  [super viewInit];
   self.backgroundColor = [UIColor clearColor];
   
   _imageView = [[UIImageView alloc] init];

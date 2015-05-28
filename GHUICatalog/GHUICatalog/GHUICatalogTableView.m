@@ -6,10 +6,11 @@
 //  Copyright (c) 2014 Gabriel Handford. All rights reserved.
 //
 
-#import <GHUIKit/GHUITableView.h>
+#import "GHUICatalogTableView.h"
+
+#import <GHUITable/GHUITable.h>
 #import <GHUIKit/GHUITableViewTitleCell.h>
 
-#import "GHUICatalogTableView.h"
 #import "GHUICatalogCell.h"
 #import "GHUICatalogSwitchCell.h"
 
