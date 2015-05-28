@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "GHUIKit"
-  s.version      = "0.0.4"
+  s.version      = "0.0.6"
   s.summary      = "UI framework."
   s.homepage     = "https://github.com/gabriel/GHUIKit"
   s.license      = "MIT"
