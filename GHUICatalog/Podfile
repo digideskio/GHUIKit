@@ -3,7 +3,7 @@ platform :ios, "7.0"
 pod "GHKit"
 pod "YOLayout"
 
-pod "GHUIKit", :path => "../../GHUIKit/"
+pod "GHUIKit", :path => "../"
 
 pod "AFNetworking"
 pod "YapDatabase"

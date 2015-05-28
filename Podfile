@@ -5,5 +5,5 @@ target "GHUIKit" do
   pod "YapDatabase"
   pod "SDWebImage"
   pod "ObjectiveSugar"
-  pod "GHUITable"
+  pod "GHUITable"#, :path => "../GHUITable"
 end
