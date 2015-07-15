@@ -41,7 +41,7 @@
 		00BA9F9B1B17BC400072167B /* GHUILabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C1D5E6182D95CA0080E2CF /* GHUILabel.m */; };
 		00BA9F9C1B17BC490072167B /* GHUIControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 009932A91820501800556ECC /* GHUIControl.h */; };
 		00BA9F9D1B17BC490072167B /* GHUIControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 009932AA1820501800556ECC /* GHUIControl.m */; };
-		00BA9F9E1B17BC490072167B /* GHUIButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 009932A618204F4B00556ECC /* GHUIButton.h */; };
+		00BA9F9E1B17BC490072167B /* GHUIButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 009932A618204F4B00556ECC /* GHUIButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		00BA9F9F1B17BC490072167B /* GHUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 009932A718204F4B00556ECC /* GHUIButton.m */; };
 		00BA9FA01B17BC490072167B /* GHUISwitchButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 009932B818206DFF00556ECC /* GHUISwitchButton.h */; };
 		00BA9FA11B17BC490072167B /* GHUISwitchButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 009932B918206DFF00556ECC /* GHUISwitchButton.m */; };
@@ -61,9 +61,9 @@
 		00BA9FBF1B17BC540072167B /* GHUICollectionViewLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 00689A661B17AB7300E1D982 /* GHUICollectionViewLabel.m */; };
 		00BA9FC01B17BC540072167B /* GHUITableViewTitleCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 004A98EE18EA0F2300280D82 /* GHUITableViewTitleCell.h */; };
 		00BA9FC11B17BC540072167B /* GHUITableViewTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 004A98EF18EA0F2300280D82 /* GHUITableViewTitleCell.m */; };
-		00BA9FC21B17BC540072167B /* GHUIView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0099329F18204D9100556ECC /* GHUIView.h */; };
+		00BA9FC21B17BC540072167B /* GHUIView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0099329F18204D9100556ECC /* GHUIView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		00BA9FC31B17BC540072167B /* GHUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 009932A018204D9100556ECC /* GHUIView.m */; };
-		00BA9FC41B17BC540072167B /* GHUIContentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 004A98FD18EB3A4B00280D82 /* GHUIContentView.h */; };
+		00BA9FC41B17BC540072167B /* GHUIContentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 004A98FD18EB3A4B00280D82 /* GHUIContentView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		00BA9FC51B17BC540072167B /* GHUIContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 004A98FE18EB3A4B00280D82 /* GHUIContentView.m */; };
 		00BA9FC61B17BC540072167B /* GHLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 009932AC1820537000556ECC /* GHLayout.h */; };
 		00BA9FC71B17BC540072167B /* GHLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 009932AD1820537000556ECC /* GHLayout.m */; };
